@@ -48,7 +48,7 @@ public class JpaConfiguration {
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		
 		String usuario = "postgres";
-		String password = "1234";
+		String password = "postgres";
 		
 		/*
 		 * En este caso el servidor postgres se encuentra en la misma maquina (localhost)

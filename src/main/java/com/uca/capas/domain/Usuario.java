@@ -27,7 +27,7 @@ public class Usuario {
 	@Column(name="fecha_nac")
 	private Date fechaNacimiento;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_municipio")
 	private Municipio municipio;
 	

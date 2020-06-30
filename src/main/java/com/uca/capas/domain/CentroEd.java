@@ -20,8 +20,8 @@ public class CentroEd {
 	
 	@Column(name="estado")
 	private Boolean estado;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_municipio")
 	private Municipio municipio;
 }

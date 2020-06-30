@@ -21,13 +21,14 @@ public class Municipio {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@OneToMany(mappedBy="municipio", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="municipio", fetch = FetchType.LAZY)
 	private List<Usuario> usuarios;
-	
-	@OneToMany(mappedBy="municipio", fetch = FetchType.EAGER)
+
+	@OneToMany(mappedBy="municipio", fetch = FetchType.LAZY)
 	private List<CentroEd> centros;
+
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_depto")
 	private Departamento departamento;
 	
