@@ -7,11 +7,9 @@ import org.springframework.data.repository.query.Param;
 import com.uca.capas.domain.Usuario;
 
 public interface UsuarioRepo extends JpaRepository<Usuario, String> {
-	
-	
+
 	//Encontrar usuario por ID
-	@Query(value = "SELECT * from public.usuario where usuario = ?1", nativeQuery = true)
-    public Usuario findUsuarioById(@Param("usuario") String usuario);
-	
+	@Query(value = "SELECT clave from public.usuario where usuario = ?1", nativeQuery = true)
+    public String findPasswordById(@Param("usuario") String usuario);
 
 }

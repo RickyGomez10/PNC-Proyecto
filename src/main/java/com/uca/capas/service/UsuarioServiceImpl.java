@@ -19,11 +19,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Autowired
 	private UsuarioRepo usuarioRepo;
-	
-	
+
 	//Encontrar usuario por ID
-	public Usuario findUsuarioById(String codigo) throws DataAccessException {
-		return usuarioRepo.findUsuarioById(codigo);
+	public String findUsernameById(String user) throws DataAccessException {
+		return usuarioRepo.findUsernameById(user);
 	}
 
 }

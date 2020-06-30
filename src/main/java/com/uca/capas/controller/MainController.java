@@ -1,13 +1,9 @@
 package com.uca.capas.controller;
 
-import java.util.List;
-
+import com.uca.capas.domain.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -16,6 +12,7 @@ import com.uca.capas.service.UsuarioService;
 
 @Controller
 public class MainController {
+
 	@Autowired
 	private UsuarioService usuarioService;
 	
@@ -25,7 +22,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		Usuario usuario = new Usuario();
 		
-		
+		mav.addObject("error", "");
 		mav.addObject("usuario", usuario);
 		mav.setViewName("Login");
 		
@@ -33,37 +30,28 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping("/verificar")
-	public @ResponseBody Usuario verificar(@RequestParam String user, @RequestParam String clave) {
-		
+	@RequestMapping(value="/verificar", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody boolean verificar(@RequestBody Login login) {
+
 		try {
-			Usuario usuario = usuarioService.findUsuarioById(user);
-			
-			if(usuario.getUsuario().equals(user)) {
-				System.out.println("Si");	
-				if(usuario.getClave().equals(clave)) {
-				System.out.println("Si");	
-				return usuario;
-				}else {
-					System.out.println("no contra");	
+			String pass = usuarioService.findPasswordById(login.getUser());
+
+			if(pass != null){
+				if(pass.equals(login.getPass())){
+					return true;
 				}
-			}else {
-				System.out.println("no usuario");	
-				return usuario;
+
+				return false;
+
+			}else{
+				return false;
 			}
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			
-			System.out.println("error");	
-			
+			return false;
 		}
-		return null;
-		
-		
-		
-		
-	
+
 	}
 	
 }

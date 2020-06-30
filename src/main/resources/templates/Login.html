@@ -1,22 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html xmlms:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+
+        function sendForm() {
+
+            var user = $('#user').val();
+            var pass = $('#pass').val();
+
+            $.ajax({
+                contentType : 'application/json; charset=utf-8',
+                type: 'post',
+                url: '/verificar',
+                dataType: 'json',
+                data: JSON.stringify({
+                    'user': user,
+                    'pass': pass
+                }),
+                success: function (res) {
+                    alert(res);
+                },
+                error: function (e) {
+                    alert(e);
+                }
+
+            });
+
+
+        }
+
+    </script>
 </head>
 <body>
 
-<form th:action="@{/verificar}"  method="post">
-
-<h1> Login </h1>
-
-<label for ="user">Usser:</label> <input type="text" name="user">
-
-<label for ="clave">pass:</label> <input type="text" name="clave">
-
-<input type="submit" value="Iniciar"> <br> <br>
-
-</form>
+    <div>
+        <h1> Login </h1>
+        <label>Usuario: <input type="text" name="user" id="user"></label> <br>
+        <label>Contraseña:<input type="password" name="clave" id="pass"></label><br>
+        <input type="button" value="Iniciar" onclick="sendForm()">
+    </div>
 
 
 </body>
