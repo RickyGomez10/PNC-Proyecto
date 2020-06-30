@@ -1,27 +1,78 @@
 package com.uca.capas.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(schema="public",name="centro_ed")
+@Table(schema = "public", name = "centro_ed")
 public class CentroEd {
-	@Id
-	@Column(name="id_centro_ed")
-	private Integer idCentroEd;
-	
-	@Column(name="nombre")
-	private String nombre;
-	
-	@Column(name="estado")
-	private Boolean estado;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_municipio")
-	private Municipio municipio;
+    @Id
+    @Column(name = "id_centro_ed")
+    private Integer idCentroEd;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "estado")
+    private Boolean estado;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_municipio")
+    private Municipio municipio;
+
+    @OneToMany(mappedBy = "centroEd", fetch = FetchType.LAZY)
+    private List<Estudiante> estudiantes;
+
+    public CentroEd() {
+
+    }
+
+    public CentroEd(Integer idCentroEd, String nombre, Boolean estado, Municipio municipio, List<Estudiante> estudiantes) {
+        this.idCentroEd = idCentroEd;
+        this.nombre = nombre;
+        this.estado = estado;
+        this.municipio = municipio;
+        this.estudiantes = estudiantes;
+    }
+
+    public Integer getIdCentroEd() {
+        return idCentroEd;
+    }
+
+    public void setIdCentroEd(Integer idCentroEd) {
+        this.idCentroEd = idCentroEd;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
+
+    public List<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public void setEstudiantes(List<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
+    }
 }

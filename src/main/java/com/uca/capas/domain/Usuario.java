@@ -11,129 +11,128 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema="public",name="usuario")
+@Table(schema = "public", name = "usuario")
 public class Usuario {
-	
-	@Id
-	@Column(name="usuario")
-	private String usuario;
-	
-	@Column(name="nombre")
-	private String nombre;
-	
-	@Column(name="apellido")
-	private String apellido;
-	
-	@Column(name="fecha_nac")
-	private Date fechaNacimiento;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_municipio")
-	private Municipio municipio;
-	
-	@Column(name="direccion")
-	private String direccion;
-	
-	@Column(name="estado")
-	private Boolean estado;
-	
-	@Column(name="clave")
-	private String clave;
-	
-	@Column(name="rol")
-	private Integer rol;
 
-	
-	public Usuario(String usuario, String nombre, String apellido, Date fechaNacimiento, Municipio municipio,
-			String direccion, Boolean estado, String clave, Integer rol) {
-		super();
-		this.usuario = usuario;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.fechaNacimiento = fechaNacimiento;
-		this.municipio = municipio;
-		this.direccion = direccion;
-		this.estado = estado;
-		this.clave = clave;
-		this.rol = rol;
-	}
-	
-	public Usuario() {
-	
-	}
+    @Id
+    @Column(name = "usuario")
+    private String usuario;
 
-	public String getUsuario() {
-		return usuario;
-	}
+    @Column(name = "nombre")
+    private String nombre;
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
+    @Column(name = "apellido")
+    private String apellido;
 
-	public String getNombre() {
-		return nombre;
-	}
+    @Column(name = "fecha_nac")
+    private Date fechaNacimiento;
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_municipio")
+    private Municipio municipio;
 
-	public String getApellido() {
-		return apellido;
-	}
+    @Column(name = "direccion")
+    private String direccion;
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+    @Column(name = "estado")
+    private Boolean estado;
 
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
-	}
+    @Column(name = "clave")
+    private String clave;
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
+    @Column(name = "rol")
+    private Integer rol;
 
-	public Municipio getMunicipio() {
-		return municipio;
-	}
 
-	public void setMunicipio(Municipio municipio) {
-		this.municipio = municipio;
-	}
+    public Usuario(String usuario, String nombre, String apellido, Date fechaNacimiento, Municipio municipio,
+                   String direccion, Boolean estado, String clave, Integer rol) {
+        super();
+        this.usuario = usuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.municipio = municipio;
+        this.direccion = direccion;
+        this.estado = estado;
+        this.clave = clave;
+        this.rol = rol;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public Usuario() {
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    }
 
-	public Boolean getEstado() {
-		return estado;
-	}
+    public String getUsuario() {
+        return usuario;
+    }
 
-	public void setEstado(Boolean estado) {
-		this.estado = estado;
-	}
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
 
-	public String getClave() {
-		return clave;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setClave(String clave) {
-		this.clave = clave;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public Integer getRol() {
-		return rol;
-	}
+    public String getApellido() {
+        return apellido;
+    }
 
-	public void setRol(Integer rol) {
-		this.rol = rol;
-	}
-	
-	
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public Integer getRol() {
+        return rol;
+    }
+
+    public void setRol(Integer rol) {
+        this.rol = rol;
+    }
+
 
 }
