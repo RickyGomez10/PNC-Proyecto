@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlms:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+
+        function sendForm() {
+            //Referencias al ID de los input
+            var nombre= $('#nombre').val();
+            var estado = $('#estado').val();
+            var municipio = $('#municipio').val();
+
+            if (document.getElementById('estado').checked) {
+                estado = true;
+            } else {
+                estado = false;
+            }
+
+            $.ajax({
+                contentType : 'application/json; charset=utf-8',
+                type: 'post',
+                url: '/ingresarCentroEd',
+                dataType: 'json',
+                data: JSON.stringify({
+                    'nombre': nombre,
+                    'estado': estado,
+                    'cMunicipio': parseInt(municipio)
+                }),
+                success: function (res) {
+                    alert(res);
+                },
+                error: function (e) {
+                    alert(e);
+                }
+
+            });
+
+
+        }
+
+    </script>
+</head>
+<body>
+
+<div>
+    <h1> Ingresar Centro Educativo </h1>
+    <label>Nombre: <input type="text" name="nombre" id="nombre"></label> <br>
+    <label>Activo: <input type="checkbox" name="estado" id="estado"> </label> <br>
+    <select id="municipio"> <option th:each ="municipio: ${municipios}" th:text="${municipio.nombre}" th:value="${municipio.idMunicipio}"></select> <br> <br>
+    <input type="button" value="Ingresar" onclick="sendForm()">
+</div>
+
+
+</body>
+</html>

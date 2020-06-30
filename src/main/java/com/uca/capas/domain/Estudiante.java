@@ -9,6 +9,7 @@ import java.util.Set;
 public class Estudiante {
     @Id
     @Column(name = "carne")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String carne;
 
     @Column(name = "nombre")

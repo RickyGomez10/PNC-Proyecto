@@ -9,6 +9,7 @@ public class CentroEd {
 
     @Id
     @Column(name = "id_centro_ed")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer idCentroEd;
 
     @Column(name = "nombre")
@@ -24,17 +25,26 @@ public class CentroEd {
     @OneToMany(mappedBy = "centroEd", fetch = FetchType.LAZY)
     private List<Estudiante> estudiantes;
 
+    @Transient
+    private Integer cMunicipio;
+
+
     public CentroEd() {
 
     }
 
-    public CentroEd(Integer idCentroEd, String nombre, Boolean estado, Municipio municipio, List<Estudiante> estudiantes) {
+    public CentroEd(Integer idCentroEd, String nombre, Boolean estado, Municipio municipio, List<Estudiante> estudiantes, Integer cMunicipio) {
         this.idCentroEd = idCentroEd;
         this.nombre = nombre;
         this.estado = estado;
         this.municipio = municipio;
         this.estudiantes = estudiantes;
+        this.cMunicipio = cMunicipio;
     }
+
+    public Integer getcMunicipio() { return cMunicipio; }
+
+    public void setcMunicipio(Integer cMunicipio) { this.cMunicipio = cMunicipio; }
 
     public Integer getIdCentroEd() {
         return idCentroEd;

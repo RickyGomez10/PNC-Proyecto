@@ -8,6 +8,7 @@ import java.util.Set;
 public class Materia {
     @Id
     @Column(name = "id_materia")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer idMateria;
 
     @Column(name = "nombre")
