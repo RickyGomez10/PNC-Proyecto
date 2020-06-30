@@ -1,5 +1,9 @@
 package com.uca.capas.controller;
 
+import com.uca.capas.domain.CentroEd;
+import com.uca.capas.domain.Municipio;
+import com.uca.capas.service.CentroEdService;
+import com.uca.capas.service.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +13,21 @@ import org.springframework.web.servlet.ModelAndView;
 import com.uca.capas.domain.Usuario;
 import com.uca.capas.service.UsuarioService;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
 	@Autowired
 	private UsuarioService usuarioService;
-	
 
+	@Autowired
+	private MunicipioService municipioService;
+
+	@Autowired
+	private CentroEdService centroEdService;
+	
+	//CARGAR HTMLS
 	@RequestMapping("/login")
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
@@ -27,8 +39,42 @@ public class MainController {
 		
 		return mav;
 	}
+
+	@RequestMapping("/centroEd")
+	public ModelAndView pantallaIngresarCentroEd() {
+		ModelAndView mav = new ModelAndView();
+		List<Municipio> municipios = null;
+		try{
+			municipios = municipioService.findAll();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		mav.addObject("error", "");
+		mav.addObject("municipios", municipios);
+		mav.setViewName("IngresarCentro");
+
+		return mav;
+	}
+
+
 	
-	
+	//FUNCIONALIDAD
+
+	@RequestMapping(value="/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void IngresarCentroEd(@RequestBody CentroEd centro) {
+
+		try {
+			centroEdService.save(centro);
+			System.out.println("Insertado");
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error");
+		}
+
+	}
+
+
 	@RequestMapping(value="/verificar", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody boolean verificar(@RequestBody Usuario login) {
 
