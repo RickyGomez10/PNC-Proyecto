@@ -1,6 +1,5 @@
 package com.uca.capas.controller;
 
-import com.uca.capas.domain.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +30,13 @@ public class MainController {
 	
 	
 	@RequestMapping(value="/verificar", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody boolean verificar(@RequestBody Login login) {
+	public @ResponseBody boolean verificar(@RequestBody Usuario login) {
 
 		try {
-			String pass = usuarioService.findPasswordById(login.getUser());
+			String pass = usuarioService.findPasswordById(login.getUsuario());
 
 			if(pass != null){
-				if(pass.equals(login.getPass())){
+				if(pass.equals(login.getClave())){
 					return true;
 				}
 

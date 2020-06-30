@@ -21,8 +21,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private UsuarioRepo usuarioRepo;
 
 	//Encontrar usuario por ID
-	public String findUsernameById(String user) throws DataAccessException {
-		return usuarioRepo.findUsernameById(user);
+	public String findPasswordById(String user) throws DataAccessException {
+		return usuarioRepo.findPasswordById(user);
 	}
 
 }
