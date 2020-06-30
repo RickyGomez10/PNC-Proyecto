@@ -10,7 +10,9 @@ import org.springframework.dao.DataAccessException;
 
 
 import com.uca.capas.domain.Usuario;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UsuarioDAOImpl implements UsuarioDAO {
 	
 	@PersistenceContext(unitName="capas")
@@ -24,15 +26,5 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		List<Usuario> resultset = query.getResultList();
 		return resultset;
 	}
-
-
-
-	@Override
-	public void insertar(Usuario usuario) throws DataAccessException {
-		// TODO Auto-generated method stub
-		entityManager.persist(usuario);
-		
-	}
-	
 
 }

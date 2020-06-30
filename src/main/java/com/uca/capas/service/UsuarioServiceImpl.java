@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.uca.capas.dao.UsuarioDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,18 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Autowired
 	private UsuarioRepo usuarioRepo;
 
+	@Autowired
+	UsuarioDAO usuarioDAO;
+
 	//Encontrar usuario por ID
-	public String findPasswordById(String user) throws DataAccessException {
-		return usuarioRepo.findPasswordById(user);
+	public Usuario findUsuarioById(String user) throws DataAccessException {
+		return usuarioRepo.findUsuarioById(user);
 	}
+
+	@Transactional
+	public void save(Usuario usuario) throws DataAccessException {
+		usuarioRepo.save(usuario);
+	}
+
 
 }

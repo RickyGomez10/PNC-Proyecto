@@ -10,5 +10,4 @@ public interface UsuarioDAO {
 
 	public List<Usuario> findAll() throws DataAccessException;
 
-	public void insertar(Usuario usuario) throws DataAccessException;
 }

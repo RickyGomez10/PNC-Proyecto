@@ -33,10 +33,20 @@ public class MainController {
 	public @ResponseBody boolean verificar(@RequestBody Usuario login) {
 
 		try {
-			String pass = usuarioService.findPasswordById(login.getUsuario());
+			Usuario user = usuarioService.findUsuarioById(login.getUsuario());
 
-			if(pass != null){
+
+			if(user != null){
+				String pass = user.getClave();
 				if(pass.equals(login.getClave())){
+					user.setSesion(true);
+
+					try {
+						usuarioService.save(user);
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+
 					return true;
 				}
 

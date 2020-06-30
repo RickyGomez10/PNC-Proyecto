@@ -43,9 +43,12 @@ public class Usuario {
     @Column(name = "rol")
     private Integer rol;
 
+    @Column(name = "sesion")
+    private Boolean sesion;
+
 
     public Usuario(String usuario, String nombre, String apellido, Date fechaNacimiento, Municipio municipio,
-                   String direccion, Boolean estado, String clave, Integer rol) {
+                   String direccion, Boolean estado, String clave, Integer rol, Boolean sesion) {
         super();
         this.usuario = usuario;
         this.nombre = nombre;
@@ -56,6 +59,7 @@ public class Usuario {
         this.estado = estado;
         this.clave = clave;
         this.rol = rol;
+        this.sesion = sesion;
     }
 
     public Usuario() {
@@ -134,5 +138,11 @@ public class Usuario {
         this.rol = rol;
     }
 
+    public Boolean getSesion() {
+        return sesion;
+    }
 
+    public void setSesion(Boolean sesion) {
+        this.sesion = sesion;
+    }
 }
