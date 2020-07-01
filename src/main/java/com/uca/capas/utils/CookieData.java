@@ -11,7 +11,7 @@ public class CookieData {
     }
 
     public CookieData(String data){
-        String[] datos = data.split(",");
+        String[] datos = data.split("-");
         username = datos[0];
         rol = Integer.parseInt(datos[1]);
     }
@@ -34,6 +34,6 @@ public class CookieData {
 
     @Override
     public String toString() {
-        return username+","+rol;
+        return username+"-"+rol;
     }
 }
