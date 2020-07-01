@@ -32,10 +32,21 @@ public class MainController {
 
 	@Autowired
 	private CentroEdService centroEdService;
+
+	@RequestMapping("/index")
+	public ModelAndView index(@CookieValue(value = "data", defaultValue = "-") String data) {
+
+		System.out.println(data);
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("index");
+
+		return mav;
+	}
 	
 	//CARGAR HTMLS
 	@RequestMapping("/login")
-	public ModelAndView index(@CookieValue(value = "data", defaultValue = "-") String data) {
+	public ModelAndView login(@CookieValue(value = "data", defaultValue = "-") String data) {
 
 		System.out.println(data);
 		ModelAndView mav = new ModelAndView();
