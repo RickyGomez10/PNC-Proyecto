@@ -6,10 +6,7 @@ import com.uca.capas.service.CentroEdService;
 import com.uca.capas.service.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -44,11 +41,18 @@ public class CentroEdController {
 
         return mav;
     }
+    @RequestMapping(value="/editarCentroEd", method = RequestMethod.POST, produces = "application/json")
+    public String PantallaEditarCentroEd(@ModelAttribute("centroEd") CentroEd centro) {
+
+        return "EditarCentro";
+
+    }
+
+
 
     //Controladores
     @RequestMapping(value="/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody
-    void IngresarCentroEd(@RequestBody CentroEd centro) {
+    public @ResponseBody void IngresarCentroEd(@RequestBody CentroEd centro) {
 
         try {
             centroEdService.save(centro);

@@ -48,61 +48,11 @@ public class MainController {
 		return mav;
 	}
 
-	@RequestMapping("/centroEd")
-	public ModelAndView pantallaIngresarCentroEd() {
-		ModelAndView mav = new ModelAndView();
-		List<Municipio> municipios = null;
-		List<CentroEd> centros = null;
-		try{
-			municipios = municipioService.findAll();
-			centros = centroEdService.findAll();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		mav.addObject("error", "");
-		mav.addObject("municipios", municipios);
-		mav.addObject("centros", centros);
-
-		mav.setViewName("IngresarCentro");
-
-		return mav;
-	}
 
 
 	
 	//FUNCIONALIDAD
 
-	@RequestMapping(value="/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void IngresarCentroEd(@RequestBody CentroEd centro) {
-
-		try {
-			centroEdService.save(centro);
-			System.out.println("Insertado");
-		}catch(Exception e) {
-			e.printStackTrace();
-			System.out.println("Error");
-		}
-
-	}
-
-	@RequestMapping(value="/cambiarEstadoCentroEd", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void CambiarCentroEd(@RequestBody CentroEd centro) {
-
-		try {
-
-			CentroEd centro1 = centroEdService.findOne(centro.getIdCentroEd());
-			System.out.println(centro1.toString());
-
-			centro1.setEstado(!centro1.getEstado());
-			centroEdService.update(centro1);
-			System.out.println("Estado cambiado");
-		}catch(Exception e) {
-			e.printStackTrace();
-			System.out.println("Error");
-		}
-
-	}
 
 
 	@RequestMapping(value="/verificar", method = RequestMethod.POST, produces = "application/json")
