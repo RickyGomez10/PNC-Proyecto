@@ -24,6 +24,7 @@
                 }),
                 success: function (res) {
                     if(res == true){
+                        window.location.href="/Error.html"
                         swal("¡Bienvenido/a!", "Se ha iniciado sesión correctamente", "success");
                     }else{
                         swal("Error", "No se ha podido iniciar sesión", "error");
