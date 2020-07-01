@@ -3,8 +3,9 @@
 <head>
 
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>Iniciar Sesión</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
 
         function sendForm() {
@@ -22,7 +23,11 @@
                     'clave': pass
                 }),
                 success: function (res) {
-                    alert(res);
+                    if(res == true){
+                        swal("¡Bienvenido/a!", "Se ha iniciado sesión correctamente", "success");
+                    }else{
+                        swal("Error", "No se ha podido iniciar sesión", "error");
+                    }
                 },
                 error: function (e) {
                     alert(e);
