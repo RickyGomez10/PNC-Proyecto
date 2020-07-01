@@ -28,6 +28,17 @@ public class CentroEd {
     @Transient
     private Integer cMunicipio;
 
+    @Override
+    public String toString() {
+        return "CentroEd{" +
+                "idCentroEd=" + idCentroEd +
+                ", nombre='" + nombre + '\'' +
+                ", estado=" + estado +
+                ", municipio=" + municipio +
+                ", estudiantes=" + estudiantes +
+                ", cMunicipio=" + cMunicipio +
+                '}';
+    }
 
     public CentroEd() {
 
@@ -40,6 +51,7 @@ public class CentroEd {
         this.municipio = municipio;
         this.estudiantes = estudiantes;
         this.cMunicipio = cMunicipio;
+
     }
 
     public Integer getcMunicipio() { return cMunicipio; }

@@ -21,6 +21,8 @@ public class CentroEdServiceImpl implements CentroEdService {
     @Autowired
     MunicipioService municipioService;
 
+    @Autowired
+    CentroEdService centroEdService;
 
     @Override
     public List<CentroEd> findAll() throws DataAccessException {
@@ -37,6 +39,20 @@ public class CentroEdServiceImpl implements CentroEdService {
     public void save(CentroEd centroEd) throws DataAccessException {
         centroEd.setMunicipio(municipioService.findOne(centroEd.getcMunicipio()));
         centroRepo.save(centroEd);
-
     }
+
+    @Override
+    @Transactional
+    public void update(CentroEd centroEd) throws DataAccessException {
+
+        centroRepo.save(centroEd);
+    }
+
+    @Override
+    public CentroEd updateEstado(Boolean estado,Integer centroEd) throws DataAccessException {
+
+        return centroRepo.updateEstado(estado, centroEd);
+    }
+
+
 }
