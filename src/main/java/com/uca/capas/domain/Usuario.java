@@ -1,8 +1,14 @@
 package com.uca.capas.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(schema = "public", name = "usuario")
@@ -10,29 +16,45 @@ public class Usuario {
 
     @Id
     @Column(name = "usuario")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Size(min=1, max=15, message = "El usuario debe tener entre 1 y 15 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String usuario;
 
     @Column(name = "nombre")
+    @Size(min=1, max=15, message = "El nombre debe tener entre 1 y 50 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String nombre;
 
     @Column(name = "apellido")
+    @Size(min=1, max=15, message = "El apellido debe tener entre 1 y 50 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String apellido;
 
     @Column(name = "fecha_nac")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past(message = "La fecha de nacimiento debe ser anterior a la fecha de ahora.")
+    @NotNull(message = "Este campo no puede estar vacío.")
     private Date fechaNacimiento;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_municipio")
     private Municipio municipio;
 
+    @Transient
+    private Integer cMunicipio;
+
     @Column(name = "direccion")
+    @Size(min=1, max=15, message = "La dirección debe tener entre 1 y 200 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String direccion;
 
     @Column(name = "estado")
     private Boolean estado;
 
     @Column(name = "clave")
+    @Size(max=50, message = "La clave no debe tener más de 50 caracteres.")
+    @Size(min=8, message = "La clave debe tener como mínimo 8 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String clave;
 
     @Column(name = "rol")
@@ -101,9 +123,11 @@ public class Usuario {
         this.municipio = municipio;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
+    public Integer getcMunicipio() { return cMunicipio; }
+
+    public void setcMunicipio(Integer cMunicipio) { this.cMunicipio = cMunicipio; }
+
+    public String getDireccion() { return direccion; }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
@@ -139,5 +163,21 @@ public class Usuario {
 
     public void setSesion(Boolean sesion) {
         this.sesion = sesion;
+    }
+
+    public Integer getEdad(){
+
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(getFechaNacimiento().getTime());
+
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH) + 1;
+        int date = c.get(Calendar.DATE);
+        LocalDate bd = LocalDate.of(year, month, date);
+
+        LocalDate now = LocalDate.now();
+
+        return Period.between(bd, now).getYears();
+
     }
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlms:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+
+        function sendForm() {
+
+            var user = $('#user').val();
+            var pass = $('#pass').val();
+
+            $.ajax({
+                contentType : 'application/json; charset=utf-8',
+                type: 'post',
+                url: '/regUser',
+                dataType: 'json',
+                data: JSON.stringify({
+                    'usuario': user,
+                    'clave': pass
+                }),
+                success: function (res) {
+                    if(res == true){
+                        swal("¡Bienvenido/a!", "Se ha iniciado sesión correctamente", "success");
+                    }else{
+                        swal("Error", "No se ha podido iniciar sesión", "error");
+                    }
+                },
+                error: function (e) {
+                    alert(e);
+                }
+
+            });
+
+
+        }
+
+    </script>
+</head>
+<body>
+
+    <div>
+        <h1> Resgistrar Usuario </h1>
+        <form th:action="@{/regUser}" th:object="${usuario}" method="post">
+            <table>
+                <tr>
+                    <td><label for="usuario">Usuario: </label></td>
+                    <td><input type="text" id="usuario" th:field="*{usuario}" ><br><span th:errors="*{usuario}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="nombre">Nombre: </label></td>
+                    <td><input type="text" id="nombre" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="apellido">Apellido: </label></td>
+                    <td><input type="text" id="apellido" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="fnac">Fecha de nacimiento: </label></td>
+                    <td><input type="date" id="fnac" th:field="*{fechaNacimiento}" ><br><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="munic">Municipio: </label></td>
+                    <td>
+                        <select id="munic">
+                            <option th:each="m : ${municipios}" th:value="${m.idMunicipio}" th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="dir">Dirección: </label></td>
+                    <td><textarea id="dir" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="clave">Contraseña: </label></td>
+                    <td><input type="password" id="clave" th:field="*{clave}" ><br><span th:errors="*{clave}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Registrar"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+</body>
+</html>
