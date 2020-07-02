@@ -5,6 +5,7 @@ import com.uca.capas.domain.Municipio;
 import com.uca.capas.service.CentroEdService;
 import com.uca.capas.service.MunicipioService;
 import com.uca.capas.utils.CookieData;
+import com.uca.capas.utils.Encriptador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +39,9 @@ public class MainController {
 
 		System.out.println(data);
 		ModelAndView mav = new ModelAndView();
-
+		Usuario usuario = new Usuario();
 		mav.setViewName("index");
-
+		mav.addObject("usuario", usuario);
 		return mav;
 	}
 	
@@ -67,16 +68,17 @@ public class MainController {
 
 
 	@RequestMapping(value="/verificar", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody boolean verificar(@RequestBody Usuario login, HttpServletResponse response) {
+	public ModelAndView verificar(@ModelAttribute Usuario userInfo, HttpServletResponse response) {
 
-		System.out.println(response.toString());
+		System.out.println(userInfo.getnUsuario());
+		ModelAndView mav = new ModelAndView();
 
 		try {
-			Usuario user = usuarioService.findUsuarioById(login.getnUsuario());
-
+			Usuario user = usuarioService.findUsuarioById(userInfo.getnUsuario());
+			System.out.println(user.getApellido());
 			if(user != null){
 				String pass = user.getClave();
-				if(pass.equals(login.getClave())){
+				if(pass.equals(Encriptador.encriptar(userInfo.getClave()))){
 					user.setSesion(true);
 
 					try {
@@ -90,19 +92,21 @@ public class MainController {
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
-
-					return true;
+					mav.setViewName("IngresarCentro");
+					return mav;
 				}
-
-				return false;
+				mav.setViewName("index");
+				return mav;
 
 			}else{
-				return false;
+				mav.setViewName("index");
+				return mav;
 			}
 
 		}catch(Exception e) {
 			e.printStackTrace();
-			return false;
+			mav.setViewName("index");
+			return mav;
 		}
 
 	}

@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	//Encontrar usuario por ID
 	public Usuario findUsuarioById(String user) throws DataAccessException {
-		return new Usuario();//usuarioRepo.findUsuarioById(user);
+		return usuarioRepo.findUsuarioById(user);
 	}
 
 	@Transactional
