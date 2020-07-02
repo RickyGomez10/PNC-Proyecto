@@ -88,7 +88,7 @@ public class MainController {
 						cookie.setMaxAge(3600);
 						response.addCookie(cookie);
 						cookie.setHttpOnly(true);
-						usuarioService.save(user);
+						usuarioService.sesionUpdate(user);
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
