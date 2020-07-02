@@ -3,13 +3,11 @@ package com.uca.capas.controller;
 import com.uca.capas.dao.MateriaDAO;
 import com.uca.capas.domain.CentroEd;
 import com.uca.capas.domain.Materia;
+import com.uca.capas.domain.Municipio;
 import com.uca.capas.service.MateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -43,6 +41,24 @@ public class MateriaController {
         return mav;
     }
 
+    @RequestMapping("/EditarMateria")
+    public ModelAndView PantallaEditarCentroEd(@ModelAttribute Materia materia) {
+        ModelAndView mav = new ModelAndView();
+
+        System.out.println(materia.getcMateria());
+        try {
+            materia = materiaService.findOne(materia.getcMateria());
+            mav.addObject("materia", materia);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mav.setViewName("EditarMateria");
+        return mav;
+
+
+    }
+
     //Controladores
 
     @RequestMapping(value = "/ingresarMateria", method = RequestMethod.POST, produces = "application/json")
@@ -61,7 +77,7 @@ public class MateriaController {
     }
 
     @RequestMapping(value = "/cambiarEstadoMateria", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody boolean CambiarCentroEd(@RequestBody Materia materia) {
+    public @ResponseBody boolean CambiarEstadoMateria(@RequestBody Materia materia) {
 
         try {
 
@@ -78,5 +94,29 @@ public class MateriaController {
             return false;
         }
 
+    }
+
+    @RequestMapping(value = "/ModificarMateria", method = RequestMethod.POST)
+    public ModelAndView modificar(@ModelAttribute Materia materia) {
+        ModelAndView mav = new ModelAndView();
+        Materia updatear = materiaService.findOne(materia.getIdMateria());
+        updatear.setNombre(materia.getNombre());
+        Materia materia1 = new Materia();
+        List<Materia> materias = null;
+
+        try {
+            materiaService.insertar(updatear);
+
+            materias = materiaService.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mav.addObject("error", "");
+
+        mav.addObject("materia", materia1);
+        mav.addObject("materias", materias);
+        mav.setViewName("IngresarMateria");
+        return mav;
     }
 }

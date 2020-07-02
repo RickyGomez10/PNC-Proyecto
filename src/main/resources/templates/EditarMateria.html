@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <h1> Editar Centro Educativo </h1>
+    <form th:action="@{/ModificarMateria}" th:object="${materia}" method="post">
+        <input type="text" th:field="*{idMateria}" hidden="hidden">
+        <input type="text" th:field="*{nombre}"> <br> <br>
+        <input type="submit" value="Modificar">
+
+    </form>
+</div>
+
+</body>
+</html>

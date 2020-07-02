@@ -79,10 +79,10 @@
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 type: 'post',
-                url: '/editarCentroEd',
+                url: '/EditarMateria',
                 dataType: 'json',
                 data: JSON.stringify({
-                    'idCentroEd': parseInt(idCentro)
+                    'idMateria': parseInt(idCentro)
                 }),
                 success: function (res) {
 
