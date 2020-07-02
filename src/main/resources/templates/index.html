@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-<body class="index">
+<body>
     <div class="container mt-3">
         <div class="row">
             <div class="col">
@@ -34,7 +34,8 @@
                         <input id="inputUser" type="text" class="form-control" th:field="*{nUsuario}" placeholder="Usuario" required autofocus>
                         <label for="inputPass" class="sr-only">Contraseña</label>
                         <input id="inputPass" type="password" class="form-control mb-3" th:field="*{clave}" placeholder="Contraseña" required>
-                        <button type="submit" class=" btn btn-lg btn-primary btn-block">Ingresar</button>
+                        <button type="submit" class=" btn btn-lg btn-primary btn-block  mb-3">Ingresar</button>
+                        <label class="text-danger" th:text="${error}"></label>
                     </form>
                 </div>
                 <div class="col-12 col-md-6 order-md-1 align-self-center">

@@ -75,7 +75,6 @@ public class MainController {
 
 		try {
 			Usuario user = usuarioService.findUsuarioById(userInfo.getnUsuario());
-			System.out.println(user.getApellido());
 			if(user != null){
 				String pass = user.getClave();
 				if(pass.equals(Encriptador.encriptar(userInfo.getClave()))){
@@ -92,23 +91,36 @@ public class MainController {
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
-					mav.setViewName("IngresarCentro");
+					mav.setViewName("redirect:/mainMenu");
 					return mav;
 				}
+				mav.addObject("error", "Usuario y/o contraseña incorrectos");
 				mav.setViewName("index");
 				return mav;
 
 			}else{
+				mav.addObject("error", "Usuario y/o contraseña incorrectos");
 				mav.setViewName("index");
 				return mav;
 			}
 
 		}catch(Exception e) {
 			e.printStackTrace();
+			mav.addObject("error", e.toString());
 			mav.setViewName("index");
 			return mav;
 		}
 
+	}
+
+	@RequestMapping("/mainMenu")
+	public ModelAndView menu(@CookieValue(value = "data", defaultValue = "-") String data) {
+
+		ModelAndView mav = new ModelAndView();
+		CookieData cookie  = new CookieData(data);
+		mav.addObject("nombre", cookie.getUsername());
+		mav.setViewName("mainmenu");
+		return mav;
 	}
 
 	@GetMapping("/Error.html")
