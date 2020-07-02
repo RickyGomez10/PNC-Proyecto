@@ -10,6 +10,8 @@ public interface CentroEdService {
 
     public List<CentroEd> findAll() throws DataAccessException;
 
+    public List<CentroEd> findAllActive() throws DataAccessException;
+
     public CentroEd findOne(Integer code) throws DataAccessException;
 
     public void save(CentroEd centroEd) throws DataAccessException;

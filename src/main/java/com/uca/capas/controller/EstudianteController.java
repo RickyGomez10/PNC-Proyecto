@@ -34,7 +34,7 @@ public class EstudianteController {
 
         ModelAndView mav = new ModelAndView();
         Estudiante estudiante = new Estudiante();
-        List<CentroEd> centros = centroService.findAll();
+        List<CentroEd> centros = centroService.findAllActive();
 
         mav.addObject("centros", centros);
         mav.addObject("estudiante", estudiante);
@@ -49,7 +49,7 @@ public class EstudianteController {
     ModelAndView verificar(@ModelAttribute @Valid Estudiante estudiante, BindingResult result) {
 
         ModelAndView mav = new ModelAndView();
-        List<CentroEd> centros = centroService.findAll();
+        List<CentroEd> centros = centroService.findAllActive();
 
         if(!result.hasErrors()) {
 

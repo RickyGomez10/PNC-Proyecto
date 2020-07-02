@@ -30,6 +30,11 @@ public class CentroEdServiceImpl implements CentroEdService {
     }
 
     @Override
+    public List<CentroEd> findAllActive() throws DataAccessException {
+        return centroRepo.findAllActive();
+    }
+
+    @Override
     public CentroEd findOne(Integer code) throws DataAccessException {
         return centroRepo.getOne(code);
     }
