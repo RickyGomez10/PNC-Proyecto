@@ -11,16 +11,16 @@ public class MateriaXEstudianteKey implements Serializable {
     @Column(name = "id_materia")
     private Integer idMateria;
 
-    @Column(name = "carne")
-    private String carne;
+    @Column(name = "id_estudiante")
+    private Integer idEstudiante;
 
     public MateriaXEstudianteKey() {
 
     }
 
-    public MateriaXEstudianteKey(Integer idMateria, String carne) {
+    public MateriaXEstudianteKey(Integer idMateria, Integer idEstudiante) {
         this.idMateria = idMateria;
-        this.carne = carne;
+        this.idEstudiante = idEstudiante;
     }
 
     public Integer getIdMateria() {
@@ -31,11 +31,12 @@ public class MateriaXEstudianteKey implements Serializable {
         this.idMateria = idMateria;
     }
 
-    public String getCarne() {
-        return carne;
+    public Integer getIdEstudiante() {
+        return idEstudiante;
     }
 
-    public void setCarne(String carne) {
-        this.carne = carne;
+    public void setIdEstudiante(Integer idEstudiante) {
+        this.idEstudiante = idEstudiante;
     }
+
 }

@@ -145,7 +145,7 @@
     <label>Nombre: <input type="text" name="nombre" id="nombre"></label> <br>
     <label>Activo: <input type="checkbox" name="estado" id="estado"> </label> <br>
     <select id="municipio">
-        <option th:each="municipio: ${municipios}" th:text="${municipio.nombre}" th:value="${municipio.idMunicipio}">
+        <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:value="${municipio.idMunicipio}">
     </select> <br> <br>
     <input type="button" value="Ingresar" onclick="ingresarForm()">
 </div>

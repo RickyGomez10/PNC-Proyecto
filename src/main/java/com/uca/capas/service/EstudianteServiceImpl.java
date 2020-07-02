@@ -10,9 +10,12 @@ import java.util.List;
 
 @Service
 public class EstudianteServiceImpl implements EstudianteService{
+
     @Autowired
     EstudianteRepo estudianteRepo;
 
+    @Autowired
+    private CentroEdService centroService;
 
     @Override
     public List<Estudiante> findAll() throws DataAccessException {
@@ -26,6 +29,7 @@ public class EstudianteServiceImpl implements EstudianteService{
 
     @Override
     public void save(Estudiante estudiante) throws DataAccessException {
-            estudianteRepo.save(estudiante);
+        estudiante.setCentroEd(centroService.findOne(estudiante.getcCentroEd()));
+        estudianteRepo.save(estudiante);
     }
 }

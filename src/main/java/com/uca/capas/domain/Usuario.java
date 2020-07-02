@@ -20,12 +20,12 @@ public class Usuario {
     private String nUsuario;
 
     @Column(name = "nombre")
-    @Size(min=1, max=15, message = "El nombre debe tener entre 1 y 50 caracteres.")
+    @Size(min=1, max=50, message = "El nombre debe tener entre 1 y 50 caracteres.")
     @NotBlank(message = "Este campo no puede estar vacío.")
     private String nombre;
 
     @Column(name = "apellido")
-    @Size(min=1, max=15, message = "El apellido debe tener entre 1 y 50 caracteres.")
+    @Size(min=1, max=50, message = "El apellido debe tener entre 1 y 50 caracteres.")
     @NotBlank(message = "Este campo no puede estar vacío.")
     private String apellido;
 
@@ -43,7 +43,7 @@ public class Usuario {
     private Integer cMunicipio;
 
     @Column(name = "direccion")
-    @Size(min=1, max=15, message = "La dirección debe tener entre 1 y 200 caracteres.")
+    @Size(min=1, max=200, message = "La dirección debe tener entre 1 y 200 caracteres.")
     @NotBlank(message = "Este campo no puede estar vacío.")
     private String direccion;
 

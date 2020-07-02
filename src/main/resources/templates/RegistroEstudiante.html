@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+
+    <div>
+        <h1> Registrar Usuario </h1>
+        <form th:action="@{/regEst}" th:object="${estudiante}" method="post">
+            <table>
+                <tr>
+                    <td><label for="carne">Carné: </label></td>
+                    <td><input type="text" id="carne" th:field="*{carne}" ><br><span th:errors="*{carne}" style="color:  #e81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="nombre">Nombre: </label></td>
+                    <td><input type="text" id="nombre" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="apellido">Apellido: </label></td>
+                    <td><input type="text" id="apellido" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="carne">Carné de minoridad: </label></td>
+                    <td><input type="text" id="carne" th:field="*{carneMin}" ><br><span th:errors="*{carneMin}" style="color:  #e81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="fnac">Fecha de nacimiento: </label></td>
+                    <td><input type="date" id="fnac" th:field="*{fechaNac}" ><br><span th:errors="*{fechaNac}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="dir">Dirección: </label></td>
+                    <td><textarea id="dir" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="tm">Teléfono móvil: </label></td>
+                    <td><input type="text" id="tm" th:field="*{telefonoMovil}"><br><span th:errors="*{telefonoMovil}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="tf">Teléfono fijo: </label></td>
+                    <td><input type="text" id="tf" th:field="*{telefonoFijo}"><br><span th:errors="*{telefonoFijo}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="centro">Centro educativo: </label></td>
+                    <td>
+                        <select id="centro" th:field="*{cCentroEd}">
+                            <option th:each="c : ${centros}" th:value="${c.idCentroEd}" th:text="${c.nombre + ',' + ' ' + c.municipio.nombre + ',' + ' ' + c.municipio.departamento.nombre}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="nombreM">Nombre de mamá: </label></td>
+                    <td><input type="text" id="nombreM" th:field="*{nombreMama}" ><br><span th:errors="*{nombreMama}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="nombreP">Nombre de papá: </label></td>
+                    <td><input type="text" id="nombreP" th:field="*{nombrePapa}" ><br><span th:errors="*{nombrePapa}" style="color:  #E81505;"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Registrar"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <script th:if="${msg == '1'}">
+        swal("¡Éxito!", "Se ha registrado el estudiante.", "success");
+    </script>
+
+    <script th:if="${msg == '2'}">
+        swal("Algo ha salido mal...", "Parece ser que ese carné ya ha sido registrado.", "error");
+    </script>
+
+    <script th:if="${msg == '3'}">
+        swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+    </script>
+
+</body>
+</html>

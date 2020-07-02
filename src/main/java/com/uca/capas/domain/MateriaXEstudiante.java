@@ -14,8 +14,8 @@ public class MateriaXEstudiante {
     private Materia materia;
 
     @ManyToOne
-    @MapsId("carne")
-    @JoinColumn(name = "carne")
+    @MapsId("id_estudiante")
+    @JoinColumn(name = "id_estudiante")
     private Estudiante estudiante;
 
     @Column(name = "anio")

@@ -1,36 +1,64 @@
 package com.uca.capas.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(schema = "public", name = "estudiante")
 public class Estudiante {
+
     @Id
+    @GeneratedValue(generator="estudiante_id_estudiante_seq", strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "estudiante_id_estudiante_seq", sequenceName = "public.estudiante_id_estudiante_seq", allocationSize = 1)
+    @Column(name = "id_estudiante")
+    private Integer idEstudiante;
+
     @Column(name = "carne")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Size(min=8, max=8, message = "El carné debe tener exactamente 8 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String carne;
 
     @Column(name = "nombre")
+    @Size(min=1, max=50, message = "El nombre debe tener entre 1 y 50 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String nombre;
 
     @Column(name = "apellido")
+    @Size(min=1, max=50, message = "El apellido debe tener entre 1 y 50 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String apellido;
 
     @Column(name = "carne_min")
+    @Size(min=9, max=9, message = "El carné de minoridad debe tener 9 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String carneMin;
 
     @Column(name = "fecha_nac")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past(message = "La fecha de nacimiento debe ser anterior a la fecha de ahora.")
+    @NotNull(message = "Este campo no puede estar vacío.")
     private Date fechaNac;
 
     @Column(name = "direccion")
-    private String direccin;
+    @Size(min=1, max=200, message = "La dirección debe tener entre 1 y 200 caracteres.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
+    private String direccion;
 
     @Column(name = "tel_movil")
+    @Pattern(regexp = "^[0-9]{8}$", message = "El número de teléfono debe contener exactamente 8 dígitos.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String telefonoMovil;
 
     @Column(name = "tel_fijo")
+    @Pattern(regexp = "^[0-9]{8}$", message = "El número de teléfono debe contener exactamente 8 dígitos.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String telefonoFijo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,30 +66,43 @@ public class Estudiante {
     private CentroEd centroEd;
 
     @Column(name = "nombre_mama")
+    @Size(max=100, message = "El nombre no debe tener más de 100 caracteres.")
     private String nombreMama;
 
     @Column(name = "nombre_papa")
+    @Size(max=100, message = "El nombre no debe tener más de 100 caracteres.")
     private String nombrePapa;
 
     @OneToMany(mappedBy = "estudiante")
     Set<MateriaXEstudiante> cruz;
 
+    @Transient
+    private Integer cCentroEd;
+
     public Estudiante() {
     }
 
-    public Estudiante(String carne, String nombre, String apellido, String carneMin, Date fechaNac, String direccin, String telefonoMovil, String telefonoFijo, CentroEd centroEd, String nombreMama, String nombrePapa, Set<MateriaXEstudiante> cruz) {
+    public Estudiante(String carne, String nombre, String apellido, String carneMin, Date fechaNac, String direccion, String telefonoMovil, String telefonoFijo, CentroEd centroEd, String nombreMama, String nombrePapa, Set<MateriaXEstudiante> cruz) {
         this.carne = carne;
         this.nombre = nombre;
         this.apellido = apellido;
         this.carneMin = carneMin;
         this.fechaNac = fechaNac;
-        this.direccin = direccin;
+        this.direccion = direccion;
         this.telefonoMovil = telefonoMovil;
         this.telefonoFijo = telefonoFijo;
         this.centroEd = centroEd;
         this.nombreMama = nombreMama;
         this.nombrePapa = nombrePapa;
         this.cruz = cruz;
+    }
+
+    public Integer getIdEstudiante() {
+        return idEstudiante;
+    }
+
+    public void setIdEstudiante(Integer idEstudiante) {
+        this.idEstudiante = idEstudiante;
     }
 
     public String getCarne() {
@@ -104,12 +145,12 @@ public class Estudiante {
         this.fechaNac = fechaNac;
     }
 
-    public String getDireccin() {
-        return direccin;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDireccin(String direccin) {
-        this.direccin = direccin;
+    public void setDireccion(String direccin) {
+        this.direccion = direccin;
     }
 
     public String getTelefonoMovil() {
@@ -158,5 +199,48 @@ public class Estudiante {
 
     public void setCruz(Set<MateriaXEstudiante> cruz) {
         this.cruz = cruz;
+    }
+
+    public Integer getcCentroEd() {
+        return cCentroEd;
+    }
+
+    public void setcCentroEd(Integer cCentroEd) {
+        this.cCentroEd = cCentroEd;
+    }
+
+    public Integer getEdad(){
+
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(getFechaNac().getTime());
+
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH) + 1;
+        int date = c.get(Calendar.DATE);
+        LocalDate bd = LocalDate.of(year, month, date);
+
+        LocalDate now = LocalDate.now();
+
+        return Period.between(bd, now).getYears();
+
+    }
+
+    @Override
+    public String toString() {
+        return "Estudiante{" +
+                "idEstudiante=" + idEstudiante +
+                ", carne='" + carne + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", carneMin='" + carneMin + '\'' +
+                ", fechaNac=" + fechaNac +
+                ", direccion='" + direccion + '\'' +
+                ", telefonoMovil='" + telefonoMovil + '\'' +
+                ", telefonoFijo='" + telefonoFijo + '\'' +
+                ", centroEd=" + centroEd +
+                ", nombreMama='" + nombreMama + '\'' +
+                ", nombrePapa='" + nombrePapa + '\'' +
+                ", cruz=" + cruz +
+                '}';
     }
 }
