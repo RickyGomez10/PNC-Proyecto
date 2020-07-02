@@ -8,6 +8,7 @@ import com.uca.capas.service.MunicipioService;
 import com.uca.capas.service.UsuarioService;
 import com.uca.capas.utils.CookieData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,7 @@ public class UsuarioController {
 
         mav.addObject("municipios", municipios);
         mav.addObject("usuario", usuario);
+        mav.addObject("msg", "0");
         mav.setViewName("Registro");
 
         return mav;
@@ -72,11 +74,16 @@ public class UsuarioController {
 
             try{
                 usuarioService.save(usuario);
-            }catch (Exception e){
+                mav.addObject("msg", "1");
+                usuario = new Usuario();
+            }catch (DataIntegrityViolationException e){
                 e.printStackTrace();
+                mav.addObject("msg", "2");
+            } catch (Exception e){
+                e.printStackTrace();
+                mav.addObject("msg", "3");
             }
 
-            usuario = new Usuario();
             mav.addObject("usuario", usuario);
 
         }

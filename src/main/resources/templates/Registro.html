@@ -1,44 +1,10 @@
 <!DOCTYPE html>
-<html xmlms:th="http://www.thymeleaf.org">
+<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml">
 <head>
-
     <meta charset="UTF-8">
     <title>Registro</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-
-        function sendForm() {
-
-            var user = $('#user').val();
-            var pass = $('#pass').val();
-
-            $.ajax({
-                contentType : 'application/json; charset=utf-8',
-                type: 'post',
-                url: '/regUser',
-                dataType: 'json',
-                data: JSON.stringify({
-                    'usuario': user,
-                    'clave': pass
-                }),
-                success: function (res) {
-                    if(res == true){
-                        swal("¡Bienvenido/a!", "Se ha iniciado sesión correctamente", "success");
-                    }else{
-                        swal("Error", "No se ha podido iniciar sesión", "error");
-                    }
-                },
-                error: function (e) {
-                    alert(e);
-                }
-
-            });
-
-
-        }
-
-    </script>
 </head>
 <body>
 
@@ -48,7 +14,7 @@
             <table>
                 <tr>
                     <td><label for="usuario">Usuario: </label></td>
-                    <td><input type="text" id="usuario" th:field="*{usuario}" ><br><span th:errors="*{usuario}" style="color:  #e81505;"></span></td>
+                    <td><input type="text" id="usuario" th:field="*{nUsuario}" ><br><span th:errors="*{nUsuario}" style="color:  #e81505;"></span></td>
                 </tr>
                 <tr>
                     <td><label for="nombre">Nombre: </label></td>
@@ -85,6 +51,17 @@
         </form>
     </div>
 
+    <script th:if="${msg == '1'}">
+        swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
+    </script>
+
+    <script th:if="${msg == '2'}">
+        swal("Algo ha salido mal...", "Parece ser que ese usuario ya ha sido registrado, prueba con otro.", "error");
+    </script>
+
+    <script th:if="${msg == '3'}">
+        swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+    </script>
 
 </body>
 </html>
