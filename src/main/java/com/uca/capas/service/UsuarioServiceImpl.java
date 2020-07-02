@@ -5,6 +5,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.uca.capas.dao.UsuarioDAO;
+import com.uca.capas.repositories.MunicipioRepo;
+import com.uca.capas.utils.Encriptador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -22,16 +24,27 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private UsuarioRepo usuarioRepo;
 
 	@Autowired
+	private MunicipioRepo municipioRepo;
+
+	@Autowired
 	UsuarioDAO usuarioDAO;
 
 	//Encontrar usuario por ID
 	public Usuario findUsuarioById(String user) throws DataAccessException {
-		return usuarioRepo.findUsuarioById(user);
+		return new Usuario();//usuarioRepo.findUsuarioById(user);
 	}
 
 	@Transactional
 	public void save(Usuario usuario) throws DataAccessException {
-		usuarioRepo.save(usuario);
+
+		usuario.setMunicipio(municipioRepo.getOne(usuario.getcMunicipio()));
+		usuario.setRol(0); //0 = coordinador
+		usuario.setSesion(false);
+		usuario.setEstado(false);
+		usuario.setClave(Encriptador.encriptar(usuario.getClave()));
+
+		usuarioDAO.save(usuario);
+
 	}
 
 

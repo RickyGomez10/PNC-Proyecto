@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.dao.DataAccessException;
 
@@ -25,6 +26,12 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		Query query = entityManager.createNativeQuery(sb.toString(), Usuario.class);
 		List<Usuario> resultset = query.getResultList();
 		return resultset;
+	}
+
+	@Override
+	@Transactional
+	public void save(Usuario usuario) throws DataAccessException {
+		entityManager.persist(usuario);
 	}
 
 }

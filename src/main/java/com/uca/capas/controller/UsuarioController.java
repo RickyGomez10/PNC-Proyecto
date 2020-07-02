@@ -47,6 +47,12 @@ public class UsuarioController {
 
         if(!result.hasErrors()) {
 
+            try{
+                usuarioService.save(usuario);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             usuario = new Usuario();
             mav.addObject("usuario", usuario);
 

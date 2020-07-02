@@ -43,12 +43,12 @@
 <body>
 
     <div>
-        <h1> Resgistrar Usuario </h1>
+        <h1> Registrar Usuario </h1>
         <form th:action="@{/regUser}" th:object="${usuario}" method="post">
             <table>
                 <tr>
                     <td><label for="usuario">Usuario: </label></td>
-                    <td><input type="text" id="usuario" th:field="*{usuario}" ><br><span th:errors="*{usuario}" style="color:  #E81505;"></span></td>
+                    <td><input type="text" id="usuario" th:field="*{usuario}" ><br><span th:errors="*{usuario}" style="color:  #e81505;"></span></td>
                 </tr>
                 <tr>
                     <td><label for="nombre">Nombre: </label></td>
@@ -65,7 +65,7 @@
                 <tr>
                     <td><label for="munic">Municipio: </label></td>
                     <td>
-                        <select id="munic">
+                        <select id="munic" th:field="*{cMunicipio}">
                             <option th:each="m : ${municipios}" th:value="${m.idMunicipio}" th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}"></option>
                         </select>
                     </td>

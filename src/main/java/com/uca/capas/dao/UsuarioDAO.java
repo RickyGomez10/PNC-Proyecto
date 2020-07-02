@@ -10,4 +10,6 @@ public interface UsuarioDAO {
 
 	public List<Usuario> findAll() throws DataAccessException;
 
+	public void save(Usuario usuario)throws DataAccessException;
+
 }

@@ -15,6 +15,11 @@ import javax.validation.constraints.*;
 public class Usuario {
 
     @Id
+    @GeneratedValue(generator="usuario_id_usuario_seq", strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "usuario_id_usuario_seq", sequenceName = "public.usuario_id_usuario_seq", allocationSize = 1)
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
+
     @Column(name = "usuario")
     @Size(min=1, max=15, message = "El usuario debe tener entre 1 y 15 caracteres.")
     @NotBlank(message = "Este campo no puede estar vacío.")
@@ -62,6 +67,9 @@ public class Usuario {
 
     @Column(name = "sesion")
     private Boolean sesion;
+
+    @Column(name = "fecha_sesion")
+    private Date fechaSesion;
 
 
     public Usuario(String usuario, String nombre, String apellido, Date fechaNacimiento, Municipio municipio,
@@ -165,6 +173,14 @@ public class Usuario {
         this.sesion = sesion;
     }
 
+    public Date getFechaSesion() {
+        return fechaSesion;
+    }
+
+    public void setFechaSesion(Date fechaSesion) {
+        this.fechaSesion = fechaSesion;
+    }
+
     public Integer getEdad(){
 
         Calendar c = Calendar.getInstance();
@@ -179,5 +195,23 @@ public class Usuario {
 
         return Period.between(bd, now).getYears();
 
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "usuario='" + usuario + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", municipio=" + municipio +
+                ", cMunicipio=" + cMunicipio +
+                ", direccion='" + direccion + '\'' +
+                ", estado=" + estado +
+                ", clave='" + clave + '\'' +
+                ", rol=" + rol +
+                ", sesion=" + sesion +
+                ", fechaSesion=" + fechaSesion +
+                '}';
     }
 }
