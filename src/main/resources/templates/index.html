@@ -5,21 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
 </head>
 <body>
     <div class="container mt-3">
         <div class="row">
             <div class="col">
                 <nav class="navbar navbar-expand-md">
-                    <h3 class=" d-flex justify-content-center justify-content-md-start align-self-center w-100 pb-5 pb-md-0">SULTRAL CORP.</h3>
+                    <h3 class=" d-flex justify-content-center justify-content-md-start align-self-right w-100 pb-5 pb-md-0">SULTRAL CORP.</h3>
                     <ul class="navbar-nav w-100 justify-content-around font-weight-bold" style="font-size: 18px;">
-                        <li class="nav-item"><a href="/login" class="nav-link d-flex justify-content-center">Inicia Sesión</a></li>
-                        <li class="nav-item"><a href="/registro" class="nav-link d-flex justify-content-center">Regístrate</a></li>
+                        <li class="nav-item"><button type="button" class="btn btn-outline-primary">Regístrate</button></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
+
+    <section class="bg-light border" style="padding-top: 4em; margin-top: 1em;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 order-md-2">
+                    <form class="form-signin text-center">
+                        <h1 class="h3 font-weight-normal mb-3">Inicio de Sesión</h1>
+                        <label for="inputUser" class="sr-only">Usuario</label>
+                        <input id="inputUser" type="text" class="form-control" placeholder="Usuario" required autofocus>
+                        <label for="inputPass" class="sr-only">Contraseña</label>
+                        <input id="inputPass" type="password" class="form-control mb-3" placeholder="Contraseña" required >
+                        <button type="submit" class=" btn btn-lg btn-primary btn-block">Ingresar</button>
+                    </form>
+                </div>
+                <div class="col-12 col-md-6 order-md-1">
+                    <h1 class="display-4 pb-2">Módulo de Administración de Estudiantes</h1>
+                    <p class="lead text-muted" style="font-size: 1.7em;">Kchau</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
