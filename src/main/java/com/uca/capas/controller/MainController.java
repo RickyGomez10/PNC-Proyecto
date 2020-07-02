@@ -72,7 +72,7 @@ public class MainController {
 		System.out.println(response.toString());
 
 		try {
-			Usuario user = usuarioService.findUsuarioById(login.getUsuario());
+			Usuario user = usuarioService.findUsuarioById(login.getnUsuario());
 
 			if(user != null){
 				String pass = user.getClave();
@@ -80,7 +80,7 @@ public class MainController {
 					user.setSesion(true);
 
 					try {
-						CookieData c = new CookieData(user.getUsuario(), user.getRol());
+						CookieData c = new CookieData(user.getnUsuario(), user.getRol());
 						System.out.println(c.toString());
 						Cookie cookie = new Cookie("data", c.toString());
 						cookie.setMaxAge(3600);

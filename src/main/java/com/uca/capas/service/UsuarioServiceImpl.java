@@ -43,6 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuario.setEstado(false);
 		usuario.setClave(Encriptador.encriptar(usuario.getClave()));
 
+		System.out.println(usuario.toString());
 		usuarioDAO.save(usuario);
 
 	}

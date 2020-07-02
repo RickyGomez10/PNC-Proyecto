@@ -14,16 +14,10 @@ import javax.validation.constraints.*;
 @Table(schema = "public", name = "usuario")
 public class Usuario {
 
-    @Id
-    @GeneratedValue(generator="usuario_id_usuario_seq", strategy = GenerationType.AUTO)
-    @SequenceGenerator(name = "usuario_id_usuario_seq", sequenceName = "public.usuario_id_usuario_seq", allocationSize = 1)
-    @Column(name = "id_usuario")
-    private Integer idUsuario;
-
     @Column(name = "usuario")
     @Size(min=1, max=15, message = "El usuario debe tener entre 1 y 15 caracteres.")
     @NotBlank(message = "Este campo no puede estar vacío.")
-    private String usuario;
+    private String nUsuario;
 
     @Column(name = "nombre")
     @Size(min=1, max=15, message = "El nombre debe tener entre 1 y 50 caracteres.")
@@ -71,32 +65,46 @@ public class Usuario {
     @Column(name = "fecha_sesion")
     private Date fechaSesion;
 
+    @Id
+    @GeneratedValue(generator="usuario_id_usuario_seq", strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "usuario_id_usuario_seq", sequenceName = "public.usuario_id_usuario_seq", allocationSize = 1)
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
 
-    public Usuario(String usuario, String nombre, String apellido, Date fechaNacimiento, Municipio municipio,
-                   String direccion, Boolean estado, String clave, Integer rol, Boolean sesion) {
-        super();
-        this.usuario = usuario;
+    public Usuario(Integer idUsuario, String usuario, String nombre, String apellido, Date fechaNacimiento, Municipio municipio, Integer cMunicipio, String direccion, Boolean estado, String clave, Integer rol, Boolean sesion, Date fechaSesion) {
+        this.idUsuario = idUsuario;
+        this.nUsuario = usuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.municipio = municipio;
+        this.cMunicipio = cMunicipio;
         this.direccion = direccion;
         this.estado = estado;
         this.clave = clave;
         this.rol = rol;
         this.sesion = sesion;
+        this.fechaSesion = fechaSesion;
     }
 
     public Usuario() {
 
     }
 
-    public String getUsuario() {
-        return usuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getnUsuario() {
+        return nUsuario;
+    }
+
+    public void setnUsuario(String nUsuario) {
+        this.nUsuario = nUsuario;
     }
 
     public String getNombre() {
@@ -200,7 +208,8 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                "usuario='" + usuario + '\'' +
+                "idUsuario=" + idUsuario +
+                ", usuario='" + nUsuario + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", fechaNacimiento=" + fechaNacimiento +
