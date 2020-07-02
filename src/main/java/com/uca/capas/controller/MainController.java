@@ -32,10 +32,21 @@ public class MainController {
 
 	@Autowired
 	private CentroEdService centroEdService;
+
+	@RequestMapping("/index")
+	public ModelAndView index(@CookieValue(value = "data", defaultValue = "-") String data) {
+
+		System.out.println(data);
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("index");
+
+		return mav;
+	}
 	
 	//CARGAR HTMLS
 	@RequestMapping("/login")
-	public ModelAndView index(@CookieValue(value = "data", defaultValue = "-") String data) {
+	public ModelAndView login(@CookieValue(value = "data", defaultValue = "-") String data) {
 
 		System.out.println(data);
 		ModelAndView mav = new ModelAndView();
@@ -71,13 +82,11 @@ public class MainController {
 					try {
 						CookieData c = new CookieData(user.getUsuario(), user.getRol());
 						System.out.println(c.toString());
-						Cookie cookie = new Cookie("data", ""+c.toString());
-						cookie.setMaxAge(7 * 24 * 60 * 60);
-						cookie.setSecure(true);
-						cookie.setHttpOnly(true);
-						cookie.setPath("/");
+						Cookie cookie = new Cookie("data", c.toString());
+						cookie.setMaxAge(3600);
 						response.addCookie(cookie);
-						//usuarioService.save(user);
+						cookie.setHttpOnly(true);
+						usuarioService.save(user);
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -97,5 +106,9 @@ public class MainController {
 		}
 
 	}
-	
+
+	@GetMapping("/Error.html")
+	public void readCookie(@CookieValue(value = "data", defaultValue = "Atta") String username) {
+		System.out.println(username);
+	}
 }
