@@ -71,7 +71,18 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Integer idUsuario;
 
-    public Usuario(Integer idUsuario, String usuario, String nombre, String apellido, Date fechaNacimiento, Municipio municipio, Integer cMunicipio, String direccion, Boolean estado, String clave, Integer rol, Boolean sesion, Date fechaSesion) {
+    @Transient
+    private String Password;
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public Usuario(Integer idUsuario, String usuario, String nombre, String apellido, Date fechaNacimiento, Municipio municipio, Integer cMunicipio, String direccion, Boolean estado, String clave, Integer rol, Boolean sesion, Date fechaSesion, String Password) {
         this.idUsuario = idUsuario;
         this.nUsuario = usuario;
         this.nombre = nombre;
@@ -85,6 +96,7 @@ public class Usuario {
         this.rol = rol;
         this.sesion = sesion;
         this.fechaSesion = fechaSesion;
+        this.Password = Password;
     }
 
     public Usuario() {
