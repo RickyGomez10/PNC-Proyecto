@@ -1,0 +1,19 @@
+#registro{
+    border: 1px #007bff;
+}
+
+.form-signin{
+    margin: 0 auto;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
