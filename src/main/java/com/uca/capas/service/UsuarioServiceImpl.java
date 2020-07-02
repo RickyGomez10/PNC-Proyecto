@@ -60,5 +60,26 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioDAO.save(user);
 	}
 
+	@Transactional
+	public void update(Usuario usuario) throws DataAccessException {
+		//Obtener todos los datos del usuario a actualizar
+		Usuario usuario2 = usuarioDAO.findOne(usuario.getIdUsuario());
+
+		usuario.setEstado(usuario2.getEstado());
+		usuario.setRol(usuario2.getRol());
+		usuario.setSesion(usuario2.getSesion());
+		//Si el campo de nueva contraseña esta vacio entonces no se actualiza.
+		if(usuario.getPassword().isEmpty() || usuario.equals("")){
+			usuario.setClave(usuario2.getClave());
+		}else{
+			usuario.setClave(Encriptador.encriptar(usuario.getPassword()));
+		}
+		usuario.setMunicipio(municipioRepo.getOne(usuario.getcMunicipio()));
+
+		System.out.println(usuario.toString());
+		usuarioRepo.save(usuario);
+
+	}
+
 
 }

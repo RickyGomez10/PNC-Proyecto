@@ -60,6 +60,20 @@ public class UsuarioController {
         return mav;
     }
 
+    @RequestMapping("/EditarUsuario")
+    public ModelAndView editarForm(@ModelAttribute Usuario usuario) {
+
+        ModelAndView mav = new ModelAndView();
+        Usuario usuario1 = new Usuario();
+        List<Municipio> municipios = muniService.findAll();
+        usuario1 = usuarioDAO.findOne(usuario.getIdUsuario());
+        mav.addObject("municipios", municipios);
+        mav.addObject("usuario", usuario1);
+        mav.addObject("msg", "0");
+        mav.setViewName("EditarUsuario");
+
+        return mav;
+    }
 
 
     //CONTROLADORES
@@ -78,7 +92,11 @@ public class UsuarioController {
                 usuario = new Usuario();
             }catch (DataIntegrityViolationException e){
                 e.printStackTrace();
-                mav.addObject("msg", "2");
+                if (e.getRootCause().toString().contains("usuario_usuario_key")){
+                    mav.addObject("msg", "2");
+                }else {
+                    mav.addObject("msg", "3");
+                }
             } catch (Exception e){
                 e.printStackTrace();
                 mav.addObject("msg", "3");
@@ -110,6 +128,41 @@ public class UsuarioController {
             System.out.println("Error");
             return false;
         }
+
+    }
+
+    @RequestMapping(value="/ModificarUsuario", method = RequestMethod.POST)
+    public @ResponseBody ModelAndView ModificarUsuario(@ModelAttribute @Valid Usuario usuario, BindingResult result) {
+
+        ModelAndView mav = new ModelAndView();
+        List<Municipio> municipios = muniService.findAll();
+
+
+        List<Usuario> usuarios = usuarioService.findAll();
+
+        if(!result.hasErrors()) {
+
+            try{
+                usuarioService.update(usuario);
+                mav.addObject("msg", "1");
+                usuario = new Usuario();
+                mav.setViewName("listadoUsuario");
+            }catch (DataIntegrityViolationException e){
+                e.printStackTrace();
+                mav.addObject("msg", "2");
+                mav.setViewName("EditarUsuario");
+            } catch (Exception e){
+                e.printStackTrace();
+                mav.addObject("msg", "3");
+                mav.setViewName("EditarUsuario");
+            }
+
+            mav.addObject("usuario", usuario);
+
+        }
+        mav.addObject("usuarios", usuarios);
+        mav.addObject("municipios", municipios);
+        return mav;
 
     }
 

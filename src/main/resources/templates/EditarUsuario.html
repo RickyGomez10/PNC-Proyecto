@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+
+<div>
+    <h1> Editar Usuario </h1>
+    <form th:action="@{/ModificarUsuario}" th:object="${usuario}" method="post">
+        <table>
+            <tr>
+                <td><label for="idUsuario"> Id Usuario: </label></td>
+                <td><input type="text" id="idUsuario" th:field="*{idUsuario}" readonly> </td>
+            </tr>
+            <tr>
+                <td><label for="usuario">Usuario: </label></td>
+                <td><input type="text" id="usuario" th:field="*{nUsuario}" ><br><span th:errors="*{nUsuario}" style="color:  #e81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="nombre">Nombre: </label></td>
+                <td><input type="text" id="nombre" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="apellido">Apellido: </label></td>
+                <td><input type="text" id="apellido" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="fnac">Fecha de nacimiento: </label></td>
+                <td><input type="date" id="fnac" th:field="*{fechaNacimiento}" ><br><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="munic">Municipio: </label></td>
+                <td>
+                    <select id="munic" th:field="*{cMunicipio}">
+                        <option th:each="m : ${municipios}" th:value="${m.idMunicipio}" th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="dir">Dirección: </label></td>
+                <td><textarea id="dir" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span></td>
+            </tr>
+
+
+            <tr>
+                <td><label for="clave">Nueva Contraseña (No escribir si no se va a cambiar): </label></td>
+                <td><input type="password" id="clave" th:field="*{Password}" ><br></span></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Registrar"></td>
+            </tr>
+        </table>
+        <input type="hidden" id="clave" th:field="*{clave}" ><br><span th:errors="*{clave}" style="color:  #E81505; display:none;"></span></td>
+    </form>
+</div>
+<script th:if="${msg == '1'}">
+    swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
+</script>
+
+<script th:if="${msg == '2'}">
+    swal("Algo ha salido mal...", "Parece ser que ese usuario ya ha sido registrado, prueba con otro.", "error");
+</script>
+
+<script th:if="${msg == '3'}">
+    swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+</script>
+</body>
+</html>
