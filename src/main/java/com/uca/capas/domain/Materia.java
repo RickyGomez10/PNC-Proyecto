@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(schema = "public", name = "estudiante")
+@Table(schema = "public", name = "materia")
 public class Materia {
     @Id
     @Column(name = "id_materia")
@@ -20,15 +20,23 @@ public class Materia {
     @OneToMany(mappedBy = "materia")
     Set<MateriaXEstudiante> cruz;
 
+    @Transient
+    private Integer cMateria;
+
+    public Integer getcMateria() { return cMateria; }
+
+    public void setcMateria(Integer cMateria) { this.cMateria = cMateria; }
+
     public Materia() {
 
     }
 
-    public Materia(Integer idMateria, String nombre, Boolean estado, Set<MateriaXEstudiante> cruz) {
+    public Materia(Integer idMateria, String nombre, Boolean estado, Set<MateriaXEstudiante> cruz, Integer cMateria) {
         this.idMateria = idMateria;
         this.nombre = nombre;
         this.estado = estado;
         this.cruz = cruz;
+        this.cMateria = cMateria;
     }
 
     public Integer getIdMateria() {

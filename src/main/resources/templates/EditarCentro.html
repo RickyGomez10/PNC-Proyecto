@@ -8,7 +8,16 @@
 
 <div>
     <h1> Editar Centro Educativo </h1>
+    <form th:action="@{/Modificar}" th:object="${centroEd}" method="post">
+        <input type="text" th:field="*{idCentroEd}" hidden="hidden">
+        <input type="text" th:field="*{nombre}"> <br> <br>
+        <input type="text" th:field="*{municipio.nombre}" readonly> <br> <br>
+        <select th:field="*{cMunicipio}">
+            <option th:each="municipio: ${municipios}" th:text="${municipio.nombre}" th:value="${municipio.idMunicipio}">
+        </select>
+        <input type="submit" value="Modificar">
 
+    </form>
 </div>
 
 </body>

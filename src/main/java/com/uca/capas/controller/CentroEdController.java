@@ -24,48 +24,63 @@ public class CentroEdController {
     @RequestMapping("/centroEd")
     public ModelAndView pantallaIngresarCentroEd() {
         ModelAndView mav = new ModelAndView();
+        CentroEd centro = new CentroEd();
         List<Municipio> municipios = null;
         List<CentroEd> centros = null;
-        try{
+        try {
             municipios = municipioService.findAll();
             centros = centroEdService.findAll();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         mav.addObject("error", "");
         mav.addObject("municipios", municipios);
         mav.addObject("centros", centros);
-
+        mav.addObject("centroEd", centro);
         mav.setViewName("IngresarCentro");
 
         return mav;
     }
-    @RequestMapping(value="/editarCentroEd", method = RequestMethod.POST, produces = "application/json")
-    public String PantallaEditarCentroEd(@ModelAttribute("centroEd") CentroEd centro) {
 
-        return "EditarCentro";
+    @RequestMapping("/EditarForm")
+    public ModelAndView PantallaEditarCentroEd(@ModelAttribute CentroEd centroEd) {
+        ModelAndView mav = new ModelAndView();
+        List<Municipio> municipios = municipioService.findAll();
+        System.out.println(centroEd.getcMunicipio());
+        try {
+            centroEd = centroEdService.findOne(centroEd.getcMunicipio());
+            mav.addObject("centroEd", centroEd);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mav.addObject("municipios", municipios);
+        mav.setViewName("EditarCentro");
+        return mav;
+
 
     }
 
 
-
     //Controladores
-    @RequestMapping(value="/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody void IngresarCentroEd(@RequestBody CentroEd centro) {
+    @RequestMapping(value = "/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+    void IngresarCentroEd(@RequestBody CentroEd centro) {
 
         try {
             centroEdService.save(centro);
             System.out.println("Insertado");
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error");
         }
 
     }
 
-    @RequestMapping(value="/cambiarEstadoCentroEd", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody void CambiarCentroEd(@RequestBody CentroEd centro) {
+    @RequestMapping(value = "/cambiarEstadoCentroEd", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+    boolean CambiarCentroEd(@RequestBody CentroEd centro) {
 
         try {
 
@@ -75,10 +90,38 @@ public class CentroEdController {
             centro1.setEstado(!centro1.getEstado());
             centroEdService.update(centro1);
             System.out.println("Estado cambiado");
-        }catch(Exception e) {
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error");
+            return false;
         }
 
     }
+
+    @RequestMapping(value = "/Modificar", method = RequestMethod.POST)
+    public ModelAndView modificar(@ModelAttribute CentroEd centroEd) {
+        ModelAndView mav = new ModelAndView();
+        CentroEd updatear = centroEdService.findOne(centroEd.getIdCentroEd());
+        List<Municipio> municipios = null;
+        List<CentroEd> centros = null;
+        CentroEd centro = new CentroEd();
+        updatear.setcMunicipio(centroEd.getcMunicipio());
+
+        try {
+            centroEdService.save(updatear);
+            municipios = municipioService.findAll();
+            centros = centroEdService.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mav.addObject("error", "");
+        mav.addObject("municipios", municipios);
+        mav.addObject("centros", centros);
+        mav.addObject("centroEd", centro);
+        mav.setViewName("IngresarCentro");
+        return mav;
+    }
 }
+

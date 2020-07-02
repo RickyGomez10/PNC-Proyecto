@@ -9,10 +9,10 @@ import java.io.Serializable;
 public class MateriaXEstudianteKey implements Serializable {
 
     @Column(name = "id_materia")
-    Integer idMateria;
+    private Integer idMateria;
 
     @Column(name = "carne")
-    String carne;
+    private String carne;
 
     public MateriaXEstudianteKey() {
 

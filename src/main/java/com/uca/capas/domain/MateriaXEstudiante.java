@@ -11,21 +11,21 @@ public class MateriaXEstudiante {
     @ManyToOne
     @MapsId("id_materia")
     @JoinColumn(name = "id_materia")
-    Materia materia;
+    private Materia materia;
 
     @ManyToOne
     @MapsId("carne")
     @JoinColumn(name = "carne")
-    Estudiante estudiante;
+    private Estudiante estudiante;
 
     @Column(name = "anio")
-    String anio;
+    private String anio;
 
     @Column(name = "ciclo")
-    String ciclo;
+    private String ciclo;
 
     @Column(name = "nota")
-    float nota;
+    private float nota;
 
     public MateriaXEstudiante() {
 

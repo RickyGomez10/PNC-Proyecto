@@ -13,4 +13,6 @@ public interface MateriaService {
 
     public void insertar(Materia materia) throws DataAccessException;
 
+    public void update(Materia materia) throws DataAccessException;
+
 }

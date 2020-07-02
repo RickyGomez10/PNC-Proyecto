@@ -4,9 +4,11 @@ import com.uca.capas.domain.Estudiante;
 import com.uca.capas.repositories.EstudianteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EstudianteServiceImpl implements EstudianteService{
     @Autowired
     EstudianteRepo estudianteRepo;

@@ -12,7 +12,7 @@
             //Referencias al ID de los input
             var nombre = $('#nombre').val();
             var estado = $('#estado').val();
-            var municipio = $('#municipio').val();
+
 
             if (document.getElementById('estado').checked) {
                 estado = true;
@@ -23,18 +23,19 @@
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 type: 'post',
-                url: '/ingresarCentroEd',
+                url: '/ingresarMateria',
                 dataType: 'json',
                 data: JSON.stringify({
                     'nombre': nombre,
                     'estado': estado,
-                    'cMunicipio': parseInt(municipio)
+
                 }),
                 success: function (res) {
-                    alert(res);
+                    alert('Se ha insertado correctamente la materia');
+                    window.location.reload();
                 },
                 error: function (e) {
-                    alert(e);
+                    alert('No se pudo insertar la materia');
                 }
 
             });
@@ -49,10 +50,10 @@
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 type: 'post',
-                url: '/cambiarEstadoCentroEd',
+                url: '/cambiarEstadoMateria',
                 dataType: 'json',
                 data: JSON.stringify({
-                    'idCentroEd': parseInt(el)
+                    'idMateria': parseInt(el)
                 }),
                 success: function (res) {
 
@@ -99,9 +100,8 @@
     </script>
 </head>
 <body>
-
 <div>
-    <h1>Listado de Centros Educativos</h1>
+    <h1>Listado de Materias</h1>
     <table>
         <thead>
         <th> Codigo</th>
@@ -111,53 +111,38 @@
         <th> Acciones</th>
 
         </thead>
-        <th:block th:each="centro, row: ${centros}">
+        <th:block th:each="materia, row: ${materias}">
             <tr>
-                <td th:text="${centro.idCentroEd}"/>
-                <td th:text="${centro.nombre}"/>
-                <td th:text="${centro.estado}"/>
+                <td th:text="${materia.idMateria}"/>
+                <td th:text="${materia.nombre}"/>
+                <td th:text="${materia.estado}"/>
 
                 <td>
-                    <td><button th:id="${centro.idCentroEd}" onclick="cambiarEstadoForm(this.id)"
-                                  th:value="${centro.idCentroEd}">Cambiar estado </td>
-                    <td>
-                            <form th:action="@{/EditarForm}" th:object="${centroEd}" method="post">
-                                <select th:field= "*{cMunicipio}" style="display:none">
-                                    <option  th:text="${centro.idCentroEd}" th:value="${centro.idCentroEd}">
-                                </select>
-
-                                <input type="submit" th:value="${centro.idCentroEd}">
-                            </form>
-                        </td>
-
+                <td>
+                    <button th:id="${materia.idMateria}" onclick="cambiarEstadoForm(this.id)"
+                            th:value="${materia.idMateria}">Cambiar estado
+                    </button>
                 </td>
-
+                <td>
+                    <form th:action="@{/EditarMateria}" th:object="${materia}" method="post">
+                        <select th:field="*{cMateria}" style="display:none">
+                            <option th:text="${materia.idMateria}" th:value="${materia.idMateria}">
+                        </select>
+                        <input type="submit" value="Editar">
+                    </form>
+                </td>
+                </td>
             </tr>
-
-
         </th:block>
-
-
     </table>
 </div>
 <div>
-    <h1> Ingresar Centro Educativo </h1>
+    <h1> Ingresar Materia </h1>
     <label>Nombre: <input type="text" name="nombre" id="nombre"></label> <br>
     <label>Activo: <input type="checkbox" name="estado" id="estado"> </label> <br>
-    <select id="municipio">
-        <option th:each="municipio: ${municipios}" th:text="${municipio.nombre}" th:value="${municipio.idMunicipio}">
-    </select> <br> <br>
     <input type="button" value="Ingresar" onclick="ingresarForm()">
 </div>
-<!--
-<div>
-    <h1> Activar/Desactivar Centro Educativo </h1>
-    <select id="idCentroEd">
-        <option th:each="centro: ${centros}" th:text="${centro.nombre}" th:value="${centro.idCentroEd}">
-    </select> <br> <br>
-    <input type="button" value="Cambiar estado" onclick="cambiarEstadoForm()">
-</div>
--->
+
 
 </body>
 </html>
