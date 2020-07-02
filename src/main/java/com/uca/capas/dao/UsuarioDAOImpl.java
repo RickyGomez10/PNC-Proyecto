@@ -29,6 +29,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
+	public Usuario findOne(Integer code) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Usuario usuario = entityManager.find(Usuario.class, code);
+		return usuario;
+	}
+
+	@Override
 	@Transactional
 	public void save(Usuario usuario) throws DataAccessException {
 		entityManager.persist(usuario);

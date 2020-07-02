@@ -9,7 +9,7 @@ import com.uca.capas.domain.Usuario;
 public interface UsuarioDAO {
 
 	public List<Usuario> findAll() throws DataAccessException;
-
+	public Usuario findOne(Integer code) throws DataAccessException;
 	public void save(Usuario usuario)throws DataAccessException;
 
 }

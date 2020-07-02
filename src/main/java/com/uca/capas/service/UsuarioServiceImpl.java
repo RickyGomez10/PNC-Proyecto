@@ -29,6 +29,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Autowired
 	UsuarioDAO usuarioDAO;
 
+	@Override
+	public List<Usuario> findAll() throws DataAccessException {
+		return usuarioRepo.findAll();
+	}
+
 	//Encontrar usuario por ID
 	public Usuario findUsuarioById(String user) throws DataAccessException {
 		return new Usuario();//usuarioRepo.findUsuarioById(user);

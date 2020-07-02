@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+
+        //Desactivar/Activar estado centro educativo
+        function cambiarEstadoForm(el) {
+            //Referencias al ID de los input
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: 'post',
+                url: '/cambiarEstadoUsuario',
+                dataType: 'json',
+                data: JSON.stringify({
+                    'idUsuario': parseInt(el)
+                }),
+                success: function (res) {
+                    window.location.reload();
+                },
+                error: function (e) {
+                    alert(e);
+
+                }
+
+            });
+
+
+        }
+
+
+
+    </script>
+</head>
+<body>
+<div>
+    <h1>Listado de Usuarios</h1>
+    <table>
+        <thead>
+        <th> Codigo</th>
+        <th> Usuario</th>
+        <th> Estado</th>
+
+        <th> Acciones</th>
+
+        </thead>
+        <th:block th:each="usuario, row: ${usuarios}">
+            <tr>
+                <td th:text="${usuario.idUsuario}"/>
+                <td th:text="${usuario.nUsuario}"/>
+                <td th:text="${usuario.estado}"/>
+
+                <td>
+                <td>
+                    <button th:id="${usuario.idUsuario}" onclick="cambiarEstadoForm(this.id)"
+                            th:value="${usuario.idUsuario}">Cambiar estado
+                </td>
+                <td>
+                    <form th:action="@{/EditarUsuarioForm}" th:object="${usuario}" method="post">
+                        <select th:field="*{idUsuario}" style="display:none">
+                            <option th:text="${usuario.idUsuario}" th:value="${usuario.idUsuario}">
+                        </select>
+
+                        <input type="submit" th:value="${usuario.idUsuario}">
+                    </form>
+                </td>
+
+                </td>
+
+            </tr>
+
+
+        </th:block>
+
+
+    </table>
+</div>
+
+</body>
+</html>
