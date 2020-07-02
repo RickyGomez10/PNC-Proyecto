@@ -113,6 +113,24 @@ public class MainController {
 
 	}
 
+	@RequestMapping("/cerrarSesion")
+	public ModelAndView exit(@CookieValue(value = "data", defaultValue = "-") String data, HttpServletResponse response) {
+
+		CookieData cookieData  = new CookieData(data);
+		Usuario user = usuarioService.findUsuarioById(cookieData.getUsername());
+		user.setSesion(false);
+		usuarioService.sesionUpdate(user);
+
+		Cookie cookie = new Cookie("data", "");
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
+		cookie.setHttpOnly(true);
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/index");
+		return mav;
+	}
+
 	@RequestMapping("/mainMenu")
 	public ModelAndView menu(@CookieValue(value = "data", defaultValue = "-") String data) {
 

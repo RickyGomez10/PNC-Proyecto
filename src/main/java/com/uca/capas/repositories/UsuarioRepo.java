@@ -9,7 +9,7 @@ import com.uca.capas.domain.Usuario;
 public interface UsuarioRepo extends JpaRepository<Usuario, String> {
 
 	//Encontrar usuario por ID
-	@Query(value = "SELECT * from public.usuario where usuario = ?1 AND sesion = false", nativeQuery = true)
+	@Query(value = "SELECT * from public.usuario where usuario = ?1", nativeQuery = true)
     public Usuario findUsuarioById(@Param("usuario") String usuario);
 
 }

@@ -56,7 +56,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	@Transactional
 	public void sesionUpdate(Usuario user) throws DataAccessException {
-		user.setSesion(true);
 		usuarioDAO.save(user);
 	}
 
