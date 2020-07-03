@@ -135,14 +135,22 @@ public class MainController {
 	public ModelAndView menu(@CookieValue(value = "data", defaultValue = "-") String data) {
 
 		ModelAndView mav = new ModelAndView();
-		CookieData cookie  = new CookieData(data);
-		mav.addObject("nombre", cookie.getUsername());
-		mav.setViewName("mainmenu");
+
+		if (CookieData.checkCookie(data)){
+			CookieData cookie  = new CookieData(data);
+			mav.addObject("nombre", cookie.getUsername());
+			mav.setViewName("mainmenu");
+			return mav;
+		}
+
+		mav.setViewName("redirect:/index");
 		return mav;
 	}
 
-	@GetMapping("/Error.html")
-	public void readCookie(@CookieValue(value = "data", defaultValue = "Atta") String username) {
-		System.out.println(username);
+	@GetMapping("/error")
+	public ModelAndView error() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("error");
+		return mav;
 	}
 }
