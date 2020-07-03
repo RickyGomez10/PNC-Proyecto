@@ -15,6 +15,13 @@ public class CookieData {
         rol = Integer.parseInt(datos[1]);
     }
 
+    public static boolean checkCookie(String data){
+        if (data.equals("-")){
+            return false;
+        }
+        return true;
+    }
+
     public String getUsername() {
         return username;
     }
