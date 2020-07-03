@@ -32,11 +32,17 @@
                     'cMunicipio': parseInt(municipio)
                 }),
                 success: function (res) {
-                    swal("¡Éxito!", "Se ha registrado el centro educativo.", "success");
+                    if(res){
+                        swal("¡Éxito!", "Se ha registrado el centro educativo.", "success");
+                    }else{
+                        document.getElementById('errorNombre').hidden= false;
+                        swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+                    }
+
 
                 },
                 error: function (e) {
-                    swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+                    alert(e);
                 }
 
             });
@@ -49,7 +55,8 @@
     <table>
     <tr>
         <td><label>Nombre: </label> </td>
-        <td><input type="text" name="nombre" id="nombre"> </td>
+        <td><input type="text" name="nombre" id="nombre"> <br><label hidden="true" style="color:#E81505" id="errorNombre" name="errorNombre">Erroraso</label> </td>
+
     </tr>
         <tr>
             <td><label>Activo:</label>

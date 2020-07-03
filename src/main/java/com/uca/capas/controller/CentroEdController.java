@@ -42,7 +42,7 @@ public class CentroEdController {
 
         return mav;
     }
-    @RequestMapping("/IngresarUsuario")
+    @RequestMapping("/IngresarCentro")
     public ModelAndView pantallaIngresarCentroEd() {
         ModelAndView mav = new ModelAndView();
         CentroEd centro = new CentroEd();
@@ -88,15 +88,15 @@ public class CentroEdController {
     //Controladores
     @RequestMapping(value = "/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody boolean IngresarCentroEd(@RequestBody CentroEd centro) {
-
+        boolean estado;
         try {
             centroEdService.save(centro);
-            return true;
+            estado = true;
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("malo");
+            estado = false;
         }
-
+                return estado;
     }
 
     @RequestMapping(value = "/cambiarEstadoCentroEd", method = RequestMethod.POST, produces = "application/json")

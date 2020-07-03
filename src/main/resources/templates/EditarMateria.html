@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,12 +9,20 @@
 <div>
     <h1> Editar Centro Educativo </h1>
     <form th:action="@{/ModificarMateria}" th:object="${materia}" method="post">
-        <input type="text" th:field="*{idMateria}" hidden="hidden">
-        <input type="text" th:field="*{nombre}"> <br> <br>
-        <input type="submit" value="Modificar">
-
+        <table>
+            <tr>
+            <td><input type="text" th:field="*{idMateria}" hidden="hidden"></td>
+            </tr>
+            <tr>
+            <td><label> Nombre: </label></td>
+            <td><input type="text" th:field="*{nombre}"> </td>
+            </tr>
+            <tr>
+            <td><input type="submit" value="Modificar"></td>
+            </tr>
+        </table>
     </form>
 </div>
-
+<a href="ListadoMateria">Regresar</a>
 </body>
 </html>

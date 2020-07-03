@@ -9,16 +9,39 @@
 <div>
     <h1> Editar Centro Educativo </h1>
     <form th:action="@{/Modificar}" th:object="${centroEd}" method="post">
-        <input type="text" th:field="*{idCentroEd}" hidden="hidden">
-        <input type="text" th:field="*{nombre}"> <br> <br>
-        <input type="text" th:field="*{municipio.nombre}" readonly> <br> <br>
-        <select id="cMunicipio" name="cMunicipio">
-            <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:selected="(${municipio.idMunicipio} == *{municipio.idMunicipio})" th:value="${municipio.idMunicipio}" >
-        </select>
-        <input type="submit" value="Modificar">
-
+        <table>
+        <tr>
+            <td><input type="text" th:field="*{idCentroEd}" hidden="hidden"></td>
+        </tr>
+        <tr>
+            <td><Label>Nombre:</Label></td>
+            <td><input type="text" th:field="*{nombre}"></td>
+        </tr>
+        <tr>
+            <td><label>Localidad:</label></td>
+            <td>
+                <select id="cMunicipio" name="cMunicipio">
+                    <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:selected="(${municipio.idMunicipio} == *{municipio.idMunicipio})" th:value="${municipio.idMunicipio}" >
+                </select>
+            </td>
+        </tr>
+        <tr>
+        <td colspan="2"><input type="submit" value="Modificar"></td>
+        </tr>
+        </table>
     </form>
 </div>
+<script th:if="${msg == '1'}">
+    swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
+</script>
 
+<script th:if="${msg == '2'}">
+    swal("Algo ha salido mal...", "Parece ser que ese usuario ya ha sido registrado, prueba con otro.", "error");
+</script>
+
+<script th:if="${msg == '3'}">
+    swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+</script>
+<a href="ListadoCentroEd">Regresar</a>
 </body>
 </html>
