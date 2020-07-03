@@ -1,11 +1,9 @@
 package com.uca.capas.controller;
 
-import com.uca.capas.domain.CentroEd;
-import com.uca.capas.domain.Estudiante;
-import com.uca.capas.domain.Municipio;
-import com.uca.capas.domain.Usuario;
+import com.uca.capas.domain.*;
 import com.uca.capas.service.CentroEdService;
 import com.uca.capas.service.EstudianteService;
+import com.uca.capas.service.MateriaService;
 import com.uca.capas.service.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -25,6 +26,9 @@ public class EstudianteController {
 
     @Autowired
     private EstudianteService estudianteService;
+
+    @Autowired
+    private MateriaService materiaService;
 
     @RequestMapping("/registroEstudiante")
     public ModelAndView regForm() {
@@ -42,8 +46,7 @@ public class EstudianteController {
     }
 
     @RequestMapping(value="/regEst", method = RequestMethod.POST)
-    public @ResponseBody
-    ModelAndView verificar(@ModelAttribute @Valid Estudiante estudiante, BindingResult result) {
+    public @ResponseBody ModelAndView verificar(@ModelAttribute @Valid Estudiante estudiante, BindingResult result) {
 
         ModelAndView mav = new ModelAndView();
         List<CentroEd> centros = centroService.findAllActive();
@@ -77,12 +80,60 @@ public class EstudianteController {
     }
 
     @RequestMapping(value="/materiaCursada")
-    public @ResponseBody ModelAndView addMateria(/*@RequestParam String carne*/) {
+    public @ResponseBody ModelAndView materiaCursada(/*@RequestParam String carne*/) {
 
         ModelAndView mav = new ModelAndView();
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+
         Estudiante estudiante = estudianteService.findOne("00046317");
+        MateriaXEstudiante mxe = new MateriaXEstudiante();
+        List<Materia> materias = materiaService.findAllActive();
+
+        ArrayList<String> anios = new ArrayList<>();
+        for (int i = 2005; i <= c.get(Calendar.YEAR); i++)
+            anios.add(""+i);
+
+        mav.addObject("mxe", mxe);
+        mav.addObject("materias", materias);
         mav.addObject("estudiante", estudiante);
+        mav.addObject("anios", anios);
+
         mav.setViewName("registroMateria");
+
+        return mav;
+
+    }
+
+    @RequestMapping(value="/regMateriaCursada", method = RequestMethod.POST)
+    public @ResponseBody ModelAndView regMateriaCursada(@ModelAttribute("mxe") @Valid MateriaXEstudiante mxe, BindingResult result) {
+
+        ModelAndView mav = new ModelAndView();
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+
+        Estudiante estudiante = estudianteService.findOne("00046317");
+
+        System.out.println(mxe.toString());
+
+        if(!result.hasErrors()){
+            System.out.println("Ingresando...");
+            mxe = new MateriaXEstudiante();
+            mav.addObject("mxe", mxe);
+        }
+
+        List<Materia> materias = materiaService.findAllActive();
+
+        ArrayList<String> anios = new ArrayList<>();
+        for (int i = 2005; i <= c.get(Calendar.YEAR); i++)
+            anios.add(""+i);
+
+        mav.addObject("materias", materias);
+        mav.addObject("estudiante", estudiante);
+        mav.addObject("anios", anios);
+
+        mav.setViewName("registroMateria");
+
         return mav;
 
     }

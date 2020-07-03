@@ -9,44 +9,61 @@
 <body>
 
     <div>
-        <h1> Usuario Seleccionado </h1>
+        <h1> Agregar Materia Cursada </h1>
         <div th:object="${estudiante}">
+            <h2>Datos del estudiante</h2>
+            <label><b>Nombre del estudiante:</b> <span id="nombre" th:text="*{nombre + ' ' + apellido}"></span></label><br>
+            <label><b>Carné:</b> <span id="carne" th:text="*{carne}"></span></label>
+        </div>
+        <form th:action="@{/regMateriaCursada}" th:object="${mxe}" method="post" modelAttribute="mxe">
+            <input type="hidden" th:value="${estudiante.idEstudiante}" id="idEstudiante" name="idEstudiante">
+            <h2>Datos de la materia cursada</h2>
             <table>
                 <tr>
-                    <td><label><b>Carné:</b> <span id="carne" th:text="*{carne}"></span></label></td>
+                    <td><label for="materia">Materia: </label></td>
+                    <td>
+                        <select id="materia" th:field="*{idMateria}">
+                            <option th:each="m : ${materias}" th:value="${m.idMateria}" th:text="${m.nombre}"></option>
+                        </select>
+                        <br><span th:errors="*{idMateria}" style="color:  #E81505;"></span>
+                    </td>
                 </tr>
+
                 <tr>
-                    <td><label><b>Nombre:</b> <span id="nombre" th:text="*{nombre}"></span></label></td>
+                    <td><label for="anio">Año de curso: </label></td>
+                    <td>
+                        <select id="anio" th:field="*{anio}">
+                            <option th:each="a : ${anios}" th:value="${a}" th:text="${a}"></option>
+                        </select>
+                        <br><span th:errors="*{anio}" style="color:  #E81505;"></span>
+                    </td>
                 </tr>
+
                 <tr>
-                    <td><label><b>Apellido:</b> <span id="apellido" th:text="*{apellido}"></span></label></td>
+                    <td><label for="ciclo">Ciclo de curso: </label></td>
+                    <td>
+                        <select id="ciclo" th:field="*{ciclo}">
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                        </select>
+                        <br><span th:errors="*{ciclo}" style="color:  #E81505;"></span>
+                    </td>
                 </tr>
+
                 <tr>
-                    <td><label><b>Carné de minoridad:</b> <span id="carnemin" th:text="*{carneMin}"></span></label></td>
+                    <td><label for="nota">Nota: </label></td>
+                    <td>
+                        <input id="nota" type="number" step="0.01" min="0" max="10" th:field="*{nota}">
+                        <br><span th:errors="*{nota}" style="color:  #E81505;"></span>
+                    </td>
                 </tr>
+
                 <tr>
-                    <td><label><b>Fecha de nacimiento:</b> <span id="fnac" th:text="*{fechaNacDelegate}"></span></label></td>
-                </tr>
-                <tr>
-                    <td><label><b>Dirección:</b> <span id="dir" th:text="*{direccion}"></span></label></td>
-                </tr>
-                <tr>
-                    <td><label><b>Teléfono móvil:</b> <span id="tm" th:text="*{telefonoMovil}"></span></label></td>
-                </tr>
-                <tr>
-                    <td><label><b>Teléfono fijo:</b> <span id="tf" th:text="*{telefonoFijo}"></span></label></td>
-                </tr>
-                <tr>
-                    <td><label><b>Centro educativo:</b> <span id="centro" th:text="*{centroEd.nombre + ',' + ' ' + centroEd.municipio.nombre + ',' + ' ' + centroEd.municipio.departamento.nombre}"></span></label></td>
-                </tr>
-                <tr>
-                    <td><label><b>Nombre de mamá:</b> <span id="nombreM" th:text="*{nombreMama}"></span></label></td>
-                </tr>
-                <tr>
-                    <td><label><b>Nombre de papá:</b> <span id="nombreP" th:text="*{nombrePapa}"></span></label></td>
+                    <td colspan="2"><input type="submit" value="Registrar"></td>
                 </tr>
             </table>
-        </div>
+        </form>
     </div>
 
 </body>
