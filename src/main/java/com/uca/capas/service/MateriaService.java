@@ -9,6 +9,8 @@ public interface MateriaService {
 
     public List<Materia> findAll() throws DataAccessException;
 
+    public List<Materia> findAllActive() throws DataAccessException;
+
     public Materia findOne(Integer code) throws DataAccessException;
 
     public void insertar(Materia materia) throws DataAccessException;

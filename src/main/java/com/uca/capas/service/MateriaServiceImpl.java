@@ -26,6 +26,11 @@ public class MateriaServiceImpl implements MateriaService{
     }
 
     @Override
+    public List<Materia> findAllActive() throws DataAccessException {
+        return  materiaRepo.findAllActive();
+    }
+
+    @Override
     public Materia findOne(Integer code) throws DataAccessException {
         return materiaRepo.getOne(code);
     }

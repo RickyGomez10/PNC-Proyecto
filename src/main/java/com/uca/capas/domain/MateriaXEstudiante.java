@@ -1,10 +1,7 @@
 package com.uca.capas.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Entity
 public class MateriaXEstudiante {
@@ -24,10 +21,12 @@ public class MateriaXEstudiante {
 
     @Column(name = "anio")
     @NotBlank(message = "Este campo no puede estar vacío.")
+    @Pattern(regexp = "^20[0-2][0-9]$", message = "Debe ingresar un año válido.")
     private String anio;
 
     @Column(name = "ciclo")
     @NotBlank(message = "Este campo no puede estar vacío.")
+    @Pattern(regexp = "^0[1-3]$", message = "Debe ingresar un ciclo válido (01, 02 o 03).")
     private String ciclo;
 
     @Column(name = "nota")
@@ -35,6 +34,13 @@ public class MateriaXEstudiante {
     @Max(value = 10, message = "La nota máxima permitida es diez (10).")
     @NotNull(message = "Este campo no puede estar vacío.")
     private float nota;
+
+    @Transient
+    private Integer idEstudiante;
+
+    @Transient
+    @NotNull(message = "Este campo no puede estar vacío.")
+    private Integer idMateria;
 
     public MateriaXEstudiante() {
 
@@ -97,10 +103,36 @@ public class MateriaXEstudiante {
         this.nota = nota;
     }
 
+    public Integer getIdEstudiante() {
+        return idEstudiante;
+    }
+
+    public void setIdEstudiante(Integer idEstudiante) {
+        this.idEstudiante = idEstudiante;
+    }
+
+    public Integer getIdMateria() {
+        return idMateria;
+    }
+
+    public void setIdMateria(Integer idMateria) {
+        this.idMateria = idMateria;
+    }
+
     public String getResultadoDelegate(){
         if(nota >= 6.0)
             return "Aprobada";
         return "Reprobada";
     }
 
+    @Override
+    public String toString() {
+        return "MateriaXEstudiante{" +
+                "anio='" + anio + '\'' +
+                ", ciclo='" + ciclo + '\'' +
+                ", nota=" + nota +
+                ", idEstudiante=" + idEstudiante +
+                ", idMateria=" + idMateria +
+                '}';
+    }
 }
