@@ -23,8 +23,8 @@ public class EstudianteServiceImpl implements EstudianteService{
     }
 
     @Override
-    public Estudiante findOne(String codigo) throws DataAccessException {
-        return estudianteRepo.getOne(codigo);
+    public Estudiante findOne(String carne) throws DataAccessException {
+        return estudianteRepo.findEstudianteByCarne(carne);
     }
 
     @Override

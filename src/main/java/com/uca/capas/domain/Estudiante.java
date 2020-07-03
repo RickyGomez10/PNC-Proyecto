@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
@@ -178,16 +179,12 @@ public class Estudiante {
     }
 
     public String getNombreMama() {
-        return nombreMama;
+        return nombreMama.equals("")?"N/A":nombreMama;
     }
 
-    public void setNombreMama(String nombreMama) {
-        this.nombreMama = nombreMama;
-    }
+    public void setNombreMama(String nombreMama) { this.nombreMama = nombreMama; }
 
-    public String getNombrePapa() {
-        return nombrePapa;
-    }
+    public String getNombrePapa() { return nombrePapa.equals("")?"N/A":nombrePapa; }
 
     public void setNombrePapa(String nombrePapa) {
         this.nombrePapa = nombrePapa;
@@ -223,6 +220,14 @@ public class Estudiante {
 
         return Period.between(bd, now).getYears();
 
+    }
+
+    public String getFechaNacDelegate() {
+        if (fechaNac == null){
+            return "";
+        }
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(fechaNac.getTime());
     }
 
     @Override

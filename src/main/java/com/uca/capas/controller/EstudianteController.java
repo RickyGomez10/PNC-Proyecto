@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -75,6 +72,17 @@ public class EstudianteController {
 
         mav.setViewName("registroEstudiante");
         mav.addObject("centros", centros);
+        return mav;
+
+    }
+
+    @RequestMapping(value="/materiaCursada")
+    public @ResponseBody ModelAndView addMateria(/*@RequestParam String carne*/) {
+
+        ModelAndView mav = new ModelAndView();
+        Estudiante estudiante = estudianteService.findOne("00046317");
+        mav.addObject("estudiante", estudiante);
+        mav.setViewName("registroMateria");
         return mav;
 
     }

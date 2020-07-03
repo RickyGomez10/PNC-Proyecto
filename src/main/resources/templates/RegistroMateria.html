@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Materia</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+
+    <div>
+        <h1> Usuario Seleccionado </h1>
+        <div th:object="${estudiante}">
+            <table>
+                <tr>
+                    <td><label><b>Carné:</b> <span id="carne" th:text="*{carne}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Nombre:</b> <span id="nombre" th:text="*{nombre}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Apellido:</b> <span id="apellido" th:text="*{apellido}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Carné de minoridad:</b> <span id="carnemin" th:text="*{carneMin}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Fecha de nacimiento:</b> <span id="fnac" th:text="*{fechaNacDelegate}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Dirección:</b> <span id="dir" th:text="*{direccion}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Teléfono móvil:</b> <span id="tm" th:text="*{telefonoMovil}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Teléfono fijo:</b> <span id="tf" th:text="*{telefonoFijo}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Centro educativo:</b> <span id="centro" th:text="*{centroEd.nombre + ',' + ' ' + centroEd.municipio.nombre + ',' + ' ' + centroEd.municipio.departamento.nombre}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Nombre de mamá:</b> <span id="nombreM" th:text="*{nombreMama}"></span></label></td>
+                </tr>
+                <tr>
+                    <td><label><b>Nombre de papá:</b> <span id="nombreP" th:text="*{nombrePapa}"></span></label></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
