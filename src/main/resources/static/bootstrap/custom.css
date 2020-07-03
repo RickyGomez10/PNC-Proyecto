@@ -3,11 +3,12 @@
 }
 
 .form-signin{
-    margin: 0 auto;
     position: relative;
-    padding-left: 25%;
-    padding-right: 25%;
-    border: 1px #343a40;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 10%;
 }
 
 .form-signin input[type="text"] {

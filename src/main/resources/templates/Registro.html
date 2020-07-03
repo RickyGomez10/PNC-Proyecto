@@ -1,55 +1,70 @@
 <!DOCTYPE html>
-<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Registro</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
 </head>
 <body>
 
-    <div>
-        <h1> Registrar Usuario </h1>
-        <form th:action="@{/regUser}" th:object="${usuario}" method="post">
-            <table>
-                <tr>
-                    <td><label for="usuario">Usuario: </label></td>
-                    <td><input type="text" id="usuario" th:field="*{nUsuario}" ><br><span th:errors="*{nUsuario}" style="color:  #e81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="nombre">Nombre: </label></td>
-                    <td><input type="text" id="nombre" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="apellido">Apellido: </label></td>
-                    <td><input type="text" id="apellido" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="fnac">Fecha de nacimiento: </label></td>
-                    <td><input type="date" id="fnac" th:field="*{fechaNacimiento}" ><br><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="munic">Municipio: </label></td>
-                    <td>
-                        <select id="munic" th:field="*{cMunicipio}">
-                            <option th:each="m : ${municipios}" th:value="${m.idMunicipio}" th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}"></option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="dir">Dirección: </label></td>
-                    <td><textarea id="dir" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="clave">Contraseña: </label></td>
-                    <td><input type="password" id="clave" th:field="*{clave}" ><br><span th:errors="*{clave}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Registrar"></td>
-                </tr>
-            </table>
-        </form>
+    <div class="row px-5 pt-2 border-bottom m-0">
+        <div class="col">
+            <nav class="navbar navbar-expand-md">
+                <a href="/index"><img src="imgs/logo_letrasN.png" class="img-fluid" alt="Responsive image"></a>
+                <ul class="navbar-nav w-100 justify-content-end font-weight-bold" style="font-size: 18px;">
+                    <li class="nav-item"><a href="/registro"><button type="button" class="btn btn-outline-primary">Regístrate</button></a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
+    <section class="bg-light d-flex" style="height: 92vh">
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-5 display-4"> Registrar Usuario </h1>
+                    <form th:action="@{/regUser}" th:object="${usuario}" method="post">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="usuario">Usuario</label>
+                                <input type="text" id="usuario" class="form-control" th:field="*{nUsuario}" ><br><span th:errors="*{nUsuario}" style="color:  #e81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="clave">Contraseña</label>
+                                <input type="password" id="clave" class="form-control" th:field="*{clave}" ><br><span th:errors="*{clave}" style="color:  #E81505;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" class="form-control" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" id="apellido" class="form-control" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="fnac">Fecha de Nacimiento</label>
+                                <input type="date" id="fnac" class="form-control" th:field="*{fechaNacimiento}" ><br><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="munic">Municipio</label>
+                                <select id="munic" class="form-control" th:field="*{cMunicipio}">
+                                    <option th:each="m : ${municipios}" th:value="${m.idMunicipio}" th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dir">Dirección</label>
+                            <textarea id="dir" class="form-control" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script th:if="${msg == '1'}">
         swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
@@ -63,5 +78,7 @@
         swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
 </body>
 </html>
