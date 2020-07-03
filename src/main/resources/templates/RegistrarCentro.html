@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        //Ingresar centro educativo
+        function ingresarForm() {
+            //Referencias al ID de los input
+            var nombre = $('#nombre').val();
+            var estado = $('#estado').val();
+            var municipio = $('#municipio').val();
+
+            if (document.getElementById('estado').checked) {
+                estado = true;
+            } else {
+                estado = false;
+            }
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: 'post',
+                url: '/ingresarCentroEd',
+                dataType: 'json',
+                data: JSON.stringify({
+                    'nombre': nombre,
+                    'estado': estado,
+                    'cMunicipio': parseInt(municipio)
+                }),
+                success: function (res) {
+                    swal("¡Éxito!", "Se ha registrado el centro educativo.", "success");
+
+                },
+                error: function (e) {
+                    swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+                }
+
+            });
+        }
+    </script>
+</head>
+<body>
+<div>
+    <h1> Ingresar Centro Educativo </h1>
+    <table>
+    <tr>
+        <td><label>Nombre: </label> </td>
+        <td><input type="text" name="nombre" id="nombre"> </td>
+    </tr>
+        <tr>
+            <td><label>Activo:</label>
+            <td><input type="checkbox" name="estado" id="estado"> </td>
+        </tr>
+        <tr>
+            <td><Label>Localidad:</Label></td>
+            <td> <select id="municipio">
+                <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:value="${municipio.idMunicipio}">
+            </select>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" value="Ingresar" onclick="ingresarForm()"></td>
+        </tr>
+    </table>
+</div>
+<a href="ListadoCentroEd">regresar</a>
+</body>
+</html>

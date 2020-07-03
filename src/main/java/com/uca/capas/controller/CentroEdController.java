@@ -21,7 +21,28 @@ public class CentroEdController {
     private CentroEdService centroEdService;
 
     //Cargar vistas
-    @RequestMapping("/centroEd")
+    @RequestMapping("/ListadoCentroEd")
+    public ModelAndView listadoCentroEd() {
+        ModelAndView mav = new ModelAndView();
+        CentroEd centro = new CentroEd();
+        List<Municipio> municipios = null;
+        List<CentroEd> centros = null;
+        try {
+            municipios = municipioService.findAll();
+            centros = centroEdService.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mav.addObject("error", "");
+        mav.addObject("municipios", municipios);
+        mav.addObject("centros", centros);
+        mav.addObject("centroEd", centro);
+        mav.setViewName("ListadoCentro");
+
+        return mav;
+    }
+    @RequestMapping("/IngresarUsuario")
     public ModelAndView pantallaIngresarCentroEd() {
         ModelAndView mav = new ModelAndView();
         CentroEd centro = new CentroEd();
@@ -38,10 +59,11 @@ public class CentroEdController {
         mav.addObject("municipios", municipios);
         mav.addObject("centros", centros);
         mav.addObject("centroEd", centro);
-        mav.setViewName("IngresarCentro");
+        mav.setViewName("RegistrarCentro");
 
         return mav;
     }
+
 
     @RequestMapping("/EditarForm")
     public ModelAndView PantallaEditarCentroEd(@ModelAttribute CentroEd centroEd) {
@@ -65,15 +87,14 @@ public class CentroEdController {
 
     //Controladores
     @RequestMapping(value = "/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody
-    void IngresarCentroEd(@RequestBody CentroEd centro) {
+    public @ResponseBody boolean IngresarCentroEd(@RequestBody CentroEd centro) {
 
         try {
             centroEdService.save(centro);
-            System.out.println("Insertado");
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error");
+            return false;
         }
 
     }
@@ -85,7 +106,7 @@ public class CentroEdController {
         try {
 
             CentroEd centro1 = centroEdService.findOne(centro.getIdCentroEd());
-            System.out.println(centro1.toString());
+
 
             centro1.setEstado(!centro1.getEstado());
             centroEdService.update(centro1);
@@ -102,11 +123,13 @@ public class CentroEdController {
     @RequestMapping(value = "/Modificar", method = RequestMethod.POST)
     public ModelAndView modificar(@ModelAttribute CentroEd centroEd) {
         ModelAndView mav = new ModelAndView();
+        System.out.println(centroEd.getcMunicipio());
         CentroEd updatear = centroEdService.findOne(centroEd.getIdCentroEd());
         List<Municipio> municipios = null;
         List<CentroEd> centros = null;
         CentroEd centro = new CentroEd();
         updatear.setcMunicipio(centroEd.getcMunicipio());
+        updatear.setNombre(centroEd.getNombre());
 
         try {
             centroEdService.save(updatear);
@@ -120,7 +143,7 @@ public class CentroEdController {
         mav.addObject("municipios", municipios);
         mav.addObject("centros", centros);
         mav.addObject("centroEd", centro);
-        mav.setViewName("IngresarCentro");
+        mav.setViewName("ListadoCentro");
         return mav;
     }
 }

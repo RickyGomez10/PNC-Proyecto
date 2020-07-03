@@ -9,7 +9,6 @@ public class CookieData {
         this.username = username;
         this.rol = rol;
     }
-
     public CookieData(String data){
         String[] datos = data.split("-");
         username = datos[0];

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,8 +12,8 @@
         <input type="text" th:field="*{idCentroEd}" hidden="hidden">
         <input type="text" th:field="*{nombre}"> <br> <br>
         <input type="text" th:field="*{municipio.nombre}" readonly> <br> <br>
-        <select th:field="*{cMunicipio}">
-            <option th:each="municipio: ${municipios}" th:text="${municipio.nombre}" th:value="${municipio.idMunicipio}">
+        <select id="cMunicipio" name="cMunicipio">
+            <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:selected="(${municipio.idMunicipio} == *{municipio.idMunicipio})" th:value="${municipio.idMunicipio}" >
         </select>
         <input type="submit" value="Modificar">
 

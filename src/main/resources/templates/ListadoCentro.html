@@ -1,46 +1,12 @@
 <!DOCTYPE html>
-<html xmlms:th="http://www.thymeleaf.org">
+<html xmlms:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmlms="http://www.w3.org/1999/xhtml">
 <head>
 
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
-
-        //Ingresar centro educativo
-        function ingresarForm() {
-            //Referencias al ID de los input
-            var nombre = $('#nombre').val();
-            var estado = $('#estado').val();
-            var municipio = $('#municipio').val();
-
-            if (document.getElementById('estado').checked) {
-                estado = true;
-            } else {
-                estado = false;
-            }
-
-            $.ajax({
-                contentType: 'application/json; charset=utf-8',
-                type: 'post',
-                url: '/ingresarCentroEd',
-                dataType: 'json',
-                data: JSON.stringify({
-                    'nombre': nombre,
-                    'estado': estado,
-                    'cMunicipio': parseInt(municipio)
-                }),
-                success: function (res) {
-                    alert(res);
-                },
-                error: function (e) {
-                    alert(e);
-                }
-
-            });
-
-
-        }
 
         //Desactivar/Activar estado centro educativo
         function cambiarEstadoForm(el) {
@@ -107,7 +73,6 @@
         <th> Codigo</th>
         <th> Nombre</th>
         <th> Estado</th>
-
         <th> Acciones</th>
 
         </thead>
@@ -117,18 +82,18 @@
                 <td th:text="${centro.nombre}"/>
                 <td th:text="${centro.estado}"/>
 
-                <td>
+                <td colspan="2">
                     <td><button th:id="${centro.idCentroEd}" onclick="cambiarEstadoForm(this.id)"
-                                  th:value="${centro.idCentroEd}">Cambiar estado </td>
+                                th:value="${centro.idCentroEd}">Cambiar estado </button>
+                    </td>
                     <td>
                             <form th:action="@{/EditarForm}" th:object="${centroEd}" method="post">
                                 <select th:field= "*{cMunicipio}" style="display:none">
                                     <option  th:text="${centro.idCentroEd}" th:value="${centro.idCentroEd}">
                                 </select>
-
-                                <input type="submit" th:value="${centro.idCentroEd}">
+                                <button type="submit" th:value="${centro.idCentroEd}"> Editar </button>
                             </form>
-                        </td>
+                    </td>
 
                 </td>
 
@@ -140,15 +105,6 @@
 
     </table>
 </div>
-<div>
-    <h1> Ingresar Centro Educativo </h1>
-    <label>Nombre: <input type="text" name="nombre" id="nombre"></label> <br>
-    <label>Activo: <input type="checkbox" name="estado" id="estado"> </label> <br>
-    <select id="municipio">
-        <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:value="${municipio.idMunicipio}">
-    </select> <br> <br>
-    <input type="button" value="Ingresar" onclick="ingresarForm()">
-</div>
 <!--
 <div>
     <h1> Activar/Desactivar Centro Educativo </h1>
@@ -158,6 +114,6 @@
     <input type="button" value="Cambiar estado" onclick="cambiarEstadoForm()">
 </div>
 -->
-
+<a href="IngresarUsuario">Ingresar Centro Educativo</a>
 </body>
 </html>
