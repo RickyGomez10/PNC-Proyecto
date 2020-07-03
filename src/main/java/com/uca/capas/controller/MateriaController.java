@@ -1,9 +1,7 @@
 package com.uca.capas.controller;
 
 import com.uca.capas.dao.MateriaDAO;
-import com.uca.capas.domain.CentroEd;
 import com.uca.capas.domain.Materia;
-import com.uca.capas.domain.Municipio;
 import com.uca.capas.service.MateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,8 +20,8 @@ public class MateriaController {
     MateriaDAO materiaDAO;
 
     //Cargar vistas
-    @RequestMapping("/materia")
-    public ModelAndView pantallaIngresarMateria() {
+    @RequestMapping("/ListadoMateria")
+    public ModelAndView pantallaListadoMateria() {
         ModelAndView mav = new ModelAndView();
         Materia materia = new Materia();
         List<Materia> materias = null;
@@ -37,7 +35,7 @@ public class MateriaController {
 
         mav.addObject("materias", materias);
         mav.addObject("materia", materia);
-        mav.setViewName("IngresarMateria");
+        mav.setViewName("ListadoMateria");
         return mav;
     }
 
@@ -59,18 +57,36 @@ public class MateriaController {
 
     }
 
+    @RequestMapping("/IngresarMateria")
+    public ModelAndView pantallaIngresarMateria() {
+        ModelAndView mav = new ModelAndView();
+        Materia materia = new Materia();
+        List<Materia> materias = null;
+        try {
+            materias = materiaService.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mav.addObject("error", "");
+
+        mav.addObject("materias", materias);
+        mav.addObject("materia", materia);
+        mav.setViewName("RegistrarMateria");
+        return mav;
+    }
+
     //Controladores
 
-    @RequestMapping(value = "/ingresarMateria", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/RegistrarMateria", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody boolean IngresarMateria(@RequestBody Materia materia) {
 
         try {
             materiaDAO.insertar(materia);;
-            System.out.println("Insertado");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error");
+
             return false;
         }
 
@@ -82,15 +98,11 @@ public class MateriaController {
         try {
 
             Materia materia1 = materiaService.findOne(materia.getIdMateria());
-            System.out.println(materia1.toString());
-
             materia1.setEstado(!materia1.getEstado());
             materiaService.update(materia1);
-            System.out.println("Estado cambiado");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error");
             return false;
         }
 
@@ -116,7 +128,7 @@ public class MateriaController {
 
         mav.addObject("materia", materia1);
         mav.addObject("materias", materias);
-        mav.setViewName("IngresarMateria");
+        mav.setViewName("ListadoMateria");
         return mav;
     }
 }

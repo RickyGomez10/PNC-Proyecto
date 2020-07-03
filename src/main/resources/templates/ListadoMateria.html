@@ -1,47 +1,14 @@
 <!DOCTYPE html>
-<html xmlms:th="http://www.thymeleaf.org">
+<html xmlms:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmlms="http://www.w3.org/1999/xhtml">
 <head>
 
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
 
-        //Ingresar centro educativo
-        function ingresarForm() {
-            //Referencias al ID de los input
-            var nombre = $('#nombre').val();
-            var estado = $('#estado').val();
-
-
-            if (document.getElementById('estado').checked) {
-                estado = true;
-            } else {
-                estado = false;
-            }
-
-            $.ajax({
-                contentType: 'application/json; charset=utf-8',
-                type: 'post',
-                url: '/ingresarMateria',
-                dataType: 'json',
-                data: JSON.stringify({
-                    'nombre': nombre,
-                    'estado': estado,
-
-                }),
-                success: function (res) {
-                    alert('Se ha insertado correctamente la materia');
-                    window.location.reload();
-                },
-                error: function (e) {
-                    alert('No se pudo insertar la materia');
-                }
-
-            });
-
-
-        }
 
         //Desactivar/Activar estado centro educativo
         function cambiarEstadoForm(el) {
@@ -59,7 +26,6 @@
                     window.location.reload();
                 },
                 error: function (e) {
-                    alert(e);
 
                 }
 
@@ -106,42 +72,32 @@
         <th> Codigo</th>
         <th> Nombre</th>
         <th> Estado</th>
-
-        <th> Acciones</th>
+        <th colspan="2"> Acciones</th>
 
         </thead>
         <th:block th:each="materia, row: ${materias}">
             <tr>
                 <td th:text="${materia.idMateria}"/>
                 <td th:text="${materia.nombre}"/>
-                <td th:text="${materia.estado}"/>
+                <td th:text="${materia.EstadoDelegate}"/>
+
 
                 <td>
-                <td>
-                    <button th:id="${materia.idMateria}" onclick="cambiarEstadoForm(this.id)"
-                            th:value="${materia.idMateria}">Cambiar estado
-                    </button>
+                    <button th:id="${materia.idMateria}" onclick="cambiarEstadoForm(this.id)" th:value="${materia.idMateria}">Cambiar estado</button>
                 </td>
-                <td>
-                    <form th:action="@{/EditarMateria}" th:object="${materia}" method="post">
+                <td><form th:action="@{/EditarMateria}" th:object="${materia}" method="post">
                         <select th:field="*{cMateria}" style="display:none">
                             <option th:text="${materia.idMateria}" th:value="${materia.idMateria}">
                         </select>
                         <input type="submit" value="Editar">
                     </form>
                 </td>
-                </td>
+
             </tr>
         </th:block>
     </table>
 </div>
-<div>
-    <h1> Ingresar Materia </h1>
-    <label>Nombre: <input type="text" name="nombre" id="nombre"></label> <br>
-    <label>Activo: <input type="checkbox" name="estado" id="estado"> </label> <br>
-    <input type="button" value="Ingresar" onclick="ingresarForm()">
-</div>
-
+<a href="IngresarMateria">Ingresar materia</a>
 
 </body>
 </html>

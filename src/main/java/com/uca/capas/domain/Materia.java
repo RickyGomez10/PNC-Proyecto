@@ -23,6 +23,16 @@ public class Materia {
     @Transient
     private Integer cMateria;
 
+    public String getEstadoDelegate(){
+        if(this.estado == null){
+            return "";
+        }
+        else{
+            if(this.estado) return "activo";
+            else return "inactivo";
+        }
+    }
+
     public Integer getcMateria() { return cMateria; }
 
     public void setcMateria(Integer cMateria) { this.cMateria = cMateria; }

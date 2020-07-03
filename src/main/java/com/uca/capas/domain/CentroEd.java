@@ -28,6 +28,15 @@ public class CentroEd {
     @Transient
     private Integer cMunicipio;
 
+    public String getEstadoDelegate(){
+        if(this.estado == null){
+            return "";
+        }
+        else{
+            if(this.estado) return "activo";
+            else return "inactivo";
+        }
+    }
     @Override
     public String toString() {
         return "CentroEd{" +

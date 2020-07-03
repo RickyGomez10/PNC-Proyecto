@@ -3,8 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+    //Ingresar centro educativo
+    function ingresarForm() {
+    //Referencias al ID de los input
+    var nombre = $('#nombre').val();
+    var estado = $('#estado').val();
+
+
+    if (document.getElementById('estado').checked) {
+    estado = true;
+    } else {
+    estado = false;
+    }
+
+    $.ajax({
+    contentType: 'application/json; charset=utf-8',
+    type: 'post',
+    url: '/RegistrarMateria',
+    dataType: 'json',
+    data: JSON.stringify({
+    'nombre': nombre,
+    'estado': estado,
+
+    }),
+    success: function (res) {
+        swal("¡Éxito!", "Se ha registrado la materia.", "success");
+
+    },
+    error: function (e) {
+        swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+    }
+
+    });
+
+
+    }
+    </script>
 </head>
 <body>
+<div>
+    <h1> Ingresar Materia </h1>
+    <table>
+        <tr>
+        <td> <label>Nombre: </label></td>
+        <td> <input type="text" name="nombre" id="nombre"> </td>
+        </tr>
+        <tr>
+        <td> <label>Activo: </label></td>
+        <td> <input type="checkbox" name="estado" id="estado"> </td>
+        </tr>
+
+        <td><input type="button" value="Ingresar" onclick="ingresarForm()">
+    </table>
+</div>
+<a href="/ListadoMateria">Regresar</a>
 
 </body>
 </html>

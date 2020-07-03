@@ -33,35 +33,6 @@
 
 
         }
-
-        //Editar form
-        //Desactivar/Activar estado centro educativo
-        function editarForm() {
-
-            //Referencias al ID de los input
-            var idCentro = $('#idCentroEd').val();
-
-            $.ajax({
-                contentType: 'application/json; charset=utf-8',
-                type: 'post',
-                url: '/editarCentroEd',
-                dataType: 'json',
-                data: JSON.stringify({
-                    'idCentroEd': parseInt(idCentro)
-                }),
-                success: function (res) {
-
-                    alert(res);
-                },
-                error: function (e) {
-                    alert(e);
-                }
-
-            });
-
-
-        }
-
     </script>
 </head>
 <body>
@@ -80,9 +51,8 @@
             <tr>
                 <td th:text="${centro.idCentroEd}"/>
                 <td th:text="${centro.nombre}"/>
-                <td th:text="${centro.estado}"/>
+                <td th:text="${centro.EstadoDelegate}"/>
 
-                <td colspan="2">
                     <td><button th:id="${centro.idCentroEd}" onclick="cambiarEstadoForm(this.id)"
                                 th:value="${centro.idCentroEd}">Cambiar estado </button>
                     </td>
@@ -94,26 +64,10 @@
                                 <button type="submit" th:value="${centro.idCentroEd}"> Editar </button>
                             </form>
                     </td>
-
-                </td>
-
             </tr>
-
-
         </th:block>
-
-
     </table>
 </div>
-<!--
-<div>
-    <h1> Activar/Desactivar Centro Educativo </h1>
-    <select id="idCentroEd">
-        <option th:each="centro: ${centros}" th:text="${centro.nombre}" th:value="${centro.idCentroEd}">
-    </select> <br> <br>
-    <input type="button" value="Cambiar estado" onclick="cambiarEstadoForm()">
-</div>
--->
 <a href="IngresarUsuario">Ingresar Centro Educativo</a>
 </body>
 </html>
