@@ -78,21 +78,34 @@ public class MainController {
 			if(user != null){
 				String pass = user.getClave();
 				if(pass.equals(Encriptador.encriptar(userInfo.getClave()))){
-					user.setSesion(true);
+					if (user.getSesion()==false){
+						if (user.getEstado()==true){
+							user.setSesion(true);
 
-					try {
-						CookieData c = new CookieData(user.getnUsuario(), user.getRol());
-						System.out.println(c.toString());
-						Cookie cookie = new Cookie("data", c.toString());
-						cookie.setMaxAge(3600);
-						response.addCookie(cookie);
-						cookie.setHttpOnly(true);
-						usuarioService.sesionUpdate(user);
-					}catch (Exception e) {
-						e.printStackTrace();
+							try {
+								CookieData c = new CookieData(user.getnUsuario(), user.getRol());
+								System.out.println(c.toString());
+								Cookie cookie = new Cookie("data", c.toString());
+								cookie.setMaxAge(3600);
+								response.addCookie(cookie);
+								cookie.setHttpOnly(true);
+								usuarioService.sesionUpdate(user);
+							}catch (Exception e) {
+								e.printStackTrace();
+							}
+							mav.setViewName("redirect:/mainMenu");
+							return mav;
+						}else{
+							mav.addObject("error", "Usuario desactivado");
+							mav.setViewName("index");
+							return mav;
+						}
+					}else{
+						mav.addObject("error", "Usuario ya ha iniciado sesión");
+						mav.setViewName("index");
+						return mav;
 					}
-					mav.setViewName("redirect:/mainMenu");
-					return mav;
+
 				}
 				mav.addObject("error", "Usuario y/o contraseña incorrectos");
 				mav.setViewName("index");

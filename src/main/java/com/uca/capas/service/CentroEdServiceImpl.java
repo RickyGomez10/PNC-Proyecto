@@ -49,7 +49,6 @@ public class CentroEdServiceImpl implements CentroEdService {
     @Override
     @Transactional
     public void update(CentroEd centroEd) throws DataAccessException {
-
         centroRepo.save(centroEd);
     }
 

@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        function LimpiarCampos(){
+            document.getElementById('nombre').value = "";
+            document.getElementById('cMunicipio').selectedIndex = 0;
+        }
+
+    </script>
 </head>
 <body>
 
 <div>
     <h1> Editar Centro Educativo </h1>
-    <form th:action="@{/Modificar}" th:object="${centroEd}" method="post">
+    <form th:action="@{/Modificar}" th:object="${centroEd}"  method="post">
         <table>
         <tr>
             <td><input type="text" th:field="*{idCentroEd}" hidden="hidden"></td>
         </tr>
         <tr>
             <td><Label>Nombre:</Label></td>
-            <td><input type="text" th:field="*{nombre}"></td>
+            <td><input type="text" th:field="*{nombre}"><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
         </tr>
         <tr>
             <td><label>Localidad:</label></td>
@@ -27,6 +37,7 @@
         </tr>
         <tr>
         <td colspan="2"><input type="submit" value="Modificar"></td>
+
         </tr>
         </table>
     </form>
@@ -43,5 +54,6 @@
     swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
 </script>
 <a href="ListadoCentroEd">Regresar</a>
+<button value="Limpiar" text="Limpiar" onclick="LimpiarCampos()">Reiniciar campos</button>
 </body>
 </html>
