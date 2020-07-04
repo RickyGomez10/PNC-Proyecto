@@ -23,30 +23,30 @@
         <div class="container align-self-center">
             <div class="row p-3">
                 <div class="col-12">
-                    <h1 class="mb-5 display-4"> Registrar Usuario </h1>
+                    <h1 class="mb-3 display-4"> Registrar Usuario </h1>
                     <form th:action="@{/regUser}" th:object="${usuario}" method="post">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="usuario">Usuario</label>
-                                <input type="text" id="usuario" class="form-control" th:field="*{nUsuario}" ><br><span th:errors="*{nUsuario}" style="color:  #e81505;"></span>
+                                <input type="text" id="usuario" class="form-control" th:field="*{nUsuario}" ><span th:errors="*{nUsuario}" style="color:  #e81505;"></span>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="clave">Contraseña</label>
-                                <input type="password" id="clave" class="form-control" th:field="*{clave}" ><br><span th:errors="*{clave}" style="color:  #E81505;"></span>
+                                <input type="password" id="clave" class="form-control" th:field="*{clave}"><span th:errors="*{clave}" style="color:  #E81505;"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" class="form-control" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span>
+                            <input type="text" id="nombre" class="form-control" th:field="*{nombre}" ><span th:errors="*{nombre}" style="color:  #E81505;"></span>
                         </div>
                         <div class="form-group">
                             <label for="apellido">Apellido</label>
-                            <input type="text" id="apellido" class="form-control" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span>
+                            <input type="text" id="apellido" class="form-control" th:field="*{apellido}" ><span th:errors="*{apellido}" style="color:  #E81505;"></span>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="fnac">Fecha de Nacimiento</label>
-                                <input type="date" id="fnac" class="form-control" th:field="*{fechaNacimiento}" ><br><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span>
+                                <input type="date" id="fnac" class="form-control" th:field="*{fechaNacimiento}" ><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="munic">Municipio</label>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group">
                             <label for="dir">Dirección</label>
-                            <textarea id="dir" class="form-control" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span>
+                            <textarea id="dir" class="form-control" th:field="*{direccion}" rows="3" cols="50" style="resize: none"></textarea><span th:errors="*{direccion}" style="color:  #E81505;"></span>
                         </div>
                         <button type="submit" class="btn btn-primary">Registrar</button>
                     </form>
