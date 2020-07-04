@@ -19,6 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,19 @@ public class MainController {
 	@Autowired
 	private CentroEdService centroEdService;
 
+	@RequestMapping("/")
+	public ModelAndView home(@CookieValue(value = "data", defaultValue = "-") String data) {
+
+		System.out.println(data);
+		ModelAndView mav = new ModelAndView();
+		Usuario usuario = new Usuario();
+		mav.setViewName("index");
+		mav.addObject("usuario", usuario);
+		return mav;
+	}
+
+	private static final int cookieTime = 3600*24;
+
 	@RequestMapping("/index")
 	public ModelAndView index(@CookieValue(value = "data", defaultValue = "-") String data) {
 
@@ -44,7 +58,7 @@ public class MainController {
 		mav.addObject("usuario", usuario);
 		return mav;
 	}
-	
+
 	//CARGAR HTMLS
 	@RequestMapping("/login")
 	public ModelAndView login(@CookieValue(value = "data", defaultValue = "-") String data) {
@@ -60,17 +74,11 @@ public class MainController {
 		return mav;
 	}
 
-
-
-	
 	//FUNCIONALIDAD
-
-
 
 	@RequestMapping(value="/verificar", method = RequestMethod.POST, produces = "application/json")
 	public ModelAndView verificar(@ModelAttribute Usuario userInfo, HttpServletResponse response) {
 
-		System.out.println(userInfo.getnUsuario());
 		ModelAndView mav = new ModelAndView();
 
 		try {
@@ -78,7 +86,7 @@ public class MainController {
 			if(user != null){
 				String pass = user.getClave();
 				if(pass.equals(Encriptador.encriptar(userInfo.getClave()))){
-					if (user.getSesion()==false){
+					if (user.getSesion()==false || sessionDateAvailable(user.getFechaSesion())){
 						if (user.getEstado()==true){
 							user.setSesion(true);
 
@@ -86,9 +94,10 @@ public class MainController {
 								CookieData c = new CookieData(user.getnUsuario(), user.getRol());
 								System.out.println(c.toString());
 								Cookie cookie = new Cookie("data", c.toString());
-								cookie.setMaxAge(3600);
+								cookie.setMaxAge(cookieTime);
 								response.addCookie(cookie);
 								cookie.setHttpOnly(true);
+								user.setFechaSesion(new Date());
 								usuarioService.sesionUpdate(user);
 							}catch (Exception e) {
 								e.printStackTrace();
@@ -96,12 +105,12 @@ public class MainController {
 							mav.setViewName("redirect:/mainMenu");
 							return mav;
 						}else{
-							mav.addObject("error", "Usuario desactivado");
+							mav.addObject("error", "El usuario está deshabilitado.");
 							mav.setViewName("index");
 							return mav;
 						}
 					}else{
-						mav.addObject("error", "Usuario ya ha iniciado sesión");
+						mav.addObject("error", "El usuario ya tiene una sesión activa.");
 						mav.setViewName("index");
 						return mav;
 					}
@@ -126,12 +135,29 @@ public class MainController {
 
 	}
 
+	private boolean sessionDateAvailable(Date fechaSesion) {
+
+		if(fechaSesion != null) {
+
+			Date now = new Date();
+			if (fechaSesion.getTime() + cookieTime * 1000 < now.getTime())
+				return true;
+
+			return false;
+
+		}
+
+		return true;
+
+	}
+
 	@RequestMapping("/cerrarSesion")
 	public ModelAndView exit(@CookieValue(value = "data", defaultValue = "-") String data, HttpServletResponse response) {
 
 		CookieData cookieData  = new CookieData(data);
 		Usuario user = usuarioService.findUsuarioById(cookieData.getUsername());
 		user.setSesion(false);
+		user.setFechaSesion(null);
 		usuarioService.sesionUpdate(user);
 
 		Cookie cookie = new Cookie("data", "");
