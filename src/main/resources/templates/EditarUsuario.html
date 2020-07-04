@@ -5,56 +5,97 @@
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
 </head>
-<div>
-    <h1> Editar Usuario </h1>
-    <form th:action="@{/ModificarUsuario}" th:object="${usuario}" method="post">
-        <table>
-            <tr style="display: none">
-                <td><label for="idUsuario"> Id Usuario: </label></td>
-                <td><input type="text" id="idUsuario" th:field="*{idUsuario}" readonly> </td>
-            </tr>
-            <tr>
-                <td><label for="usuario">Usuario: </label></td>
-                <td><input type="text" id="usuario" th:field="*{nUsuario}" ><br><span th:errors="*{nUsuario}" style="color:  #e81505;"></span></td>
-            </tr>
-            <tr>
-                <td><label for="nombre">Nombre: </label></td>
-                <td><input type="text" id="nombre" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
-            </tr>
-            <tr>
-                <td><label for="apellido">Apellido: </label></td>
-                <td><input type="text" id="apellido" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span></td>
-            </tr>
-            <tr>
-                <td><label for="fnac">Fecha de nacimiento: </label></td>
-                <td><input type="date" id="fnac" th:field="*{fechaNacimiento}" ><br><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span></td>
-            </tr>
-            <tr>
-                <td><label for="munic">Municipio: </label></td>
-                <td>
-                    <select id="munic" th:field="*{cMunicipio}">
-                        <option th:each="m : ${municipios}" th:value="${m.idMunicipio}" th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}"></option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="dir">Dirección: </label></td>
-                <td><textarea id="dir" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span></td>
-            </tr>
+<body class="bg-light">
 
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/mainMenu">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="/mainMenu">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/ListadoCentroEd">Centro Educativo </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/ListadoMateria">Materias</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link mr-3" href="/listadoUsuarios">Usuarios <span class="sr-only">(current)</span></a>
+                </li>
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>-->
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
 
-            <tr>
-                <td><label for="clave">Nueva Contraseña (No escribir si no se va a cambiar): </label></td>
-                <td><input type="password" id="clave" th:field="*{Password}" ><br></span></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" value="Registrar"></td>
-            </tr>
-        </table>
-        <input type="hidden" id="clave" th:field="*{clave}" ><br><span th:errors="*{clave}" style="color:  #E81505; display:none;"></span></td>
-    </form>
-</div>
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Editar Usuario </h1>
+                    <form th:action="@{/ModificarUsuario}" th:object="${usuario}" method="post">
+                        <input type="hidden" id="idUsuario"  th:field="*{idUsuario}" >
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="usuario">Usuario</label>
+                                <input type="text" id="usuario" class="form-control" th:field="*{nUsuario}" ><span th:errors="*{nUsuario}" style="color:  #e81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="clave">Nueva Contraseña (Dejar vacío para no modificar)</label>
+                                <input type="password" id="clave" class="form-control" th:field="*{Password}"></span>
+                                <input type="hidden" th:field="*{clave}" class="form-control" ><span th:errors="*{clave}" style="color:  #E81505; display:none;"></span></td>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" class="form-control" th:field="*{nombre}" ><span th:errors="*{nombre}" style="color:  #E81505;"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" id="apellido" class="form-control" th:field="*{apellido}" ><span th:errors="*{apellido}" style="color:  #E81505;"></span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="fnac">Fecha de Nacimiento</label>
+                                <input type="date" id="fnac" class="form-control" th:field="*{fechaNacimiento}" ><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="munic">Municipio</label>
+                                <select id="munic" class="form-control" th:field="*{cMunicipio}">
+                                    <option th:each="m : ${municipios}" th:value="${m.idMunicipio}" th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dir">Dirección</label>
+                            <textarea id="dir" class="form-control" th:field="*{direccion}" rows="3" cols="50" style="resize: none"></textarea><span th:errors="*{direccion}" style="color:  #E81505;"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Modificar</button>
+                        <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Reiniciar campos</button>
+                        <a href="/ListadoMateria"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <script th:if="${msg == '1'}">
     swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
 </script>
@@ -66,7 +107,5 @@
 <script th:if="${msg == '3'}">
     swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
 </script>
-<a href="listadoUsuarios">Regresar</a>
-<button onclick="LimpiarCampos()" >Limpiar Campos</button>
 </body>
 </html>
