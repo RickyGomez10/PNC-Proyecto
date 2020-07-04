@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+<div>
+    <h1>Expedientes de Alumnos</h1>
+    <form th:action="@{/buscarEstudiantes}" method="post">
+        <table>
+            <tr>
+                <td><label for="crit">Buscar Alumno por:</label></td>
+                <td>
+                    <select id="crit" name="crit">
+                        <option value="0">Seleccione criterio [Nombres, Apellidos]</option>
+                        <option value="1">Nombres</option>
+                        <option value="2">Apellidos</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="val">Valor de búsqueda:</label></td>
+                <td>
+                    <input type="text" id="val" name="val"><input type="submit" value="Buscar">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <button onclick="location.href='/registroEstudiante'">Agregar Nuevo Expediente</button>
+</div>
+
+<script th:if="${msg == '1'}">
+    swal("Error", "Por favor selecciona un criterio de búsqueda.", "error");
+</script>
+
+<script th:if="${msg == '2'}">
+    swal("Error", "No se ha especificado un criterio válido.", "error");
+</script>
+
+</body>
+</html>

@@ -84,13 +84,13 @@ public class EstudianteController {
     }
 
     @RequestMapping(value="/materiaCursada")
-    public @ResponseBody ModelAndView materiaCursada(/*@RequestParam String carne*/) {
+    public @ResponseBody ModelAndView materiaCursada(@RequestParam String carne) {
 
         ModelAndView mav = new ModelAndView();
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
 
-        Estudiante estudiante = estudianteService.findOne("00046318");
+        Estudiante estudiante = estudianteService.findOne(carne);
         MateriaXEstudiante mxe = new MateriaXEstudiante();
         List<Materia> materias = materiaService.findAllActive();
 
@@ -117,7 +117,7 @@ public class EstudianteController {
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
 
-        Estudiante estudiante = estudianteService.findOne("00046318");
+        Estudiante estudiante = estudianteService.findById(mxe.getIdEstudiante());
 
         System.out.println(mxe.toString());
 
@@ -150,6 +150,60 @@ public class EstudianteController {
 
         mav.setViewName("registroMateria");
 
+        return mav;
+
+    }
+
+    @RequestMapping("/expedientes")
+    public ModelAndView expedientes() {
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("msg", "0");
+        mav.setViewName("Expedientes");
+
+        return mav;
+    }
+
+    @RequestMapping(value="/buscarEstudiantes", method=RequestMethod.POST)
+    public ModelAndView filtrar(@RequestParam(value="crit") String crit, @RequestParam(value="val") String val) {
+
+        ModelAndView mav = new ModelAndView();
+        List<Estudiante> estudiantes = null;
+
+        if (crit.equals("1")){
+
+            try {
+                estudiantes = estudianteService.filtrarPorNombre(val);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }else if (crit.equals("2")){
+
+            try {
+                estudiantes = estudianteService.filtrarPorApellido(val);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            if (crit.equals("0")){
+                mav.addObject("msg", "1");
+            }else{
+                mav.addObject("msg", "2");
+            }
+            mav.setViewName("Expedientes");
+            return mav;
+        }
+
+        for ( Estudiante e:estudiantes ) {
+            e.setAprobadas(estudianteService.getMateriasAprobadas(e.getIdEstudiante()));
+            e.setReprobadas(estudianteService.getMateriasReprobadas(e.getIdEstudiante()));
+            e.setPromedio(estudianteService.getPromedio(e.getIdEstudiante()));
+        }
+
+        mav.addObject("estudiantes", estudiantes);
+        mav.setViewName("ListadoEstudiantes");
         return mav;
 
     }

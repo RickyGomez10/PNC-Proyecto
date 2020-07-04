@@ -81,6 +81,15 @@ public class Estudiante {
     @Transient
     private Integer cCentroEd;
 
+    @Transient
+    private Integer aprobadas;
+
+    @Transient
+    private Integer reprobadas;
+
+    @Transient
+    private Float promedio;
+
     public Estudiante() {
     }
 
@@ -180,12 +189,12 @@ public class Estudiante {
     }
 
     public String getNombreMama() {
-        return nombreMama.equals("")?"N/A":nombreMama;
+        return nombreMama!=null?(nombreMama.equals("")?"N/A":nombreMama):"";
     }
 
     public void setNombreMama(String nombreMama) { this.nombreMama = nombreMama; }
 
-    public String getNombrePapa() { return nombrePapa.equals("")?"N/A":nombrePapa; }
+    public String getNombrePapa() { return nombrePapa!=null?(nombrePapa.equals("")?"N/A":nombrePapa):""; }
 
     public void setNombrePapa(String nombrePapa) {
         this.nombrePapa = nombrePapa;
@@ -205,6 +214,30 @@ public class Estudiante {
 
     public void setcCentroEd(Integer cCentroEd) {
         this.cCentroEd = cCentroEd;
+    }
+
+    public Integer getAprobadas() {
+        return aprobadas;
+    }
+
+    public void setAprobadas(Integer aprobadas) {
+        this.aprobadas = aprobadas;
+    }
+
+    public Integer getReprobadas() {
+        return reprobadas;
+    }
+
+    public void setReprobadas(Integer reprobadas) {
+        this.reprobadas = reprobadas;
+    }
+
+    public Float getPromedio() {
+        return promedio!=null?promedio:0.0f;
+    }
+
+    public void setPromedio(Float promedio) {
+        this.promedio = promedio;
     }
 
     public Integer getEdad(){

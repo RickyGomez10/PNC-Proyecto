@@ -9,7 +9,7 @@
 <body>
 
     <div>
-        <h1> Registrar Usuario </h1>
+        <h1> Registrar Expediente </h1>
         <form th:action="@{/regEst}" th:object="${estudiante}" method="post">
             <table>
                 <tr>
@@ -65,6 +65,7 @@
                 </tr>
             </table>
         </form>
+        <button onclick="location.href='/expedientes'">Regresar</button>
     </div>
 
     <script th:if="${msg == '1'}">

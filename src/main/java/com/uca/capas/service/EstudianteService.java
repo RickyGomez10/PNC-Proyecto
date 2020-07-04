@@ -12,5 +12,18 @@ public interface EstudianteService {
 
     public Estudiante findOne(String carne) throws DataAccessException;
 
+    public Estudiante findById(Integer id) throws DataAccessException;
+
     public void save(Estudiante estudiante) throws DataAccessException;
+
+    public List<Estudiante> filtrarPorNombre(String val);
+
+    public List<Estudiante> filtrarPorApellido(String val);
+
+    public Integer getMateriasAprobadas(Integer id) throws DataAccessException;
+
+    public Integer getMateriasReprobadas(Integer id) throws DataAccessException;
+
+    public Float getPromedio(Integer id) throws DataAccessException;
+
 }
