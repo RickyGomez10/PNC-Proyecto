@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function LimpiarCampos(){
+            document.getElementById("carne").value="";
+            document.getElementById("nombre").value="";
+            document.getElementById("apellido").value="";
+            document.getElementById("carnemin").value="";
+            document.getElementById("dir").value="";
+            document.getElementById("tm").value="";
+            document.getElementById("tf").value="";
+            document.getElementById("cCentroEd").selectedIndex = "0";
+            document.getElementById("nombreM").value="";
+            document.getElementById("nombreP").value="";
+
+        }
+    </script>
+</head>
+<body>
+
+<div>
+    <h1> Editar estudiante </h1>
+    <form th:action="@{/ModificarEstudiante}" th:object="${estudiante}" method="post">
+        <table>
+            <tr>
+                <td><input type="text" hidden="true" id="idEstudiante" th:field="*{idEstudiante}"></td>
+            </tr>
+            <tr>
+                <td><label for="carne">Carné: </label></td>
+                <td><input type="text" id="carne" th:field="*{carne}" ><br><span th:errors="*{carne}" style="color:  #e81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="nombre">Nombre: </label></td>
+                <td><input type="text" id="nombre" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="apellido">Apellido: </label></td>
+                <td><input type="text" id="apellido" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="carne">Carné de minoridad: </label></td>
+                <td><input type="text" id="carnemin" th:field="*{carneMin}" ><br><span th:errors="*{carneMin}" style="color:  #e81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="fnac">Fecha de nacimiento: </label></td>
+                <td><input type="date" id="fnac" th:field="*{fechaNac}" ><br><span th:errors="*{fechaNac}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="dir">Dirección: </label></td>
+                <td><textarea id="dir" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="tm">Teléfono móvil: </label></td>
+                <td><input type="text" id="tm" th:field="*{telefonoMovil}"><br><span th:errors="*{telefonoMovil}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="tf">Teléfono fijo: </label></td>
+                <td><input type="text" id="tf" th:field="*{telefonoFijo}"><br><span th:errors="*{telefonoFijo}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="cCentroEd">Centro educativo: </label></td>
+                <td>
+                    <select id="cCentroEd" name="cCentroEd">
+                        <option th:each="c : ${centros}" th:text="${c.nombre + ',' + ' ' + c.municipio.nombre + ',' + ' ' + c.municipio.departamento.nombre}" th:selected="(${c.idCentroEd} == *{centroEd.idCentroEd})" th:value="${c.idCentroEd}" ></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="nombreM">Nombre de mamá: </label></td>
+                <td><input type="text" id="nombreM" th:field="*{nombreMama}" ><br><span th:errors="*{nombreMama}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td><label for="nombreP">Nombre de papá: </label></td>
+                <td><input type="text" id="nombreP" th:field="*{nombrePapa}" ><br><span th:errors="*{nombrePapa}" style="color:  #E81505;"></span></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Registrar"></td>
+            </tr>
+        </table>
+    </form>
+    <button onclick="location.href='/expedientes'">Regresar</button>
+    <button onClick="LimpiarCampos()">Limpiar campos</button>
+</div>
+<script th:if="${msg == '1'}">
+    swal("Algo ha salido mal...", "Parece ser que ese usuario ya ha sido registrado, prueba con otro.", "error");
+</script>
+
+
+</body>
+</html>

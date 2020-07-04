@@ -43,6 +43,11 @@ public class EstudianteServiceImpl implements EstudianteService{
     }
 
     @Override
+    public void update(Estudiante estudiante) throws DataAccessException {
+        estudianteRepo.save(estudiante);
+    }
+
+    @Override
     public List<Estudiante> filtrarPorNombre(String val) {
         return estudianteRepo.findEstudiantesByNombreContains(val);
     }

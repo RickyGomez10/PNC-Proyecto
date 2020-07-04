@@ -15,7 +15,7 @@ public interface EstudianteService {
     public Estudiante findById(Integer id) throws DataAccessException;
 
     public void save(Estudiante estudiante) throws DataAccessException;
-
+    public void update(Estudiante estudiante) throws DataAccessException;
     public List<Estudiante> filtrarPorNombre(String val);
 
     public List<Estudiante> filtrarPorApellido(String val);

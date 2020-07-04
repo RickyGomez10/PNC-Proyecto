@@ -66,5 +66,10 @@
     swal("Error", "No se ha especificado un criterio válido.", "error");
 </script>
 
+<script th:if="${msg == '3'}">
+    swal("¡Éxito!", "Se ha modificado el estudiante correctamente.", "success");
+</script>
+
+
 </body>
 </html>

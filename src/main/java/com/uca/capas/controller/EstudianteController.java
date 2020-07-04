@@ -43,6 +43,21 @@ public class EstudianteController {
         return mav;
     }
 
+    @RequestMapping("/EditarEstudiante")
+    public ModelAndView EditarEstudiante(@ModelAttribute Estudiante estudiante){
+
+        ModelAndView mav = new ModelAndView();
+        List<CentroEd> centros = centroService.findAllActive();
+        Estudiante e = estudianteService.findOne(estudiante.getCarne());
+        System.out.println(e.getCentroEd().getIdCentroEd());
+        mav.addObject("centros", centros);
+        mav.addObject("estudiante", e);
+        mav.addObject("msg", "0");
+        mav.setViewName("EditarEstudiante");
+
+        return mav;
+    }
+
     @RequestMapping(value="/regEst", method = RequestMethod.POST)
     public @ResponseBody ModelAndView verificar(@ModelAttribute @Valid Estudiante estudiante, BindingResult result) {
 
@@ -129,6 +144,32 @@ public class EstudianteController {
         mav.setViewName("ListadoEstudiantes");
         return mav;
 
+    }
+
+    @RequestMapping(value = "/ModificarEstudiante", method = RequestMethod.POST)
+    public ModelAndView ModificarEstudiante(@Valid @ModelAttribute Estudiante estudiante, BindingResult result) {
+        ModelAndView mav = new ModelAndView();
+        List<CentroEd> centros = centroService.findAll();
+        System.out.println(estudiante.getcCentroEd());
+        estudiante.setCentroEd(centroService.findOne(estudiante.getcCentroEd()));
+        mav.addObject("centros", centros);
+        System.out.println(estudiante.getcCentroEd());
+        if(!result.hasErrors()) {
+            try {
+
+                estudianteService.update(estudiante);
+                mav.addObject("msg", "3");
+                mav.setViewName("Expedientes");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                mav.addObject("msg", "1");
+                mav.setViewName("EditarEstudiante");
+            }
+        }else{
+            mav.setViewName("EditarEstudiante");
+        }
+        return mav;
     }
 
 }
