@@ -5,32 +5,58 @@
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
 </head>
-<body>
-<div>
-    <h1>Expedientes de Alumnos</h1>
-    <form th:action="@{/buscarEstudiantes}" method="post">
-        <table>
-            <tr>
-                <td><label for="crit">Buscar Alumno por:</label></td>
-                <td>
-                    <select id="crit" name="crit">
-                        <option value="0">Seleccione criterio [Nombres, Apellidos]</option>
-                        <option value="1">Nombres</option>
-                        <option value="2">Apellidos</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="val">Valor de búsqueda:</label></td>
-                <td>
-                    <input type="text" id="val" name="val"><input type="submit" value="Buscar">
-                </td>
-            </tr>
-        </table>
-    </form>
-    <button onclick="location.href='/registroEstudiante'">Agregar Nuevo Expediente</button>
-</div>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/expedientes">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active mx-3">
+                    <a class="nav-link" href="/expedientes">Expedientes <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <label class="text-white mr-5">¡Bienvenido &nbsp;<span th:text="${nombre}"></span>!</label>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
+
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Expediente de Alumnos </h1>
+                    <form th:action="@{/buscarEstudiantes}" method="post" class="mb-3">
+                        <div class="form-group">
+                            <label for="crit">Buscar Alumno por</label>
+                            <select id="crit" name="crit" class="form-control">
+                                <option value="0">Seleccione criterio [Nombres, Apellidos]</option>
+                                <option value="1">Nombres</option>
+                                <option value="2">Apellidos</option>
+                            </select>
+                        </div>
+                        <div class="form-row align-items-end">
+                            <div class="form-group col-md-10">
+                                <label for="val">Valor de búsqueda</label>
+                                <input type="text" id="val" name="val" class="form-control">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <input type="submit" class="btn btn-primary w-100" value="Buscar">
+                            </div>
+                        </div>
+                    </form>
+                    <button class="btn btn-success" onclick="location.href='/registroEstudiante'">Agregar Nuevo Expediente</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
 <script th:if="${msg == '1'}">
     swal("Error", "Por favor selecciona un criterio de búsqueda.", "error");
