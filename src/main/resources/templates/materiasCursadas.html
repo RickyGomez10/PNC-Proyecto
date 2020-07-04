@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Materia</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+
+    <div>
+        <h1> Agregar Materia Cursada </h1>
+        <div th:object="${estudiante}">
+            <h2>Datos del estudiante</h2>
+            <label><b>Nombre del estudiante:</b> <span id="nombre" th:text="*{nombre + ' ' + apellido}"></span></label><br>
+            <label><b>Carné:</b> <span id="carne" th:text="*{carne}"></span></label>
+        </div>
+        <div>
+            <h2>Listado de Materias</h2>
+            <table>
+                <thead>
+                    <th>Acción</th>
+                    <th>Materia</th>
+                    <th>Año</th>
+                    <th>Ciclo</th>
+                    <th>Nota</th>
+                    <th>Resultado</th>
+                </thead>
+                <th:block th:each="materia, row: ${materias}">
+                    <tr>
+                        <td>
+                            <form th:action="@{/editarMateriaCursada}" th:object="${estudiante}" method="post">
+                                <Button th:name="carne" th:value="*{carne}">Editar</Button>
+                            </form>
+                        </td>
+                        <td th:text="${materia.materia.nombre}"/>
+                        <td th:text="${materia.anio}"/>
+                        <td th:text="${materia.ciclo}"/>
+                        <td th:text="${materia.nota}"/>
+                        <td th:text="${materia.resultadoDelegate}"/>
+                    </tr>
+                </th:block>
+            </table>
+        </div>
+    </div>
+    <form th:action="@{/materiaCursada}" th:object="${estudiante}" method="post">
+        <Button th:name="carne" th:value="*{carne}">Agregar Nueva Materia</Button>
+    </form>
+    <button onclick="location.href='/expedientes'">Regresar</button>
+
+</body>
+</html>

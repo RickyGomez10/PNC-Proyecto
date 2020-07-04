@@ -62,4 +62,9 @@ public class MateriaXEstudianteServiceImpl implements MateriaXEstudianteService{
 
     }
 
+    @Override
+    public List<MateriaXEstudiante> findByEstudiante(Integer id) throws DataAccessException {
+        return mxeRepo.getMaterias(id);
+    }
+
 }

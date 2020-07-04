@@ -28,12 +28,6 @@ public class EstudianteController {
     @Autowired
     private EstudianteService estudianteService;
 
-    @Autowired
-    private MateriaService materiaService;
-
-    @Autowired
-    private MateriaXEstudianteService mxeService;
-
     @RequestMapping("/registroEstudiante")
     public ModelAndView regForm() {
 
@@ -79,77 +73,6 @@ public class EstudianteController {
 
         mav.setViewName("registroEstudiante");
         mav.addObject("centros", centros);
-        return mav;
-
-    }
-
-    @RequestMapping(value="/materiaCursada")
-    public @ResponseBody ModelAndView materiaCursada(@RequestParam String carne) {
-
-        ModelAndView mav = new ModelAndView();
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-
-        Estudiante estudiante = estudianteService.findOne(carne);
-        MateriaXEstudiante mxe = new MateriaXEstudiante();
-        List<Materia> materias = materiaService.findAllActive();
-
-        ArrayList<String> anios = new ArrayList<>();
-        for (int i = 2005; i <= c.get(Calendar.YEAR); i++)
-            anios.add(""+i);
-
-        mav.addObject("mxe", mxe);
-        mav.addObject("materias", materias);
-        mav.addObject("estudiante", estudiante);
-        mav.addObject("anios", anios);
-        mav.addObject("msg", "0");
-
-        mav.setViewName("registroMateria");
-
-        return mav;
-
-    }
-
-    @RequestMapping(value="/regMateriaCursada", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView regMateriaCursada(@ModelAttribute("mxe") @Valid MateriaXEstudiante mxe, BindingResult result) {
-
-        ModelAndView mav = new ModelAndView();
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-
-        Estudiante estudiante = estudianteService.findById(mxe.getIdEstudiante());
-
-        System.out.println(mxe.toString());
-
-        if(!result.hasErrors()){
-
-            try{
-                mxeService.insertar(mxe);
-                mav.addObject("msg", "1");
-            }catch (ConstraintViolationException e){
-                mav.addObject("msg", "3");
-            }catch (EntityNotFoundException e){
-                mav.addObject("msg", "3");
-            }catch (DataIntegrityViolationException e){
-                mav.addObject("msg", "2");
-            }
-
-            mxe = new MateriaXEstudiante();
-            mav.addObject("mxe", mxe);
-        }
-
-        List<Materia> materias = materiaService.findAllActive();
-
-        ArrayList<String> anios = new ArrayList<>();
-        for (int i = 2005; i <= c.get(Calendar.YEAR); i++)
-            anios.add(""+i);
-
-        mav.addObject("materias", materias);
-        mav.addObject("estudiante", estudiante);
-        mav.addObject("anios", anios);
-
-        mav.setViewName("registroMateria");
-
         return mav;
 
     }

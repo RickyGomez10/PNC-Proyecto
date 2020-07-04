@@ -13,4 +13,6 @@ public interface MateriaXEstudianteService {
 
     public void insertar(MateriaXEstudiante mxe) throws DataAccessException;
 
+    public List<MateriaXEstudiante> findByEstudiante(Integer id) throws DataAccessException;
+
 }

@@ -64,6 +64,9 @@
                 </tr>
             </table>
         </form>
+        <form th:action="@{/materiasCursadas}" th:object="${estudiante}" method="post">
+            <Button th:name="carne" th:value="*{carne}">Regresar</Button>
+        </form>
     </div>
 
     <script th:if="${msg == '1'}">
