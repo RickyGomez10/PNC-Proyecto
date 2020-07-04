@@ -6,6 +6,7 @@ import com.uca.capas.repositories.CentroEdRepo;
 import com.uca.capas.repositories.MunicipioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -26,7 +27,7 @@ public class CentroEdServiceImpl implements CentroEdService {
 
     @Override
     public List<CentroEd> findAll() throws DataAccessException {
-        return centroRepo.findAll();
+        return centroRepo.findAll(Sort.by(Sort.Direction.ASC, "idCentroEd"));
     }
 
     @Override

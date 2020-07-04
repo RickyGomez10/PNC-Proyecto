@@ -9,6 +9,7 @@ import com.uca.capas.repositories.MunicipioRepo;
 import com.uca.capas.utils.Encriptador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -31,7 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public List<Usuario> findAll() throws DataAccessException {
-		return usuarioRepo.findAll();
+		return usuarioRepo.findAll(Sort.by(Sort.Direction.ASC, "idUsuario"));
 	}
 
 	//Encontrar usuario por ID

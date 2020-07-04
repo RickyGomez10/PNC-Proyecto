@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface CentroEdRepo extends JpaRepository<CentroEd, Integer> {
 
@@ -15,5 +16,6 @@ public interface CentroEdRepo extends JpaRepository<CentroEd, Integer> {
 
     @Query(value = "SELECT * FROM public.centro_ed WHERE estado = true", nativeQuery = true)
     public ArrayList<CentroEd> findAllActive();
+
 
 }
