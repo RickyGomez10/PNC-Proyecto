@@ -1,6 +1,8 @@
 package com.uca.capas.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -13,6 +15,8 @@ public class CentroEd {
     private Integer idCentroEd;
 
     @Column(name = "nombre")
+    @Size(min=1, max=100, message = "El nombre del centro educativo debe poseer almenos 1 carácter.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String nombre;
 
     @Column(name = "estado")

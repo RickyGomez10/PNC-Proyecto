@@ -93,10 +93,8 @@
                     </td>
                     <td>
                             <form th:action="@{/EditarForm}" th:object="${centroEd}" method="post">
-                                <select th:field= "*{cMunicipio}" style="display:none">
-                                    <option  th:text="${centro.idCentroEd}" th:value="${centro.idCentroEd}">
-                                </select>
-                                <button type="submit" th:value="${centro.idCentroEd}"> Editar </button>
+
+                                <button th:name="cMunicipio" th:value="${centro.idCentroEd}"> Editar </button>
                             </form>
                     </td>
             </tr>

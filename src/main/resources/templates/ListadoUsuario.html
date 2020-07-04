@@ -61,11 +61,7 @@
                 </td>
                 <td>
                     <form th:action="@{/EditarUsuario}" th:object="${usuario}" method="post">
-                        <select th:field="*{idUsuario}" style="display:none">
-                            <option th:text="${usuario.idUsuario}" th:value="${usuario.idUsuario}">
-                        </select>
-
-                        <input type="submit" th:value="${usuario.idUsuario}">
+                        <Button th:name="idUsuario" th:value="${usuario.idUsuario}">Editar</Button>
                     </form>
                 </td>
 
@@ -79,18 +75,5 @@
 
     </table>
 </div>
-
-<script th:if="${msg == '1'}">
-    swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
-</script>
-
-<script th:if="${msg == '2'}">
-    swal("Algo ha salido mal...", "Parece ser que ese usuario ya ha sido registrado, prueba con otro.", "error");
-</script>
-
-<script th:if="${msg == '3'}">
-    swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
-</script>
-
 </body>
 </html>

@@ -6,9 +6,11 @@ import com.uca.capas.service.CentroEdService;
 import com.uca.capas.service.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -69,7 +71,6 @@ public class CentroEdController {
     public ModelAndView PantallaEditarCentroEd(@ModelAttribute CentroEd centroEd) {
         ModelAndView mav = new ModelAndView();
         List<Municipio> municipios = municipioService.findAll();
-        System.out.println(centroEd.getcMunicipio());
         try {
             centroEd = centroEdService.findOne(centroEd.getcMunicipio());
             mav.addObject("centroEd", centroEd);
@@ -121,29 +122,34 @@ public class CentroEdController {
     }
 
     @RequestMapping(value = "/Modificar", method = RequestMethod.POST)
-    public ModelAndView modificar(@ModelAttribute CentroEd centroEd) {
+    public ModelAndView modificar(@Valid @ModelAttribute CentroEd centroEd, BindingResult result) {
         ModelAndView mav = new ModelAndView();
-        System.out.println(centroEd.getcMunicipio());
+        List<Municipio> municipios = municipioService.findAll();
+        List<CentroEd> centros = centroEdService.findAll();
+        mav.addObject("municipios", municipios);
         CentroEd updatear = centroEdService.findOne(centroEd.getIdCentroEd());
-        List<Municipio> municipios = null;
-        List<CentroEd> centros = null;
-        CentroEd centro = new CentroEd();
-        updatear.setcMunicipio(centroEd.getcMunicipio());
-        updatear.setNombre(centroEd.getNombre());
+        centroEd.setMunicipio(municipioService.findOne(centroEd.getcMunicipio()));
+        centroEd.setEstado(updatear.getEstado());
 
+        if(result.hasErrors()){
+            //mav.addObject("centroEd", centroEd);
+            mav.setViewName("EditarCentro");
+            return mav;
+        }
+        CentroEd centro = new CentroEd();
         try {
-            centroEdService.save(updatear);
-            municipios = municipioService.findAll();
-            centros = centroEdService.findAll();
+
+            centroEdService.save(centroEd);
+            mav.setViewName("ListadoCentro");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         mav.addObject("error", "");
-        mav.addObject("municipios", municipios);
+
         mav.addObject("centros", centros);
         mav.addObject("centroEd", centro);
-        mav.setViewName("ListadoCentro");
+
         return mav;
     }
 }
