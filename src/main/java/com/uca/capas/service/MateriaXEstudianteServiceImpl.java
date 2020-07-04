@@ -5,10 +5,15 @@ import com.uca.capas.domain.MateriaXEstudianteKey;
 import com.uca.capas.repositories.EstudianteRepo;
 import com.uca.capas.repositories.MateriaRepo;
 import com.uca.capas.repositories.MateriaXEstudianteRepo;
+import javassist.tools.rmi.Sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -37,9 +42,13 @@ public class MateriaXEstudianteServiceImpl implements MateriaXEstudianteService{
     public void insertar(MateriaXEstudiante mxe) throws DataAccessException {
 
         mxe.setId(new MateriaXEstudianteKey(mxe.getIdMateria(),mxe.getIdEstudiante()));
-        mxe.setEstudiante(estudianteRepo.getOne(mxe.getIdEstudiante()));
-        mxe.setMateria(materiaRepo.getOne(mxe.getIdMateria()));
-        mxeRepo.save(mxe);
+        if(findOne(mxe.getId()) == null) {
+            mxe.setEstudiante(estudianteRepo.getOne(mxe.getIdEstudiante()));
+            mxe.setMateria(materiaRepo.getOne(mxe.getIdMateria()));
+            mxeRepo.save(mxe);
+        }else{
+            throw new ConstraintViolationException(new HashSet<>());
+        }
 
     }
 
