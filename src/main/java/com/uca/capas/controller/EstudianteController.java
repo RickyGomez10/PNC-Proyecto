@@ -1,10 +1,7 @@
 package com.uca.capas.controller;
 
 import com.uca.capas.domain.*;
-import com.uca.capas.service.CentroEdService;
-import com.uca.capas.service.EstudianteService;
-import com.uca.capas.service.MateriaService;
-import com.uca.capas.service.MunicipioService;
+import com.uca.capas.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -29,6 +26,9 @@ public class EstudianteController {
 
     @Autowired
     private MateriaService materiaService;
+
+    @Autowired
+    private MateriaXEstudianteService mxeService;
 
     @RequestMapping("/registroEstudiante")
     public ModelAndView regForm() {
@@ -117,7 +117,13 @@ public class EstudianteController {
         System.out.println(mxe.toString());
 
         if(!result.hasErrors()){
-            System.out.println("Ingresando...");
+
+            try{
+                mxeService.insertar(mxe);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             mxe = new MateriaXEstudiante();
             mav.addObject("mxe", mxe);
         }

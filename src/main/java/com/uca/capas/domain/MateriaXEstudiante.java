@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
+@Table(schema = "public", name = "materia_x_estudiante")
 public class MateriaXEstudiante {
 
     @EmbeddedId
@@ -39,7 +40,6 @@ public class MateriaXEstudiante {
     private Integer idEstudiante;
 
     @Transient
-    @NotNull(message = "Este campo no puede estar vacío.")
     private Integer idMateria;
 
     public MateriaXEstudiante() {

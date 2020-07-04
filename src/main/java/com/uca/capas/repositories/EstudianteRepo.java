@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface EstudianteRepo extends JpaRepository<Estudiante, String> {
+public interface EstudianteRepo extends JpaRepository<Estudiante, Integer> {
 
     public Estudiante findEstudianteByCarne(String carne);
 

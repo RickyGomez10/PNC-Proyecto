@@ -1,6 +1,7 @@
 package com.uca.capas.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,7 +19,7 @@ public class Materia {
     private Boolean estado;
 
     @OneToMany(mappedBy = "materia")
-    Set<MateriaXEstudiante> cruz;
+    private Set<MateriaXEstudiante> cruz = new HashSet<>();
 
     @Transient
     private Integer cMateria;

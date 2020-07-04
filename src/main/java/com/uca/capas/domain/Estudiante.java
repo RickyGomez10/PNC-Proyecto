@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -75,7 +76,7 @@ public class Estudiante {
     private String nombrePapa;
 
     @OneToMany(mappedBy = "estudiante")
-    Set<MateriaXEstudiante> cruz;
+    private Set<MateriaXEstudiante> cruz = new HashSet<>();
 
     @Transient
     private Integer cCentroEd;
