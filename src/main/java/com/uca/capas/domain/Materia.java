@@ -81,4 +81,13 @@ public class Materia {
     public void setCruz(Set<MateriaXEstudiante> cruz) {
         this.cruz = cruz;
     }
+
+    @Override
+    public String toString() {
+        return "Materia{" +
+                "idMateria=" + idMateria +
+                ", nombre='" + nombre + '\'' +
+                ", estado=" + estado +
+                '}';
+    }
 }

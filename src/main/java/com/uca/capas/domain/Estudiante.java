@@ -243,10 +243,8 @@ public class Estudiante {
                 ", direccion='" + direccion + '\'' +
                 ", telefonoMovil='" + telefonoMovil + '\'' +
                 ", telefonoFijo='" + telefonoFijo + '\'' +
-                ", centroEd=" + centroEd +
                 ", nombreMama='" + nombreMama + '\'' +
                 ", nombrePapa='" + nombrePapa + '\'' +
-                ", cruz=" + cruz +
                 '}';
     }
 }
