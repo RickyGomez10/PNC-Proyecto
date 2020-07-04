@@ -45,28 +45,68 @@
     }
 
     });
-
-
     }
     </script>
 </head>
-<body>
-<div>
-    <h1> Ingresar Materia </h1>
-    <table>
-        <tr>
-        <td> <label>Nombre: </label></td>
-        <td> <input type="text" name="nombre" id="nombre"><br><label id="errorNombre" hidden="true" style="color:  #E81505;">El campo debe tener al menos 1 caracter y máximo 50<label> </td>
-        </tr>
-        <tr>
-        <td> <label>Activo: </label></td>
-        <td> <input type="checkbox" name="estado" id="estado"> </td>
-        </tr>
+<body class="bg-light">
 
-        <td><input type="button" value="Ingresar" onclick="ingresarForm()">
-    </table>
-</div>
-<a href="/ListadoMateria">Regresar</a>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/mainMenu">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="/mainMenu">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/ListadoCentroEd">Centro Educativo</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link mr-3" href="/ListadoMateria">Materias <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/listadoUsuarios">Usuarios</a>
+                </li>
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>-->
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
+
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Ingresar Materia </h1>
+                    <form>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control"><label id="errorNombre" hidden="true" style="color:  #E81505;">El campo debe tener al menos 1 caracter y máximo 50</label>
+                        </div>
+                        <div class="form-check mb-4">
+                            <input type="checkbox" name="estado" id="estado" class="form-check-input">
+                            <label class="form-check-label" for="estado">Activo</label>
+                        </div>
+                        <input type="button" value="Ingresar" onclick="ingresarForm()" class="btn btn-primary">
+                        <a href="/ListadoMateria"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
 </body>
 </html>

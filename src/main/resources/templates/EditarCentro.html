@@ -66,7 +66,7 @@
                             <label for="nombre">Nombre</label>
                             <input type="text" name="nombre" id="nombre" class="form-control" th:field="*{nombre}"><span th:errors="*{nombre}" style="color:  #E81505;"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-4">
                             <label for="cMunicipio">Localidad</label>
                             <select id="cMunicipio" name="cMunicipio" class="form-control">
                                 <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:selected="(${municipio.idMunicipio} == *{municipio.idMunicipio})" th:value="${municipio.idMunicipio}">
@@ -74,6 +74,7 @@
                         </div>
                         <input type="submit" value="Modificar" class="btn btn-primary">
                         <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Reiniciar campos</button>
+                        <a href="/ListadoCentroEd"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
                     </form>
                 </div>
             </div>
