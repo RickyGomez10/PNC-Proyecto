@@ -9,6 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintDeclarationException;
+import javax.validation.ConstraintDefinitionException;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -86,7 +90,7 @@ public class EstudianteController {
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
 
-        Estudiante estudiante = estudianteService.findOne("00046317");
+        Estudiante estudiante = estudianteService.findOne("00046318");
         MateriaXEstudiante mxe = new MateriaXEstudiante();
         List<Materia> materias = materiaService.findAllActive();
 
@@ -98,6 +102,7 @@ public class EstudianteController {
         mav.addObject("materias", materias);
         mav.addObject("estudiante", estudiante);
         mav.addObject("anios", anios);
+        mav.addObject("msg", "0");
 
         mav.setViewName("registroMateria");
 
@@ -112,7 +117,7 @@ public class EstudianteController {
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
 
-        Estudiante estudiante = estudianteService.findOne("00046317");
+        Estudiante estudiante = estudianteService.findOne("00046318");
 
         System.out.println(mxe.toString());
 
@@ -120,8 +125,13 @@ public class EstudianteController {
 
             try{
                 mxeService.insertar(mxe);
-            }catch (Exception e){
-                e.printStackTrace();
+                mav.addObject("msg", "1");
+            }catch (ConstraintViolationException e){
+                mav.addObject("msg", "3");
+            }catch (EntityNotFoundException e){
+                mav.addObject("msg", "3");
+            }catch (DataIntegrityViolationException e){
+                mav.addObject("msg", "2");
             }
 
             mxe = new MateriaXEstudiante();

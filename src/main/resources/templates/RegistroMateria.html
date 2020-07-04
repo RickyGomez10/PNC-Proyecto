@@ -66,5 +66,17 @@
         </form>
     </div>
 
+    <script th:if="${msg == '1'}">
+        swal("¡Éxito!", "Se ha registrado la materia para el estudiante seleccionado.", "success");
+    </script>
+
+    <script th:if="${msg == '2'}">
+        swal("Algo ha salido mal...", "Esa materia ya ha sido registrada para el usuario seleccionado.", "error");
+    </script>
+
+    <script th:if="${msg == '3'}">
+        swal("Algo ha salido mal...", "Por favor revisa que la información proporcionada sea correcta.", "error");
+    </script>
+
 </body>
 </html>

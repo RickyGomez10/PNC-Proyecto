@@ -1,11 +1,14 @@
 package com.uca.capas.domain;
 
+import com.uca.capas.utils.BaseEntity;
+import org.springframework.data.domain.Persistable;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
 @Table(schema = "public", name = "materia_x_estudiante")
-public class MateriaXEstudiante {
+public class MateriaXEstudiante extends BaseEntity implements Persistable<MateriaXEstudianteKey> {
 
     @EmbeddedId
     MateriaXEstudianteKey id;
@@ -57,6 +60,11 @@ public class MateriaXEstudiante {
 
     public MateriaXEstudianteKey getId() {
         return id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return !persisted;
     }
 
     public void setId(MateriaXEstudianteKey id) {
