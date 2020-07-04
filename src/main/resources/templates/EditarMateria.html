@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+        function LimpiarCampos(){
+            document.getElementById('nombre').value = "";
+        }
+    </script>
 </head>
 <body>
 
 <div>
-    <h1> Editar Centro Educativo </h1>
+    <h1> Editar Materia </h1>
     <form th:action="@{/ModificarMateria}" th:object="${materia}" method="post">
         <table>
             <tr>
@@ -15,7 +20,7 @@
             </tr>
             <tr>
             <td><label> Nombre: </label></td>
-            <td><input type="text" th:field="*{nombre}"> </td>
+            <td><input type="text" th:field="*{nombre}"><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
             </tr>
             <tr>
             <td><input type="submit" value="Modificar"></td>
@@ -24,5 +29,7 @@
     </form>
 </div>
 <a href="ListadoMateria">Regresar</a>
+<button onclick="LimpiarCampos()">Limpiar campos</button>
+
 </body>
 </html>

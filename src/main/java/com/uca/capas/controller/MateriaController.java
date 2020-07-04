@@ -5,9 +5,11 @@ import com.uca.capas.domain.Materia;
 import com.uca.capas.service.MateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -79,17 +81,23 @@ public class MateriaController {
     //Controladores
 
     @RequestMapping(value = "/RegistrarMateria", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody boolean IngresarMateria(@RequestBody Materia materia) {
+    public @ResponseBody String IngresarMateria(@RequestBody Materia materia) {
+        String msg;
+        if(materia.getNombre().isEmpty() || materia.getNombre() == null || materia.getNombre() == "" ||materia.getNombre().length() >50){
+            msg="2";
+            return msg;
+        }
 
         try {
             materiaDAO.insertar(materia);;
-            return true;
+            msg="1";
+
         } catch (Exception e) {
             e.printStackTrace();
+            msg="3";
 
-            return false;
         }
-
+        return msg;
     }
 
     @RequestMapping(value = "/cambiarEstadoMateria", method = RequestMethod.POST, produces = "application/json")
@@ -109,26 +117,35 @@ public class MateriaController {
     }
 
     @RequestMapping(value = "/ModificarMateria", method = RequestMethod.POST)
-    public ModelAndView modificar(@ModelAttribute Materia materia) {
+    public ModelAndView modificar(@Valid @ModelAttribute Materia materia, BindingResult result) {
+
         ModelAndView mav = new ModelAndView();
+        List<Materia> materias = materiaService.findAll();
+        mav.addObject("materias", materias);
+
         Materia updatear = materiaService.findOne(materia.getIdMateria());
-        updatear.setNombre(materia.getNombre());
+        materia.setEstado(updatear.getEstado());
         Materia materia1 = new Materia();
-        List<Materia> materias = null;
 
-        try {
-            materiaService.insertar(updatear);
-
-            materias = materiaService.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!result.hasErrors()) {
+            try {
+                materiaService.insertar(materia);
+                mav.setViewName("ListadoMateria");
+                mav.addObject("msg", "1");
+            } catch (Exception e) {
+                e.printStackTrace();
+                mav.addObject("msg","2");
+            }
+        }else{
+            mav.setViewName("EditarMateria");
+            return mav;
         }
 
         mav.addObject("error", "");
 
         mav.addObject("materia", materia1);
-        mav.addObject("materias", materias);
-        mav.setViewName("ListadoMateria");
+
+
         return mav;
     }
 }

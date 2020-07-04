@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -31,7 +31,11 @@
 
     }),
     success: function (res) {
-        swal("¡Éxito!", "Se ha registrado la materia.", "success");
+        if(res == "1") {
+            swal("¡Éxito!", "Se ha registrado la materia.", "success");
+        }else if(res =="2"){
+            document.getElementById('errorNombre').hidden= false;
+        }
 
     },
     error: function (e) {
@@ -50,7 +54,7 @@
     <table>
         <tr>
         <td> <label>Nombre: </label></td>
-        <td> <input type="text" name="nombre" id="nombre"> </td>
+        <td> <input type="text" name="nombre" id="nombre"><br><label id="errorNombre" hidden="true" style="color:  #E81505;">El campo debe tener al menos 1 caracter y máximo 50<label> </td>
         </tr>
         <tr>
         <td> <label>Activo: </label></td>

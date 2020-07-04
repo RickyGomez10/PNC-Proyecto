@@ -1,6 +1,8 @@
 package com.uca.capas.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +15,8 @@ public class Materia {
     private Integer idMateria;
 
     @Column(name = "nombre")
+    @Size(min=1, max=50,message = "El campo debe contener al menos 1 caracter y máximo 50.")
+    @NotBlank(message = "Este campo no puede estar vacío.")
     private String nombre;
 
     @Column(name = "estado")

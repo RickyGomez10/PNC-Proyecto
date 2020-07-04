@@ -95,7 +95,14 @@
         </th:block>
     </table>
 </div>
+
 <a href="IngresarMateria">Ingresar materia</a>
 
+<script th:if="${msg == '1'}">
+    swal("¡Éxito!", "Se ha modificado la materia correctamente.", "success");
+</script>
+<script th:if="${msg == '2'}">
+    swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+</script>
 </body>
 </html>
