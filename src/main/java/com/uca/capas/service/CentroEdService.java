@@ -4,6 +4,7 @@ import com.uca.capas.domain.CentroEd;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.query.Param;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 public interface CentroEdService {
@@ -16,6 +17,5 @@ public interface CentroEdService {
 
     public void save(CentroEd centroEd) throws DataAccessException;
     public void update(CentroEd centroEd) throws DataAccessException;
-
     public CentroEd updateEstado(Boolean estado, Integer centroEd) throws DataAccessException;
 }

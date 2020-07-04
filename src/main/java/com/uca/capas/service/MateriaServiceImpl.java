@@ -6,6 +6,7 @@ import com.uca.capas.repositories.CentroEdRepo;
 import com.uca.capas.repositories.MateriaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class MateriaServiceImpl implements MateriaService{
 
     @Override
     public List<Materia> findAll() throws DataAccessException {
-       return  materiaRepo.findAll();
+       return  materiaRepo.findAll(Sort.by(Sort.Direction.ASC, "idMateria"));
     }
 
     @Override

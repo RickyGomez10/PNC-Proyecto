@@ -2,6 +2,7 @@ package com.uca.capas.controller;
 
 import com.uca.capas.domain.CentroEd;
 import com.uca.capas.domain.Municipio;
+import com.uca.capas.repositories.CentroEdRepo;
 import com.uca.capas.service.CentroEdService;
 import com.uca.capas.service.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class CentroEdController {
 
     @Autowired
     private CentroEdService centroEdService;
+
+    @Autowired
+    private CentroEdRepo centroEdRepo;
 
     //Cargar vistas
     @RequestMapping("/ListadoCentroEd")
