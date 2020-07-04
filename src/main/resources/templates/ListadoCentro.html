@@ -35,7 +35,7 @@
         }
     </script>
 </head>
-<body>
+<body class="bg-light">
 
     <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
         <a class="navbar-brand" href="/mainMenu">
@@ -43,10 +43,10 @@
         </a>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active mx-3">
+                <li class="nav-item mx-3">
                     <a class="nav-link" href="/mainMenu">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link mr-3" href="/ListadoCentroEd">Centro Educativo <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
@@ -72,36 +72,47 @@
         </div>
     </nav>
 
-<div>
-    <h1>Listado de Centros Educativos</h1>
-    <table>
-        <thead>
-        <th> Codigo</th>
-        <th> Nombre</th>
-        <th> Estado</th>
-        <th> Acciones</th>
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Listado de Centros Educativos </h1>
+                    <div class="d-flex w-100 mb-2 justify-content-end">
+                        <a href="/IngresarCentro"><button type="button" class="btn btn-sm btn-success">Ingresar Centro Educativo</button></a>
+                    </div>
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"> Codigo</th>
+                            <th scope="col"> Nombre</th>
+                            <th scope="col"> Estado</th>
+                            <th scope="col" colspan="2"> Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <th:block th:each="centro, row: ${centros}">
+                                <tr>
+                                    <th scope="row" th:text="${centro.idCentroEd}"/>
+                                    <td th:text="${centro.nombre}"/>
+                                    <td th:text="${centro.EstadoDelegate}"/>
 
-        </thead>
-        <th:block th:each="centro, row: ${centros}">
-            <tr>
-                <td th:text="${centro.idCentroEd}"/>
-                <td th:text="${centro.nombre}"/>
-                <td th:text="${centro.EstadoDelegate}"/>
+                                    <td><button class="btn btn-sm btn-outline-primary" th:id="${centro.idCentroEd}" onclick="cambiarEstadoForm(this.id)"
+                                                th:value="${centro.idCentroEd}">Cambiar estado </button>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{/EditarForm}" th:object="${centroEd}" method="post">
 
-                    <td><button th:id="${centro.idCentroEd}" onclick="cambiarEstadoForm(this.id)"
-                                th:value="${centro.idCentroEd}">Cambiar estado </button>
-                    </td>
-                    <td>
-                            <form th:action="@{/EditarForm}" th:object="${centroEd}" method="post">
-
-                                <button th:name="cMunicipio" th:value="${centro.idCentroEd}"> Editar </button>
-                            </form>
-                    </td>
-            </tr>
-        </th:block>
-    </table>
-</div>
-<a href="IngresarCentro">Ingresar Centro Educativo</a>
+                                            <button class="btn btn-sm btn-outline-primary" th:name="cMunicipio" th:value="${centro.idCentroEd}"> Editar </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script src="js/bootstrap.bundle.js"></script>
 
