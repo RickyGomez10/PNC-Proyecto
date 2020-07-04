@@ -9,7 +9,7 @@
 <body>
 
     <div>
-        <h1> Agregar Materia Cursada </h1>
+        <h1> Materias Cursadas </h1>
         <div th:object="${estudiante}">
             <h2>Datos del estudiante</h2>
             <label><b>Nombre del estudiante:</b> <span id="nombre" th:text="*{nombre + ' ' + apellido}"></span></label><br>
@@ -30,6 +30,7 @@
                     <tr>
                         <td>
                             <form th:action="@{/editarMateriaCursada}" th:object="${estudiante}" method="post">
+                                <input type="hidden" name="mat" id="mat" th:value="${materia.materia.idMateria}">
                                 <Button th:name="carne" th:value="*{carne}">Editar</Button>
                             </form>
                         </td>
