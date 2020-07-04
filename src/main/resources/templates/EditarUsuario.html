@@ -6,13 +6,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-<body>
-
 <div>
     <h1> Editar Usuario </h1>
     <form th:action="@{/ModificarUsuario}" th:object="${usuario}" method="post">
         <table>
-            <tr>
+            <tr style="display: none">
                 <td><label for="idUsuario"> Id Usuario: </label></td>
                 <td><input type="text" id="idUsuario" th:field="*{idUsuario}" readonly> </td>
             </tr>
@@ -68,5 +66,7 @@
 <script th:if="${msg == '3'}">
     swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
 </script>
+<a href="listadoUsuarios">Regresar</a>
+<button onclick="LimpiarCampos()" >Limpiar Campos</button>
 </body>
 </html>

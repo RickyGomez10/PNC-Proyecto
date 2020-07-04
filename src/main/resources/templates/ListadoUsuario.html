@@ -45,7 +45,7 @@
         <th> Usuario</th>
         <th> Estado</th>
 
-        <th> Acciones</th>
+        <th colspan="2"> Acciones</th>
 
         </thead>
         <th:block th:each="usuario, row: ${usuarios}">
@@ -53,27 +53,19 @@
                 <td th:text="${usuario.idUsuario}"/>
                 <td th:text="${usuario.nUsuario}"/>
                 <td th:text="${usuario.estado}"/>
-
-                <td>
-                <td>
-                    <button th:id="${usuario.idUsuario}" onclick="cambiarEstadoForm(this.id)"
-                            th:value="${usuario.idUsuario}">Cambiar estado
-                </td>
-                <td>
-                    <form th:action="@{/EditarUsuario}" th:object="${usuario}" method="post">
+                <td><button th:id="${usuario.idUsuario}" onclick="cambiarEstadoForm(this.id)" th:value="${usuario.idUsuario}">Cambiar estado </button></td>
+                <td><form th:action="@{/EditarUsuario}" th:object="${usuario}" method="post">
                         <Button th:name="idUsuario" th:value="${usuario.idUsuario}">Editar</Button>
                     </form>
                 </td>
-
-                </td>
-
             </tr>
-
-
         </th:block>
-
-
     </table>
 </div>
+
+<script th:if="${msg == '1'}">
+    swal("¡Éxito!", "Se ha modificado el usuario correctamente.", "success");
+</script>
+
 </body>
 </html>
