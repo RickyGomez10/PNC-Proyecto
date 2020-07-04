@@ -4,9 +4,12 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Insert title here</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
     <script>
         //Ingresar centro educativo
         function ingresarForm() {
@@ -49,32 +52,68 @@
         }
     </script>
 </head>
-<body>
-<div>
-    <h1> Ingresar Centro Educativo </h1>
-    <table>
-    <tr>
-        <td><label>Nombre: </label> </td>
-        <td><input type="text" name="nombre" id="nombre"> <br><label hidden="true" style="color:#E81505" id="errorNombre" name="errorNombre">Erroraso</label> </td>
+<body class="bg-light">
 
-    </tr>
-        <tr>
-            <td><label>Activo:</label>
-            <td><input type="checkbox" name="estado" id="estado"> </td>
-        </tr>
-        <tr>
-            <td><Label>Localidad:</Label></td>
-            <td> <select id="municipio">
-                <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:value="${municipio.idMunicipio}">
-            </select>
-            </td>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/mainMenu">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="/mainMenu">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link mr-3" href="/ListadoCentroEd">Centro Educativo <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/ListadoMateria">Materias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/listadoUsuarios">Usuarios</a>
+                </li>
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>-->
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
 
-        </tr>
-        <tr>
-            <td colspan="2"><input type="button" value="Ingresar" onclick="ingresarForm()"></td>
-        </tr>
-    </table>
-</div>
-<a href="ListadoCentroEd">regresar</a>
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Ingresar Centro Educativo </h1>
+                    <form>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control"><label hidden="true" style="color:#E81505" id="errorNombre" name="errorNombre">Erroraso</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" name="estado" id="estado" class="form-check-input">
+                            <label class="form-check-label" for="estado">Activo</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="municipio">Localidad</label>
+                            <select id="municipio" class="form-control">
+                                <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:value="${municipio.idMunicipio}">
+                            </select>
+                        </div>
+                        <input type="button" value="Ingresar" onclick="ingresarForm()" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

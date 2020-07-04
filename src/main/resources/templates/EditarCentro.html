@@ -2,46 +2,84 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
 
     <script>
         function LimpiarCampos(){
+
             document.getElementById('nombre').value = "";
             document.getElementById('cMunicipio').selectedIndex = 0;
         }
 
     </script>
 </head>
-<body>
+<body class="bg-light">
 
-<div>
-    <h1> Editar Centro Educativo </h1>
-    <form th:action="@{/Modificar}" th:object="${centroEd}"  method="post">
-        <table>
-        <tr>
-            <td><input type="text" th:field="*{idCentroEd}" hidden="hidden"></td>
-        </tr>
-        <tr>
-            <td><Label>Nombre:</Label></td>
-            <td><input type="text" th:field="*{nombre}"><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
-        </tr>
-        <tr>
-            <td><label>Localidad:</label></td>
-            <td>
-                <select id="cMunicipio" name="cMunicipio">
-                    <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:selected="(${municipio.idMunicipio} == *{municipio.idMunicipio})" th:value="${municipio.idMunicipio}" >
-                </select>
-            </td>
-        </tr>
-        <tr>
-        <td colspan="2"><input type="submit" value="Modificar"></td>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/mainMenu">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="/mainMenu">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link mr-3" href="/ListadoCentroEd">Centro Educativo <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/ListadoMateria">Materias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/listadoUsuarios">Usuarios</a>
+                </li>
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>-->
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
 
-        </tr>
-        </table>
-    </form>
-</div>
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Editar Centro Educativo </h1>
+                    <form th:action="@{/Modificar}" th:object="${centroEd}"  method="post">
+                        <input type="text" th:field="*{idCentroEd}" hidden="hidden">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control" th:field="*{nombre}"><span th:errors="*{nombre}" style="color:  #E81505;"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="cMunicipio">Localidad</label>
+                            <select id="cMunicipio" name="cMunicipio" class="form-control">
+                                <option th:each="municipio: ${municipios}" th:text="${municipio.departamento.nombre + ',' + ' ' + municipio.nombre}" th:selected="(${municipio.idMunicipio} == *{municipio.idMunicipio})" th:value="${municipio.idMunicipio}">
+                            </select>
+                        </div>
+                        <input type="submit" value="Modificar" class="btn btn-primary">
+                        <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Reiniciar campos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <script th:if="${msg == '1'}">
     swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
 </script>
@@ -53,7 +91,6 @@
 <script th:if="${msg == '3'}">
     swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
 </script>
-<a href="ListadoCentroEd">Regresar</a>
-<button value="Limpiar" text="Limpiar" onclick="LimpiarCampos()">Reiniciar campos</button>
+
 </body>
 </html>
