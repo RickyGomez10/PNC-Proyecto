@@ -7,6 +7,8 @@
     <title>Insert title here</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
     <script>
 
 
@@ -64,39 +66,84 @@
 
     </script>
 </head>
-<body>
-<div>
-    <h1>Listado de Materias</h1>
-    <table>
-        <thead>
-        <th> Codigo</th>
-        <th> Nombre</th>
-        <th> Estado</th>
-        <th colspan="2"> Acciones</th>
+<body class="bg-light">
 
-        </thead>
-        <th:block th:each="materia, row: ${materias}">
-            <tr>
-                <td th:text="${materia.idMateria}"/>
-                <td th:text="${materia.nombre}"/>
-                <td th:text="${materia.EstadoDelegate}"/>
-                <td>
-                    <button th:id="${materia.idMateria}" onclick="cambiarEstadoForm(this.id)"
-                            th:value="${materia.idMateria}">Cambiar estado
-                    </button>
-                </td>
-                <td>
-                    <form th:action="@{/EditarMateria}" th:object="${materia}" method="post">
-                        <button th:name="cMateria" th:value="${materia.idMateria}">Editar</button>
-                    </form>
-                </td>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/mainMenu">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="/mainMenu">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/ListadoCentroEd">Centro Educativo</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link mr-3" href="/ListadoMateria">Materias <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mr-3" href="/listadoUsuarios">Usuarios</a>
+                </li>
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>-->
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
 
-            </tr>
-        </th:block>
-    </table>
-</div>
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Listado de Materias </h1>
+                    <div class="d-flex w-100 mb-2 justify-content-end">
+                        <a href="/IngresarMateria"><button type="button" class="btn btn-sm btn-success">Ingresar Materia</button></a>
+                    </div>
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"> Codigo</th>
+                            <th scope="col"> Nombre</th>
+                            <th scope="col"> Estado</th>
+                            <th scope="col" colspan="2"> Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="materia, row: ${materias}">
+                            <tr>
+                                <th scope="row" th:text="${materia.idMateria}"/>
+                                <td th:text="${materia.nombre}"/>
+                                <td th:text="${materia.EstadoDelegate}"/>
 
-<a href="IngresarMateria">Ingresar materia</a>
+                                <td><button class="btn btn-sm btn-outline-primary" th:id="${materia.idMateria}" onclick="cambiarEstadoForm(this.id)"
+                                            th:value="${materia.idMateria}">Cambiar estado </button>
+                                </td>
+                                <td>
+                                    <form th:action="@{/EditarMateria}" th:object="${materia}" method="post">
+
+                                        <button class="btn btn-sm btn-outline-primary" th:name="cMateria" th:value="${materia.idMateria}"> Editar </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <script th:if="${msg == '1'}">
     swal("¡Éxito!", "Se ha modificado la materia correctamente.", "success");
