@@ -11,6 +11,14 @@
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
     <script>
+
+        function LimpiarCampos(){
+
+            document.getElementById('nombre').value = "";
+            document.getElementById('municipio').selectedIndex = 0;
+            document.getElementById('estado').checked = false;
+        }
+
         //Ingresar centro educativo
         function ingresarForm() {
             //Referencias al ID de los input
@@ -114,6 +122,7 @@
                             </select>
                         </div>
                         <input type="button" value="Ingresar" onclick="ingresarForm()" class="btn btn-primary">
+                        <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Limpiar campos</button>
                         <a href="/ListadoCentroEd"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
                     </form>
                 </div>
