@@ -45,21 +45,17 @@ public class EstudianteController {
         return mav;
     }
 
-    @RequestMapping("/EditarEstudiante")
+    @RequestMapping(value="/EditarEstudiante", method = RequestMethod.POST)
     public ModelAndView EditarEstudiante(@ModelAttribute Estudiante estudiante){
 
         ModelAndView mav = new ModelAndView();
 
-        if (estudiante.getIdEstudiante() != null) {
-            List<CentroEd> centros = centroService.findAllActive();
-            Estudiante e = estudianteService.findOne(estudiante.getCarne());
-            mav.addObject("centros", centros);
-            mav.addObject("estudiante", e);
-            mav.addObject("msg", "0");
-            mav.setViewName("EditarEstudiante");
-        }else{
-            mav.setViewName("redirect:/expedientes");
-        }
+        List<CentroEd> centros = centroService.findAllActive();
+        Estudiante e = estudianteService.findOne(estudiante.getCarne());
+        mav.addObject("centros", centros);
+        mav.addObject("estudiante", e);
+        mav.addObject("msg", "0");
+        mav.setViewName("EditarEstudiante");
 
         return mav;
 
@@ -169,10 +165,8 @@ public class EstudianteController {
     public ModelAndView ModificarEstudiante(@Valid @ModelAttribute Estudiante estudiante, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         List<CentroEd> centros = centroService.findAll();
-        System.out.println(estudiante.getcCentroEd());
         estudiante.setCentroEd(centroService.findOne(estudiante.getcCentroEd()));
         mav.addObject("centros", centros);
-        System.out.println(estudiante.getcCentroEd());
         if(!result.hasErrors()) {
             try {
 
