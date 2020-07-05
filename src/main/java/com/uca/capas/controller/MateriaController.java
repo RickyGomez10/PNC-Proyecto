@@ -3,12 +3,12 @@ package com.uca.capas.controller;
 import com.uca.capas.dao.MateriaDAO;
 import com.uca.capas.domain.Materia;
 import com.uca.capas.service.MateriaService;
+import com.uca.capas.utils.CookieData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -21,23 +21,30 @@ public class MateriaController {
     @Autowired
     MateriaDAO materiaDAO;
 
-    //Cargar vistas
     @RequestMapping("/ListadoMateria")
-    public ModelAndView pantallaListadoMateria() {
-        ModelAndView mav = new ModelAndView();
-        Materia materia = new Materia();
-        List<Materia> materias = null;
-        try {
-            materias = materiaService.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public ModelAndView pantallaListadoMateria(@CookieValue(value = "data", defaultValue = "-") String data) {
+        if(CookieData.checkCookie(data)) {
+            CookieData cookie = new CookieData(data);
+            if (cookie.getRol() == 1) {
+                ModelAndView mav = new ModelAndView();
+                List<Materia> materias = null;
+                try {
+                    materias = materiaService.findAll();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mav.addObject("materias", materias);
+                mav.setViewName("ListadoMateria");
+                return mav;
+            }
         }
-        mav.addObject("materias", materias);
-        mav.setViewName("ListadoMateria");
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/");
         return mav;
     }
 
-    @RequestMapping("/EditarMateria")
+    @RequestMapping(value = "/EditarMateria", method = RequestMethod.POST)
     public ModelAndView PantallaEditarCentroEd(@ModelAttribute Materia materia) {
         ModelAndView mav = new ModelAndView();
 
@@ -56,22 +63,24 @@ public class MateriaController {
     }
 
     @RequestMapping("/IngresarMateria")
-    public ModelAndView pantallaIngresarMateria() {
-        ModelAndView mav = new ModelAndView();
-        Materia materia = new Materia();
-        List<Materia> materias = null;
-        try {
-            materias = materiaService.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public ModelAndView pantallaIngresarMateria(@CookieValue(value = "data", defaultValue = "-") String data) {
+
+        if(CookieData.checkCookie(data)) {
+            CookieData cookie = new CookieData(data);
+            if (cookie.getRol() == 1) {
+                ModelAndView mav = new ModelAndView();
+                Materia materia = new Materia();
+                mav.addObject("materia", materia);
+                mav.setViewName("RegistrarMateria");
+                return mav;
+            }
         }
 
-        mav.addObject("materia", materia);
-        mav.setViewName("RegistrarMateria");
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/");
         return mav;
-    }
 
-    //Controladores
+    }
 
     @RequestMapping(value = "/RegistrarMateria", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody String IngresarMateria(@RequestBody Materia materia) {

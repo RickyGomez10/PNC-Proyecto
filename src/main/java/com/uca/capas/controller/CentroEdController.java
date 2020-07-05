@@ -2,15 +2,14 @@ package com.uca.capas.controller;
 
 import com.uca.capas.domain.CentroEd;
 import com.uca.capas.domain.Municipio;
-import com.uca.capas.repositories.CentroEdRepo;
 import com.uca.capas.service.CentroEdService;
 import com.uca.capas.service.MunicipioService;
+import com.uca.capas.utils.CookieData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -23,52 +22,65 @@ public class CentroEdController {
     @Autowired
     private CentroEdService centroEdService;
 
-    @Autowired
-    private CentroEdRepo centroEdRepo;
-
-    //Cargar vistas
     @RequestMapping("/ListadoCentroEd")
-    public ModelAndView listadoCentroEd() {
-        ModelAndView mav = new ModelAndView();
-        CentroEd centro = new CentroEd();
-        List<Municipio> municipios = null;
-        List<CentroEd> centros = null;
-        try {
-            municipios = municipioService.findAll();
-            centros = centroEdService.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public ModelAndView listadoCentroEd(@CookieValue(value = "data", defaultValue = "-") String data) {
+
+        if(CookieData.checkCookie(data)) {
+            CookieData cookie = new CookieData(data);
+            if (cookie.getRol() == 1) {
+                ModelAndView mav = new ModelAndView();
+                List<CentroEd> centros = null;
+                try {
+                    centros = centroEdService.findAll();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mav.addObject("msg", "");
+                mav.addObject("centros", centros);
+                mav.setViewName("ListadoCentro");
+                return mav;
+            }
         }
 
-        mav.addObject("msg", "");
-        mav.addObject("centros", centros);
-        mav.setViewName("ListadoCentro");
-
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/");
         return mav;
+
     }
+
     @RequestMapping("/IngresarCentro")
-    public ModelAndView pantallaIngresarCentroEd() {
-        ModelAndView mav = new ModelAndView();
-        CentroEd centro = new CentroEd();
-        List<Municipio> municipios = null;
-        List<CentroEd> centros = null;
-        try {
-            municipios = municipioService.findAll();
-            centros = centroEdService.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public ModelAndView pantallaIngresarCentroEd(@CookieValue(value = "data", defaultValue = "-") String data) {
+
+        if(CookieData.checkCookie(data)) {
+            CookieData cookie = new CookieData(data);
+            if (cookie.getRol() == 1) {
+                ModelAndView mav = new ModelAndView();
+                CentroEd centro = new CentroEd();
+                List<Municipio> municipios = null;
+                List<CentroEd> centros = null;
+                try {
+                    municipios = municipioService.findAll();
+                    centros = centroEdService.findAll();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                mav.addObject("municipios", municipios);
+                mav.addObject("centros", centros);
+                mav.addObject("centroEd", centro);
+                mav.setViewName("RegistrarCentro");
+
+                return mav;
+            }
         }
 
-        mav.addObject("municipios", municipios);
-        mav.addObject("centros", centros);
-        mav.addObject("centroEd", centro);
-        mav.setViewName("RegistrarCentro");
-
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/");
         return mav;
+
     }
 
-
-    @RequestMapping("/EditarForm")
+    @RequestMapping(value = "/EditarForm", method = RequestMethod.POST)
     public ModelAndView PantallaEditarCentroEd(@ModelAttribute CentroEd centroEd) {
         ModelAndView mav = new ModelAndView();
         List<Municipio> municipios = municipioService.findAll();
@@ -86,8 +98,6 @@ public class CentroEdController {
 
     }
 
-
-    //Controladores
     @RequestMapping(value = "/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody String IngresarCentroEd(@RequestBody CentroEd centro) {
         String msg;
