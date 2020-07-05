@@ -42,6 +42,7 @@
                         <form th:action="@{/materiaCursada}" th:object="${estudiante}" method="post">
                             <button class="btn btn-sm btn-success" th:name="carne" th:value="*{carne}">Agregar Nueva Materia</button>
                         </form>
+                        <a href="/expedientes"><input type="button" value="Regresar" class="btn btn-sm btn-secondary ml-3"></a>
                     </div>
                     <table class="table table-hover">
                         <thead class="thead-dark">
@@ -77,8 +78,6 @@
             </div>
         </div>
     </section>
-
-    <button onclick="location.href='/expedientes'">Regresar</button>
 
 </body>
 </html>
