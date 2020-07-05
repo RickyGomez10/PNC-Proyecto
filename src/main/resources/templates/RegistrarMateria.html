@@ -9,6 +9,11 @@
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
     <script>
+
+        function LimpiarCampos(){
+            document.getElementById('nombre').value = "";
+            document.getElementById('estado').checked= false;
+        }
     //Ingresar centro educativo
     function ingresarForm() {
     //Referencias al ID de los input
@@ -104,6 +109,7 @@
                             <label class="form-check-label" for="estado">Activo</label>
                         </div>
                         <input type="button" value="Ingresar" onclick="ingresarForm()" class="btn btn-primary">
+                        <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Limpiar campos</button>
                         <a href="/ListadoMateria"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
                     </form>
                 </div>

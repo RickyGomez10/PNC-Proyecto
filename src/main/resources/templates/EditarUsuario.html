@@ -13,8 +13,8 @@
             document.getElementById("password").value="";
             document.getElementById("nombre").value="";
             document.getElementById("apellido").value="";
-            document.getElementById("munic").selectIndex="0";
-            document.getElementById("dir").selectIndex="0";
+            document.getElementById("cMunicipio").selectedIndex= 0;
+            document.getElementById("dir").value="";
 
         }
 
@@ -89,8 +89,8 @@
                                 <input type="date" id="fnac" class="form-control" th:field="*{fechaNacimiento}" ><span th:errors="*{fechaNacimiento}" style="color:  #E81505;"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="munic">Municipio</label>
-                                <select id="munic" class="form-control" th:name="cMunicipio">
+                                <label for="cMunicipio">Municipio</label>
+                                <select id="cMunicipio" class="form-control" th:name="cMunicipio">
                                     <option th:each="m : ${municipios}"  th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}" th:selected="(${m.idMunicipio} == *{municipio.idMunicipio})" th:value="${m.idMunicipio}"></option>
                                 </select>
                             </div>
@@ -100,7 +100,7 @@
                             <textarea id="dir" class="form-control" th:field="*{direccion}" rows="3" cols="50" style="resize: none"></textarea><span th:errors="*{direccion}" style="color:  #E81505;"></span>
                         </div>
                         <button type="submit" class="btn btn-primary">Modificar</button>
-                        <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Reiniciar campos</button>
+                        <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Limpiar campos</button>
                         <a href="/listadoUsuarios"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
                     </form>
                 </div>
