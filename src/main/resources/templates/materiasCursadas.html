@@ -1,52 +1,83 @@
 <!DOCTYPE html>
-<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml">
+<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Agregar Materia</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
 </head>
-<body>
+<body class="bg-light">
 
-    <div>
-        <h1> Materias Cursadas </h1>
-        <div th:object="${estudiante}">
-            <h2>Datos del estudiante</h2>
-            <label><b>Nombre del estudiante:</b> <span id="nombre" th:text="*{nombre + ' ' + apellido}"></span></label><br>
-            <label><b>Carné:</b> <span id="carne" th:text="*{carne}"></span></label>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/expedientes">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active mx-3">
+                    <a class="nav-link" href="/expedientes">Expedientes <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <label class="text-white mr-5">¡Bienvenido &nbsp;<span th:text="${nombre}"></span>!</label>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
         </div>
-        <div>
-            <h2>Listado de Materias</h2>
-            <table>
-                <thead>
-                    <th>Acción</th>
-                    <th>Materia</th>
-                    <th>Año</th>
-                    <th>Ciclo</th>
-                    <th>Nota</th>
-                    <th>Resultado</th>
-                </thead>
-                <th:block th:each="materia, row: ${materias}">
-                    <tr>
-                        <td>
-                            <form th:action="@{/editarMateriaCursada}" th:object="${estudiante}" method="post">
-                                <input type="hidden" name="mat" id="mat" th:value="${materia.materia.idMateria}">
-                                <Button th:name="carne" th:value="*{carne}">Editar</Button>
-                            </form>
-                        </td>
-                        <td th:text="${materia.materia.nombre}"/>
-                        <td th:text="${materia.anio}"/>
-                        <td th:text="${materia.ciclo}"/>
-                        <td th:text="${materia.nota}"/>
-                        <td th:text="${materia.resultadoDelegate}"/>
-                    </tr>
-                </th:block>
-            </table>
+    </nav>
+
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Materias Cursadas</h1>
+                    <div th:object="${estudiante}">
+                        <label><b>Nombre del estudiante:</b> <span id="nombre" th:text="*{nombre + ' ' + apellido}"></span></label><br>
+                        <label><b>Carné:</b> <span id="carne" th:text="*{carne}"></span></label>
+                    </div>
+                    <div class="d-flex w-100 mb-2 justify-content-end">
+                        <form th:action="@{/materiaCursada}" th:object="${estudiante}" method="post">
+                            <button class="btn btn-sm btn-success" th:name="carne" th:value="*{carne}">Agregar Nueva Materia</button>
+                        </form>
+                    </div>
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col"> Materia</th>
+                                <th scope="col"> Año</th>
+                                <th scope="col"> Ciclo</th>
+                                <th scope="col"> Nota</th>
+                                <th scope="col"> Resultado</th>
+                                <th scope="col"> Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="materia, row: ${materias}">
+                            <tr>
+                                <td th:text="${materia.materia.nombre}"/>
+                                <td th:text="${materia.anio}"/>
+                                <td th:text="${materia.ciclo}"/>
+                                <td th:text="${materia.nota}"/>
+                                <td th:text="${materia.resultadoDelegate}"/>
+
+                                <td>
+                                    <form th:action="@{/editarMateriaCursada}" th:object="${estudiante}" method="post">
+                                        <input type="hidden" name="mat" id="mat" th:value="${materia.materia.idMateria}">
+                                        <button class="btn btn-sm btn-outline-primary" th:name="carne" th:value="*{carne}">Editar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-    <form th:action="@{/materiaCursada}" th:object="${estudiante}" method="post">
-        <Button th:name="carne" th:value="*{carne}">Agregar Nueva Materia</Button>
-    </form>
+    </section>
+
     <button onclick="location.href='/expedientes'">Regresar</button>
 
 </body>
