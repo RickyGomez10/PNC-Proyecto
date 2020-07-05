@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -24,9 +23,6 @@ import java.util.List;
 public class MateriaXEstudianteController {
 
     @Autowired
-    private CentroEdService centroService;
-
-    @Autowired
     private EstudianteService estudianteService;
 
     @Autowired
@@ -35,7 +31,7 @@ public class MateriaXEstudianteController {
     @Autowired
     private MateriaXEstudianteService mxeService;
 
-    @RequestMapping(value="/materiaCursada")
+    @RequestMapping(value="/materiaCursada", method = RequestMethod.POST)
     public @ResponseBody ModelAndView materiaCursada(@RequestParam String carne) {
 
         ModelAndView mav = new ModelAndView();
@@ -62,7 +58,7 @@ public class MateriaXEstudianteController {
 
     }
 
-    @RequestMapping(value="/editarMateriaCursada")
+    @RequestMapping(value="/editarMateriaCursada", method = RequestMethod.POST)
     public @ResponseBody ModelAndView editarMateriaCursada(@RequestParam String carne, @RequestParam Integer mat) {
 
         ModelAndView mav = new ModelAndView();
@@ -133,7 +129,7 @@ public class MateriaXEstudianteController {
 
     }
 
-    @RequestMapping(value="/materiasCursadas")
+    @RequestMapping(value="/materiasCursadas", method = RequestMethod.POST)
     public @ResponseBody ModelAndView listadoMatCurs(@RequestParam String carne) {
 
         ModelAndView mav = new ModelAndView();

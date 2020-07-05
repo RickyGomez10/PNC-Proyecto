@@ -108,6 +108,7 @@ public class EstudianteController {
             CookieData cookie = new CookieData(data);
             if (cookie.getRol() == 0) {
                 mav.addObject("msg", "0");
+                mav.addObject("nombre", cookie.getUsername());
                 mav.setViewName("Expedientes");
             } else {
                 mav.setViewName("redirect:/");

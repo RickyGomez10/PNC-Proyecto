@@ -1,7 +1,6 @@
 package com.uca.capas.controller;
 
 import com.uca.capas.dao.UsuarioDAO;
-import com.uca.capas.domain.Materia;
 import com.uca.capas.domain.Municipio;
 import com.uca.capas.domain.Usuario;
 import com.uca.capas.service.MunicipioService;
@@ -13,9 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -33,20 +29,29 @@ public class UsuarioController {
     //CARGAR VISTAS
 
     @RequestMapping("/registro")
-    public ModelAndView regForm() {
+    public ModelAndView regForm(@CookieValue(value = "data", defaultValue = "-") String data) {
 
-        ModelAndView mav = new ModelAndView();
-        Usuario usuario = new Usuario();
-        List<Municipio> municipios = muniService.findAll();
+        if(!CookieData.checkCookie(data)) {
 
-        mav.addObject("municipios", municipios);
-        mav.addObject("usuario", usuario);
-        mav.addObject("msg", "0");
-        mav.setViewName("Registro");
+            ModelAndView mav = new ModelAndView();
+            Usuario usuario = new Usuario();
+            List<Municipio> municipios = muniService.findAll();
 
-        return mav;
+            mav.addObject("municipios", municipios);
+            mav.addObject("usuario", usuario);
+            mav.addObject("msg", "0");
+            mav.setViewName("Registro");
+            return mav;
+
+        }else{
+            ModelAndView mav = new ModelAndView();
+            mav.setViewName("redirect:/");
+            return mav;
+        }
+
     }
 
+    //Aqui
     @RequestMapping("/listadoUsuarios")
     public ModelAndView listadoUsuariosForm() {
 
