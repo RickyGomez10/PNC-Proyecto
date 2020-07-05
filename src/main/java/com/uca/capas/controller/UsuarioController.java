@@ -51,21 +51,29 @@ public class UsuarioController {
 
     }
 
-    //Aqui
     @RequestMapping("/listadoUsuarios")
-    public ModelAndView listadoUsuariosForm() {
+    public ModelAndView listadoUsuariosForm(@CookieValue(value = "data", defaultValue = "-") String data) {
+
+        if(CookieData.checkCookie(data)) {
+            CookieData cookie = new CookieData(data);
+            if (cookie.getRol() == 1) {
+                ModelAndView mav = new ModelAndView();
+                Usuario usuario = new Usuario();
+                List<Usuario> usuarios = usuarioService.findAll();
+                mav.addObject("usuarios", usuarios);
+                mav.addObject("usuario", usuario);
+                mav.setViewName("ListadoUsuario");
+                return mav;
+            }
+        }
 
         ModelAndView mav = new ModelAndView();
-        Usuario usuario = new Usuario();
-        List<Usuario> usuarios = usuarioService.findAll();
-        mav.addObject("usuarios", usuarios);
-        mav.addObject("usuario", usuario);
-        mav.setViewName("ListadoUsuario");
-
+        mav.setViewName("redirect:/");
         return mav;
+
     }
 
-    @RequestMapping("/EditarUsuario")
+    @RequestMapping(value = "/EditarUsuario", method = RequestMethod.POST)
     public ModelAndView editarForm(@ModelAttribute Usuario usuario) {
 
         ModelAndView mav = new ModelAndView();
@@ -79,9 +87,6 @@ public class UsuarioController {
 
         return mav;
     }
-
-
-    //CONTROLADORES
 
     @RequestMapping(value="/regUser", method = RequestMethod.POST)
     public @ResponseBody ModelAndView verificar(@ModelAttribute @Valid Usuario usuario, BindingResult result) {
