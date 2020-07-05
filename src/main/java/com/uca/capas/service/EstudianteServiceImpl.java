@@ -49,12 +49,12 @@ public class EstudianteServiceImpl implements EstudianteService{
 
     @Override
     public List<Estudiante> filtrarPorNombre(String val) {
-        return estudianteRepo.findEstudiantesByNombreContains(val);
+        return estudianteRepo.findEstudiantesByNombreContainsIgnoreCase(val);
     }
 
     @Override
     public List<Estudiante> filtrarPorApellido(String val) {
-        return estudianteRepo.findEstudiantesByApellidoContains(val);
+        return estudianteRepo.findEstudiantesByApellidoContainsIgnoreCase(val);
     }
 
     @Override

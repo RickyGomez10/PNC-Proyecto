@@ -13,8 +13,8 @@ public interface EstudianteRepo extends JpaRepository<Estudiante, Integer> {
 
     public Estudiante findEstudianteByCarne(String carne) throws DataAccessException;
 
-    public List<Estudiante> findEstudiantesByApellidoContains(String val) throws DataAccessException;
+    public List<Estudiante> findEstudiantesByApellidoContainsIgnoreCase(String val) throws DataAccessException;
 
-    public List<Estudiante> findEstudiantesByNombreContains(String val) throws DataAccessException;
+    public List<Estudiante> findEstudiantesByNombreContainsIgnoreCase(String val) throws DataAccessException;
 
 }
