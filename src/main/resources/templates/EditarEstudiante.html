@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Registro</title>
+    <title>Editar Estudiante</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
@@ -106,7 +106,7 @@
                                 <input type="text" id="nombreP" class="form-control" th:field="*{nombrePapa}" ><br><span th:errors="*{nombrePapa}" style="color:  #E81505;"></span>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button type="submit" class="btn btn-primary">Modificar</button>
                         <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Limpiar campos</button>
                         <a href="/expedientes"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
                     </form>
