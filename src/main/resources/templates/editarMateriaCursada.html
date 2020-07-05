@@ -22,7 +22,7 @@
                 <tr>
                     <td><label>Materia: </label></td>
                     <td>
-                        <input type="hidden" th:field="*{materia.idMateria}">
+                        <input type="hidden" id="idMateria" name="idMateria" th:value="*{materia.idMateria}">
                         <span th:text="*{materia.nombre}"></span>
                     </td>
                 </tr>

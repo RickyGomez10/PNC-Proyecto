@@ -1,5 +1,6 @@
 package com.uca.capas.service;
 
+import com.uca.capas.dao.MateriaXEstudianteDAO;
 import com.uca.capas.domain.MateriaXEstudiante;
 import com.uca.capas.domain.MateriaXEstudianteKey;
 import com.uca.capas.repositories.EstudianteRepo;
@@ -26,6 +27,9 @@ public class MateriaXEstudianteServiceImpl implements MateriaXEstudianteService{
     MateriaXEstudianteRepo mxeRepo;
 
     @Autowired
+    MateriaXEstudianteDAO mxeDao;
+
+    @Autowired
     EstudianteRepo estudianteRepo;
 
     @Autowired
@@ -48,9 +52,6 @@ public class MateriaXEstudianteServiceImpl implements MateriaXEstudianteService{
         mxe.setEstudiante(estudianteRepo.getOne(mxe.getIdEstudiante()));
         mxe.setMateria(materiaRepo.getOne(mxe.getIdMateria()));
 
-        System.out.println(mxe.getEstudiante().toString());
-        System.out.println(mxe.getMateria().toString());
-
         if (mxe.getEstudiante() != null && mxe.getMateria() != null) {
             if(mxe.isNew()) {
                 mxeRepo.save(mxe);
@@ -65,6 +66,14 @@ public class MateriaXEstudianteServiceImpl implements MateriaXEstudianteService{
     @Override
     public List<MateriaXEstudiante> findByEstudiante(Integer id) throws DataAccessException {
         return mxeRepo.getMaterias(id);
+    }
+
+    @Override
+    public void modificar(MateriaXEstudiante mxe) throws DataAccessException {
+        mxe.setId(new MateriaXEstudianteKey(mxe.getIdMateria(),mxe.getIdEstudiante()));
+        mxe.setEstudiante(estudianteRepo.getOne(mxe.getIdEstudiante()));
+        mxe.setMateria(materiaRepo.getOne(mxe.getIdMateria()));
+        mxeDao.modificar(mxe);
     }
 
 }

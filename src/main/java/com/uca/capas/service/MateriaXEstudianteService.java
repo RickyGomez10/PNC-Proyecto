@@ -15,4 +15,6 @@ public interface MateriaXEstudianteService {
 
     public List<MateriaXEstudiante> findByEstudiante(Integer id) throws DataAccessException;
 
+    public void modificar(MateriaXEstudiante mxe) throws DataAccessException;
+
 }

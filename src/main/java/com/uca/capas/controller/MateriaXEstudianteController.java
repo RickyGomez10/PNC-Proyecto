@@ -103,7 +103,7 @@ public class MateriaXEstudianteController {
         if(!result.hasErrors()){
 
             try{
-                //mxeService.insertar(mxe);
+                mxeService.modificar(mxe);
                 return listadoMatCurs(estudiante.getCarne());
             }catch (ConstraintViolationException e){
                 mav.addObject("msg", "3");

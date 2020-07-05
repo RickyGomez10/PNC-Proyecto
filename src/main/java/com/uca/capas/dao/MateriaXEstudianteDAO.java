@@ -13,4 +13,6 @@ public interface MateriaXEstudianteDAO {
     public MateriaXEstudiante findOne(Integer code) throws DataAccessException;
 
     public void insertar(MateriaXEstudiante materiaEstudiante) throws DataAccessException;
+
+    public void modificar(MateriaXEstudiante mxe) throws  DataAccessException;
 }
