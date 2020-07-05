@@ -40,10 +40,8 @@ public class CentroEdController {
             e.printStackTrace();
         }
 
-        mav.addObject("error", "");
-        mav.addObject("municipios", municipios);
+        mav.addObject("msg", "");
         mav.addObject("centros", centros);
-        mav.addObject("centroEd", centro);
         mav.setViewName("ListadoCentro");
 
         return mav;
@@ -61,7 +59,6 @@ public class CentroEdController {
             e.printStackTrace();
         }
 
-        mav.addObject("error", "");
         mav.addObject("municipios", municipios);
         mav.addObject("centros", centros);
         mav.addObject("centroEd", centro);
@@ -92,16 +89,21 @@ public class CentroEdController {
 
     //Controladores
     @RequestMapping(value = "/ingresarCentroEd", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody boolean IngresarCentroEd(@RequestBody CentroEd centro) {
-        boolean estado;
-        try {
-            centroEdService.save(centro);
-            estado = true;
-        } catch (Exception e) {
-            System.out.println("malo");
-            estado = false;
+    public @ResponseBody String IngresarCentroEd(@RequestBody CentroEd centro) {
+        String msg;
+        if(centro.getNombre().length() < 1 || centro.getNombre().length()>50){
+            msg = "3";
+
+        }else {
+            try {
+                centroEdService.save(centro);
+                msg = "1";
+            } catch (Exception e) {
+                msg="2";
+
+            }
         }
-                return estado;
+                return msg;
     }
 
     @RequestMapping(value = "/cambiarEstadoCentroEd", method = RequestMethod.POST, produces = "application/json")
@@ -125,8 +127,8 @@ public class CentroEdController {
 
     }
 
-    @RequestMapping(value = "/Modificar", method = RequestMethod.POST)
-    public ModelAndView modificar(@Valid @ModelAttribute CentroEd centroEd, BindingResult result) {
+    @RequestMapping(value = "/ModificarCentro", method = RequestMethod.POST)
+    public ModelAndView ModificarCentro(@Valid @ModelAttribute CentroEd centroEd, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         List<Municipio> municipios = municipioService.findAll();
         List<CentroEd> centros = centroEdService.findAll();
@@ -135,24 +137,21 @@ public class CentroEdController {
         centroEd.setMunicipio(municipioService.findOne(centroEd.getcMunicipio()));
         centroEd.setEstado(updatear.getEstado());
 
-        if(result.hasErrors()){
-            //mav.addObject("centroEd", centroEd);
+        if(!result.hasErrors()) {
+            try {
+
+                centroEdService.save(centroEd);
+                mav.setViewName("redirect:/ListadoCentroEd");
+            } catch (Exception e) {
+                e.printStackTrace();
+                mav.addObject("msg","1");
+                mav.setViewName("EditarCentro");
+            }
+        }else{
+
             mav.setViewName("EditarCentro");
             return mav;
         }
-        CentroEd centro = new CentroEd();
-        try {
-
-            centroEdService.save(centroEd);
-            mav.setViewName("ListadoCentro");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        mav.addObject("error", "");
-
-        mav.addObject("centros", centros);
-        mav.addObject("centroEd", centro);
 
         return mav;
     }

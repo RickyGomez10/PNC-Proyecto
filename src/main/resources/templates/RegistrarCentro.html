@@ -35,11 +35,15 @@
                     'cMunicipio': parseInt(municipio)
                 }),
                 success: function (res) {
-                    if(res){
+                    if(res == "1"){
+                        document.getElementById('errorNombre').hidden= true;
                         swal("¡Éxito!", "Se ha registrado el centro educativo.", "success");
-                    }else{
-                        document.getElementById('errorNombre').hidden= false;
+
+                    }else if(res=="2"){
+
                         swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
+                    }else if(res =="3"){
+                        document.getElementById('errorNombre').hidden= false;
                     }
 
 
@@ -97,7 +101,7 @@
                     <form>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" class="form-control"><label hidden="true" style="color:#E81505" id="errorNombre" name="errorNombre">Erroraso</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control"><label hidden="true" style="color:#E81505" id="errorNombre" name="errorNombre">El nombre del centro educativo debe poseer almenos 1 carácter y máximo 50 caracteres.</label>
                         </div>
                         <div class="form-check mb-3">
                             <input type="checkbox" name="estado" id="estado" class="form-check-input">

@@ -7,6 +7,18 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
+    <script>
+        function LimpiarCampos() {
+            document.getElementById("usuario").value="";
+            document.getElementById("password").value="";
+            document.getElementById("nombre").value="";
+            document.getElementById("apellido").value="";
+            document.getElementById("munic").selectIndex="0";
+            document.getElementById("dir").selectIndex="0";
+
+        }
+
+    </script>
 </head>
 <body class="bg-light">
 
@@ -58,8 +70,8 @@
                                 <input type="text" id="usuario" class="form-control" th:field="*{nUsuario}" ><span th:errors="*{nUsuario}" style="color:  #e81505;"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="clave">Nueva Contraseña (Dejar vacío para no modificar)</label>
-                                <input type="password" id="clave" class="form-control" th:field="*{Password}"></span>
+                                <label for="password">Nueva Contraseña (Dejar vacío para no modificar)</label>
+                                <input type="password" id="password" class="form-control" th:field="*{Password}"></span>
                                 <input type="hidden" th:field="*{clave}" class="form-control" ><span th:errors="*{clave}" style="color:  #E81505; display:none;"></span></td>
                             </div>
                         </div>
@@ -78,8 +90,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="munic">Municipio</label>
-                                <select id="munic" class="form-control" th:field="*{cMunicipio}">
-                                    <option th:each="m : ${municipios}" th:value="${m.idMunicipio}" th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}"></option>
+                                <select id="munic" class="form-control" th:name="cMunicipio">
+                                    <option th:each="m : ${municipios}"  th:text="${m.departamento.nombre + ',' + ' ' + m.nombre}" th:selected="(${m.idMunicipio} == *{municipio.idMunicipio})" th:value="${m.idMunicipio}"></option>
                                 </select>
                             </div>
                         </div>
@@ -89,22 +101,15 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Modificar</button>
                         <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Reiniciar campos</button>
-                        <a href="/ListadoMateria"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
+                        <a href="/listadoUsuarios"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
+
 <script th:if="${msg == '1'}">
-    swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
-</script>
-
-<script th:if="${msg == '2'}">
-    swal("Algo ha salido mal...", "Parece ser que ese usuario ya ha sido registrado, prueba con otro.", "error");
-</script>
-
-<script th:if="${msg == '3'}">
     swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
 </script>
 </body>
