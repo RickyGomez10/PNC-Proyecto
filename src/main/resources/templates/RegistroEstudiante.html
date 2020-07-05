@@ -9,6 +9,21 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
+    <script>
+        function LimpiarCampos(){
+            document.getElementById("carne").value="";
+            document.getElementById("nombre").value="";
+            document.getElementById("apellido").value="";
+            document.getElementById("carnemin").value="";
+            document.getElementById("dir").value="";
+            document.getElementById("tm").value="";
+            document.getElementById("tf").value="";
+            document.getElementById("centro").selectedIndex = "0";
+            document.getElementById("nombreM").value="";
+            document.getElementById("nombreP").value="";
+
+        }
+    </script>
 </head>
 <body class="bg-light">
 
@@ -91,6 +106,7 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Limpiar campos</button>
                         <a href="/expedientes"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
                     </form>
                 </div>

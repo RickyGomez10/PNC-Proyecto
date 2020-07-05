@@ -6,6 +6,18 @@
     <title>Registro</title>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
+    <script>
+        function LimpiarCampos() {
+            document.getElementById("usuario").value="";
+            document.getElementById("clave").value="";
+            document.getElementById("nombre").value="";
+            document.getElementById("apellido").value="";
+            document.getElementById("munic").selectedIndex= "0";
+            document.getElementById("dir").value="";
+
+        }
+
+    </script>
 </head>
 <body>
 
@@ -60,6 +72,8 @@
                             <textarea id="dir" class="form-control" th:field="*{direccion}" rows="3" cols="50" style="resize: none"></textarea><span th:errors="*{direccion}" style="color:  #E81505;"></span>
                         </div>
                         <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button type="button" value="Limpiar" text="Limpiar" class="btn btn-warning" onclick="LimpiarCampos()">Limpiar campos</button>
+                        <a href="/index"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
                     </form>
                 </div>
             </div>

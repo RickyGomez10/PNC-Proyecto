@@ -171,8 +171,7 @@ public class EstudianteController {
             try {
 
                 estudianteService.update(estudiante);
-                mav.addObject("msg", "3");
-                mav.setViewName("Expedientes");
+                mav.setViewName("redirect:/expedientes");
 
             } catch (Exception e) {
                 e.printStackTrace();
