@@ -1,20 +1,13 @@
 package com.uca.capas.controller;
 
-import com.uca.capas.domain.CentroEd;
-import com.uca.capas.domain.Municipio;
-import com.uca.capas.service.CentroEdService;
-import com.uca.capas.service.MunicipioService;
 import com.uca.capas.utils.CookieData;
 import com.uca.capas.utils.Encriptador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-
 import com.uca.capas.domain.Usuario;
 import com.uca.capas.service.UsuarioService;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -25,24 +18,17 @@ public class MainController {
 	@Autowired
 	private UsuarioService usuarioService;
 
-	@Autowired
-	private MunicipioService municipioService;
-
-	@Autowired
-	private CentroEdService centroEdService;
+	private static final int cookieTime = 3600*24;
 
 	@RequestMapping("/")
 	public ModelAndView home(@CookieValue(value = "data", defaultValue = "-") String data) {
 		return index(data);
 	}
 
-	private static final int cookieTime = 3600*24;
-
 	@RequestMapping("/index")
 	public ModelAndView index(@CookieValue(value = "data", defaultValue = "-") String data) {
 
 		if(!CookieData.checkCookie(data)) {
-			System.out.println(data);
 			ModelAndView mav = new ModelAndView();
 			Usuario usuario = new Usuario();
 			mav.setViewName("index");
@@ -79,7 +65,6 @@ public class MainController {
 
 							try {
 								CookieData c = new CookieData(user.getnUsuario(), user.getRol());
-								System.out.println(c.toString());
 								Cookie cookie = new Cookie("data", c.toString());
 								cookie.setMaxAge(cookieTime);
 								response.addCookie(cookie);
