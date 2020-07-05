@@ -1,72 +1,103 @@
 <!DOCTYPE html>
-<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml">
+<html xmlms:th="http://www.thymeleaf.org" xmlns:xmlms="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Registro</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
 </head>
-<body>
+<body class="bg-light">
 
-    <div>
-        <h1> Registrar Expediente </h1>
-        <form th:action="@{/regEst}" th:object="${estudiante}" method="post">
-            <table>
-                <tr>
-                    <td><label for="carne">Carné: </label></td>
-                    <td><input type="text" id="carne" th:field="*{carne}" ><br><span th:errors="*{carne}" style="color:  #e81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="nombre">Nombre: </label></td>
-                    <td><input type="text" id="nombre" th:field="*{nombre}" ><br><span th:errors="*{nombre}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="apellido">Apellido: </label></td>
-                    <td><input type="text" id="apellido" th:field="*{apellido}" ><br><span th:errors="*{apellido}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="carne">Carné de minoridad: </label></td>
-                    <td><input type="text" id="carnemin" th:field="*{carneMin}" ><br><span th:errors="*{carneMin}" style="color:  #e81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="fnac">Fecha de nacimiento: </label></td>
-                    <td><input type="date" id="fnac" th:field="*{fechaNac}" ><br><span th:errors="*{fechaNac}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="dir">Dirección: </label></td>
-                    <td><textarea id="dir" th:field="*{direccion}" rows="4" cols="50"></textarea><br><span th:errors="*{direccion}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="tm">Teléfono móvil: </label></td>
-                    <td><input type="text" id="tm" th:field="*{telefonoMovil}"><br><span th:errors="*{telefonoMovil}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="tf">Teléfono fijo: </label></td>
-                    <td><input type="text" id="tf" th:field="*{telefonoFijo}"><br><span th:errors="*{telefonoFijo}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="centro">Centro educativo: </label></td>
-                    <td>
-                        <select id="centro" th:field="*{cCentroEd}">
-                            <option th:each="c : ${centros}" th:value="${c.idCentroEd}" th:text="${c.nombre + ',' + ' ' + c.municipio.nombre + ',' + ' ' + c.municipio.departamento.nombre}"></option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="nombreM">Nombre de mamá: </label></td>
-                    <td><input type="text" id="nombreM" th:field="*{nombreMama}" ><br><span th:errors="*{nombreMama}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="nombreP">Nombre de papá: </label></td>
-                    <td><input type="text" id="nombreP" th:field="*{nombrePapa}" ><br><span th:errors="*{nombrePapa}" style="color:  #E81505;"></span></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Registrar"></td>
-                </tr>
-            </table>
-        </form>
-        <button onclick="location.href='/expedientes'">Regresar</button>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/expedientes">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active mx-3">
+                    <a class="nav-link" href="/expedientes">Expedientes <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <label class="text-white mr-5">¡Bienvenido &nbsp;<span th:text="${nombre}"></span>!</label>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
+
+    <section class="d-flex">
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Registrar Estudiante </h1>
+                    <form th:action="@{/regEst}" th:object="${estudiante}" method="post">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="carne">Carné </label>
+                                <input type="text" id="carne" class="form-control" th:field="*{carne}" ><span th:errors="*{carne}" style="color:  #e81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="carne">Carné de minoridad </label>
+                                <input type="password" id="carnemin" th:field="*{carneMin}" class="form-control"><span th:errors="*{carneMin}" style="color:  #e81505;"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nombre">Nombre </label>
+                                <input type="text" id="nombre" class="form-control" th:field="*{nombre}" ><span th:errors="*{nombre}" style="color:  #E81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="apellido">Apellido: </label>
+                                <input type="text" id="apellido" class="form-control" th:field="*{apellido}" ><span th:errors="*{apellido}" style="color:  #E81505;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dir">Dirección</label>
+                            <textarea id="dir" class="form-control" th:field="*{direccion}" rows="3" cols="50" style="resize: none"></textarea><span th:errors="*{direccion}" style="color:  #E81505;"></span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="fnac">Fecha de nacimiento </label>
+                                <input type="date" id="fnac" class="form-control" th:field="*{fechaNac}" ><span th:errors="*{fechaNac}" style="color:  #E81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="centro">Centro educativo </label>
+                                <select id="centro" class="form-control" th:field="*{cCentroEd}">
+                                    <option th:each="c : ${centros}" th:value="${c.idCentroEd}" th:text="${c.nombre + ',' + ' ' + c.municipio.nombre + ',' + ' ' + c.municipio.departamento.nombre}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="tm">Teléfono móvil </label>
+                                <input type="text" id="tm" class="form-control" th:field="*{telefonoMovil}"><span th:errors="*{telefonoMovil}" style="color:  #E81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="tf">Teléfono fijo: </label>
+                                <input type="text" id="tf" class="form-control" th:field="*{telefonoFijo}"><span th:errors="*{telefonoFijo}" style="color:  #E81505;"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nombreM">Nombre de mamá: </label>
+                                <input type="text" id="nombreM" class="form-control" th:field="*{nombreMama}" ><span th:errors="*{nombreMama}" style="color:  #E81505;"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="nombreP">Nombre de papá: </label>
+                                <input type="text" id="nombreP" class="form-control" th:field="*{nombrePapa}" ><br><span th:errors="*{nombrePapa}" style="color:  #E81505;"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <a href="/expedientes"><input type="button" value="Regresar" class="btn btn-outline-secondary"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script th:if="${msg == '1'}">
         swal("¡Éxito!", "Se ha registrado el estudiante.", "success");

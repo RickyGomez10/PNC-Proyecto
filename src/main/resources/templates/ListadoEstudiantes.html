@@ -2,50 +2,75 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
 </head>
-<body>
-<div>
-    <h1>Listado de Estudiantes</h1>
-    <table>
-        <thead>
-        <th colspan="2"> Acción</th>
-        <th> Nombre</th>
-        <th> Apellido</th>
-        <th> Materias Aprobadas</th>
-        <th> Materias Reprobadas</th>
-        <th> Promedio</th>
+<body class="bg-light">
 
-        </thead>
-        <th:block th:each="estudiante, row: ${estudiantes}">
-            <tr>
-                <td>
-                    <form th:action="@{/EditarEstudiante}" th:object="${estudiante}" method="post">
-                        <Button th:name="carne" th:value="*{carne}">Editar</Button>
-                    </form>
-                </td>
-                <td>
-                    <form th:action="@{/materiasCursadas}" th:object="${estudiante}" method="post">
-                        <Button th:name="carne" th:value="*{carne}">Materias</Button>
-                    </form>
-                </td>
-                <td th:text="${estudiante.nombre}"/>
-                <td th:text="${estudiante.apellido}"/>
-                <td th:text="${estudiante.aprobadas}"/>
-                <td th:text="${estudiante.reprobadas}"/>
-                <td th:text="${estudiante.promedio}"/>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-dark">
+        <a class="navbar-brand" href="/expedientes">
+            <img src="imgs/logo_letrasB.png" class="d-inline-block align-top" style="width: 200px" alt="logo" loading="lazy">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active mx-3">
+                    <a class="nav-link" href="/expedientes">Expedientes <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form th:action="@{/cerrarSesion}" class="form-inline">
+                <label class="text-white mr-5">¡Bienvenido &nbsp;<span th:text="${nombre}"></span>!</label>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
 
-            </tr>
+    <section class="d-flex" >
+        <div class="container align-self-center">
+            <div class="row p-3">
+                <div class="col-12">
+                    <h1 class="mb-3 display-4"> Listado de Estudiantes</h1>
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"> Nombre</th>
+                            <th scope="col"> Apellido</th>
+                            <th scope="col"> Materias Aprobadas</th>
+                            <th scope="col"> Materias Reprobadas</th>
+                            <th scope="col"> Promedio</th>
+                            <th scope="col" colspan="2"> Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="estudiante, row: ${estudiantes}">
+                            <tr>
+                                <td th:text="${estudiante.nombre}"/>
+                                <td th:text="${estudiante.apellido}"/>
+                                <td th:text="${estudiante.aprobadas}"/>
+                                <td th:text="${estudiante.reprobadas}"/>
+                                <td th:text="${estudiante.promedio}"/>
 
-
-        </th:block>
-
-
-    </table>
-    <button onclick="location.href='/expedientes'">Regresar</button>
-</div>
+                                <td>
+                                    <form th:action="@{/EditarEstudiante}" th:object="${estudiante}" method="post">
+                                        <button class="btn btn-sm btn-outline-primary" th:name="carne" th:value="*{carne}">Editar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form th:action="@{/materiasCursadas}" th:object="${estudiante}" method="post">
+                                        <button class="btn btn-sm btn-outline-primary" th:name="carne" th:value="*{carne}">Materias</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <script th:if="${msg == '1'}">
     swal("¡Éxito!", "Se ha registrado el usuario, espere a que su usuario sea habilitado para iniciar sesión.", "success");
