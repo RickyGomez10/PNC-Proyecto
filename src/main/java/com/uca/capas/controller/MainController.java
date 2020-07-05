@@ -16,12 +16,8 @@ import com.uca.capas.domain.Usuario;
 import com.uca.capas.service.UsuarioService;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -37,13 +33,7 @@ public class MainController {
 
 	@RequestMapping("/")
 	public ModelAndView home(@CookieValue(value = "data", defaultValue = "-") String data) {
-
-		System.out.println(data);
-		ModelAndView mav = new ModelAndView();
-		Usuario usuario = new Usuario();
-		mav.setViewName("index");
-		mav.addObject("usuario", usuario);
-		return mav;
+		return index(data);
 	}
 
 	private static final int cookieTime = 3600*24;
@@ -51,30 +41,27 @@ public class MainController {
 	@RequestMapping("/index")
 	public ModelAndView index(@CookieValue(value = "data", defaultValue = "-") String data) {
 
-		System.out.println(data);
-		ModelAndView mav = new ModelAndView();
-		Usuario usuario = new Usuario();
-		mav.setViewName("index");
-		mav.addObject("usuario", usuario);
-		return mav;
+		if(!CookieData.checkCookie(data)) {
+			System.out.println(data);
+			ModelAndView mav = new ModelAndView();
+			Usuario usuario = new Usuario();
+			mav.setViewName("index");
+			mav.addObject("usuario", usuario);
+			return mav;
+		}else{
+			CookieData cookie = new CookieData(data);
+			if (cookie.getRol() == 1){
+				ModelAndView mav = new ModelAndView();
+				mav.setViewName("redirect:/mainMenu");
+				return mav;
+			}{
+				ModelAndView mav = new ModelAndView();
+				mav.setViewName("redirect:/Expedientes");
+				return mav;
+			}
+
+		}
 	}
-
-	//CARGAR HTMLS
-	@RequestMapping("/login")
-	public ModelAndView login(@CookieValue(value = "data", defaultValue = "-") String data) {
-
-		System.out.println(data);
-		ModelAndView mav = new ModelAndView();
-		Usuario usuario = new Usuario();
-		
-		mav.addObject("error", "");
-		mav.addObject("usuario", usuario);
-		mav.setViewName("Login");
-		
-		return mav;
-	}
-
-	//FUNCIONALIDAD
 
 	@RequestMapping(value="/verificar", method = RequestMethod.POST, produces = "application/json")
 	public ModelAndView verificar(@ModelAttribute Usuario userInfo, HttpServletResponse response) {
