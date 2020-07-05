@@ -32,11 +32,7 @@ public class MateriaController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        mav.addObject("error", "");
-
         mav.addObject("materias", materias);
-        mav.addObject("materia", materia);
         mav.setViewName("ListadoMateria");
         return mav;
     }
@@ -70,9 +66,6 @@ public class MateriaController {
             e.printStackTrace();
         }
 
-        mav.addObject("error", "");
-
-        mav.addObject("materias", materias);
         mav.addObject("materia", materia);
         mav.setViewName("RegistrarMateria");
         return mav;
@@ -84,7 +77,7 @@ public class MateriaController {
     public @ResponseBody String IngresarMateria(@RequestBody Materia materia) {
         String msg;
         if(materia.getNombre().isEmpty() || materia.getNombre() == null || materia.getNombre() == "" ||materia.getNombre().length() >50){
-            msg="2";
+            msg="3";
             return msg;
         }
 
@@ -94,7 +87,7 @@ public class MateriaController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            msg="3";
+            msg="2";
 
         }
         return msg;
@@ -120,18 +113,12 @@ public class MateriaController {
     public ModelAndView modificar(@Valid @ModelAttribute Materia materia, BindingResult result) {
 
         ModelAndView mav = new ModelAndView();
-        List<Materia> materias = materiaService.findAll();
-        mav.addObject("materias", materias);
-
         Materia updatear = materiaService.findOne(materia.getIdMateria());
         materia.setEstado(updatear.getEstado());
-        Materia materia1 = new Materia();
-
         if(!result.hasErrors()) {
             try {
                 materiaService.insertar(materia);
-                mav.setViewName("ListadoMateria");
-                mav.addObject("msg", "1");
+                mav.setViewName("redirect:/ListadoMateria");
             } catch (Exception e) {
                 e.printStackTrace();
                 mav.addObject("msg","2");
@@ -140,12 +127,6 @@ public class MateriaController {
             mav.setViewName("EditarMateria");
             return mav;
         }
-
-        mav.addObject("error", "");
-
-        mav.addObject("materia", materia1);
-
-
         return mav;
     }
 }

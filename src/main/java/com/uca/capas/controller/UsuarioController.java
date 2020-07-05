@@ -136,32 +136,20 @@ public class UsuarioController {
 
         ModelAndView mav = new ModelAndView();
         List<Municipio> municipios = muniService.findAll();
-
-
-        List<Usuario> usuarios = usuarioService.findAll();
-
+        mav.addObject("municipios", municipios);
         if(!result.hasErrors()) {
-
             try{
                 usuarioService.update(usuario);
-                mav.addObject("msg", "1");
-                usuario = new Usuario();
-                mav.setViewName("listadoUsuario");
-            }catch (DataIntegrityViolationException e){
-                e.printStackTrace();
-                mav.addObject("msg", "2");
-                mav.setViewName("EditarUsuario");
+                mav.setViewName("redirect:/listadoUsuarios");
             } catch (Exception e){
                 e.printStackTrace();
-                mav.addObject("msg", "3");
+                mav.addObject("msg", "1");
                 mav.setViewName("EditarUsuario");
             }
 
-            mav.addObject("usuario", usuario);
-
+        }else{
+            mav.setViewName("EditarUsuario");
         }
-        mav.addObject("usuarios", usuarios);
-        mav.addObject("municipios", municipios);
         return mav;
 
     }
