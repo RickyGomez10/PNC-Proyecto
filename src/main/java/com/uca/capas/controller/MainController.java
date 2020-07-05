@@ -42,7 +42,7 @@ public class MainController {
 				return mav;
 			}{
 				ModelAndView mav = new ModelAndView();
-				mav.setViewName("redirect:/Expedientes");
+				mav.setViewName("redirect:/expedientes");
 				return mav;
 			}
 
@@ -74,7 +74,10 @@ public class MainController {
 							}catch (Exception e) {
 								e.printStackTrace();
 							}
-							mav.setViewName("redirect:/mainMenu");
+							if (user.getRol() == 1)
+								mav.setViewName("redirect:/mainMenu");
+							else
+								mav.setViewName("redirect:/expedientes");
 							return mav;
 						}else{
 							mav.addObject("error", "El usuario está deshabilitado.");
@@ -149,12 +152,16 @@ public class MainController {
 
 		if (CookieData.checkCookie(data)){
 			CookieData cookie  = new CookieData(data);
-			mav.addObject("nombre", cookie.getUsername());
-			mav.setViewName("mainmenu");
+			if(cookie.getRol() == 1) {
+				mav.addObject("nombre", cookie.getUsername());
+				mav.setViewName("mainmenu");
+			}else{
+				mav.setViewName("redirect:/");
+			}
 			return mav;
 		}
 
-		mav.setViewName("redirect:/index");
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 

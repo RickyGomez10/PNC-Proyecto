@@ -2,21 +2,14 @@ package com.uca.capas.controller;
 
 import com.uca.capas.domain.*;
 import com.uca.capas.service.*;
+import com.uca.capas.utils.CookieData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.ConstraintDeclarationException;
-import javax.validation.ConstraintDefinitionException;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -29,17 +22,26 @@ public class EstudianteController {
     private EstudianteService estudianteService;
 
     @RequestMapping("/registroEstudiante")
-    public ModelAndView regForm() {
+    public ModelAndView regForm(@CookieValue(value = "data", defaultValue = "-") String data) {
 
         ModelAndView mav = new ModelAndView();
-        Estudiante estudiante = new Estudiante();
-        List<CentroEd> centros = centroService.findAllActive();
 
-        mav.addObject("centros", centros);
-        mav.addObject("estudiante", estudiante);
-        mav.addObject("msg", "0");
-        mav.setViewName("RegistroEstudiante");
+        if (CookieData.checkCookie(data)) {
+            CookieData cookie = new CookieData(data);
+            if (cookie.getRol() == 0) {
+                Estudiante estudiante = new Estudiante();
+                List<CentroEd> centros = centroService.findAllActive();
 
+                mav.addObject("centros", centros);
+                mav.addObject("estudiante", estudiante);
+                mav.addObject("msg", "0");
+                mav.setViewName("RegistroEstudiante");
+
+                return mav;
+            }
+        }
+
+        mav.setViewName("redirect:/index");
         return mav;
     }
 
@@ -47,15 +49,20 @@ public class EstudianteController {
     public ModelAndView EditarEstudiante(@ModelAttribute Estudiante estudiante){
 
         ModelAndView mav = new ModelAndView();
-        List<CentroEd> centros = centroService.findAllActive();
-        Estudiante e = estudianteService.findOne(estudiante.getCarne());
-        System.out.println(e.getCentroEd().getIdCentroEd());
-        mav.addObject("centros", centros);
-        mav.addObject("estudiante", e);
-        mav.addObject("msg", "0");
-        mav.setViewName("EditarEstudiante");
+
+        if (estudiante.getIdEstudiante() != null) {
+            List<CentroEd> centros = centroService.findAllActive();
+            Estudiante e = estudianteService.findOne(estudiante.getCarne());
+            mav.addObject("centros", centros);
+            mav.addObject("estudiante", e);
+            mav.addObject("msg", "0");
+            mav.setViewName("EditarEstudiante");
+        }else{
+            mav.setViewName("redirect:/expedientes");
+        }
 
         return mav;
+
     }
 
     @RequestMapping(value="/regEst", method = RequestMethod.POST)
@@ -93,13 +100,24 @@ public class EstudianteController {
     }
 
     @RequestMapping("/expedientes")
-    public ModelAndView expedientes() {
+    public ModelAndView expedientes(@CookieValue(value = "data", defaultValue = "-") String data) {
 
         ModelAndView mav = new ModelAndView();
-        mav.addObject("msg", "0");
-        mav.setViewName("Expedientes");
 
+        if (CookieData.checkCookie(data)) {
+            CookieData cookie = new CookieData(data);
+            if (cookie.getRol() == 0) {
+                mav.addObject("msg", "0");
+                mav.setViewName("Expedientes");
+            } else {
+                mav.setViewName("redirect:/");
+            }
+            return mav;
+        }
+
+        mav.setViewName("redirect:/");
         return mav;
+
     }
 
     @RequestMapping(value="/buscarEstudiantes", method=RequestMethod.POST)
