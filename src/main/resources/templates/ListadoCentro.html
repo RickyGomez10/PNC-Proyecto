@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
+    <script src="https://kit.fontawesome.com/b20aef55a4.js" crossorigin="anonymous"></script>
 
     <script>
         //Desactivar/Activar estado centro educativo
@@ -55,19 +56,9 @@
                 <li class="nav-item">
                     <a class="nav-link mr-3" href="/listadoUsuarios">Usuarios</a>
                 </li>
-                <!--<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>-->
             </ul>
             <form th:action="@{/cerrarSesion}" class="form-inline">
-                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit"><i class="fas fa-sign-out-alt pull-left"></i> Cerrar Sesión</button>
             </form>
         </div>
     </nav>
@@ -78,15 +69,15 @@
                 <div class="col-12">
                     <h1 class="mb-3 display-4"> Listado de Centros Educativos </h1>
                     <div class="d-flex w-100 mb-2 justify-content-end">
-                        <a href="/IngresarCentro"><button type="button" class="btn btn-sm btn-success">Ingresar Centro Educativo</button></a>
+                        <a href="/IngresarCentro"><button type="button" class="btn btn-sm btn-success"><i class="fas fa-plus pull-left"></i> Ingresar Centro Educativo</button></a>
                     </div>
-                    <table class="table table-hover">
+                    <table class="table table-hover text-center">
                         <thead class="thead-dark">
                         <tr>
-                            <th scope="col"> Codigo</th>
+                            <th scope="col"> Código</th>
                             <th scope="col"> Nombre</th>
                             <th scope="col"> Estado</th>
-                            <th scope="col" colspan="2"> Acciones</th>
+                            <th scope="col"> Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -96,13 +87,14 @@
                                     <td th:text="${centro.nombre}"/>
                                     <td th:text="${centro.EstadoDelegate}"/>
 
-                                    <td><button class="btn btn-sm btn-outline-primary" th:id="${centro.idCentroEd}" onclick="cambiarEstadoForm(this.id)"
-                                                th:value="${centro.idCentroEd}">Cambiar estado </button>
-                                    </td>
-                                    <td>
-                                        <form th:action="@{/EditarForm}" th:object="${centroEd}" method="post">
+                                    <td class="row justify-content-center">
 
-                                            <button class="btn btn-sm btn-outline-primary" th:name="cMunicipio" th:value="${centro.idCentroEd}"> Editar </button>
+                                        <button class="btn btn-sm btn-outline-primary" th:id="${centro.idCentroEd}" onclick="cambiarEstadoForm(this.id)"
+                                                th:value="${centro.idCentroEd}"><i class="fas fa-exchange-alt pull-left"></i> Cambiar estado </button>
+
+                                        <form th:action="@{/EditarForm}" th:object="${centroEd}" method="post" style="margin-left: 10px;">
+
+                                            <button class="btn btn-sm btn-outline-primary" th:name="cMunicipio" th:value="${centro.idCentroEd}"><i class="fas fa-pencil-alt pull-left"></i> Editar </button>
                                         </form>
                                     </td>
                                 </tr>

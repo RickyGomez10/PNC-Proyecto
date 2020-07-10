@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
+    <script src="https://kit.fontawesome.com/b20aef55a4.js" crossorigin="anonymous"></script>
     <script>
 
         //Desactivar/Activar estado centro educativo
@@ -54,19 +55,9 @@
                 <li class="nav-item active">
                     <a class="nav-link mr-3" href="/listadoUsuarios">Usuarios <span class="sr-only">(current)</span></a>
                 </li>
-                <!--<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>-->
             </ul>
             <form th:action="@{/cerrarSesion}" class="form-inline">
-                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit"><i class="fas fa-sign-out-alt pull-left"></i> Cerrar Sesión</button>
             </form>
         </div>
     </nav>
@@ -76,13 +67,13 @@
             <div class="row p-3">
                 <div class="col-12">
                     <h1 class="mb-3 display-4"> Listado de Usuarios</h1>
-                    <table class="table table-hover">
+                    <table class="table table-hover text-center">
                         <thead class="thead-dark">
                         <tr>
-                            <th scope="col"> Codigo</th>
+                            <th scope="col"> Código</th>
                             <th scope="col"> Usuario</th>
                             <th scope="col"> Estado</th>
-                            <th scope="col" colspan="2"> Acciones</th>
+                            <th scope="col"> Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -90,15 +81,15 @@
                             <tr>
                                 <th scope="row" th:text="${usuario.idUsuario}"/>
                                 <td th:text="${usuario.nUsuario}"/>
-                                <td th:text="${usuario.estado}"/>
+                                <td th:text="${usuario.estadoDelegate}"/>
 
-                                <td><button class="btn btn-sm btn-outline-primary" th:id="${usuario.idUsuario}" onclick="cambiarEstadoForm(this.id)"
-                                            th:value="${usuario.idUsuario}">Cambiar estado </button>
-                                </td>
-                                <td>
-                                    <form th:action="@{/EditarUsuario}" th:object="${usuario}" method="post">
+                                <td class="row justify-content-center">
 
-                                        <button class="btn btn-sm btn-outline-primary" th:name="idUsuario" th:value="${usuario.idUsuario}"> Editar </button>
+                                    <button class="btn btn-sm btn-outline-primary" th:id="${usuario.idUsuario}" onclick="cambiarEstadoForm(this.id)"
+                                            th:value="${usuario.idUsuario}"><i class="fas fa-exchange-alt pull-left"></i> Cambiar estado </button>
+
+                                    <form th:action="@{/EditarUsuario}" th:object="${usuario}" method="post" style="margin-left: 10px;">
+                                        <button class="btn btn-sm btn-outline-primary" th:name="idUsuario" th:value="${usuario.idUsuario}"><i class="fas fa-pencil-alt pull-left"></i> Editar </button>
                                     </form>
                                 </td>
                             </tr>

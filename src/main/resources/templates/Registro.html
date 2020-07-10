@@ -6,6 +6,7 @@
     <title>Registro</title>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         function LimpiarCampos() {
             document.getElementById("usuario").value="";
@@ -19,19 +20,16 @@
 
     </script>
 </head>
-<body>
+<body class="bg-light">
 
-    <div class="row px-5 pt-2 border-bottom m-0">
+    <div class="row px-5 pt-2 border-bottom m-0 bg-white">
         <div class="col">
             <nav class="navbar navbar-expand-md">
                 <a href="/index"><img src="imgs/logo_letrasN.png" class="img-fluid" alt="Responsive image"></a>
-                <ul class="navbar-nav w-100 justify-content-end font-weight-bold" style="font-size: 18px;">
-                    <li class="nav-item"><a href="/registro"><button type="button" class="btn btn-outline-primary">Regístrate</button></a></li>
-                </ul>
             </nav>
         </div>
     </div>
-    <section class="bg-light d-flex" style="height: 92vh">
+    <section class="d-flex">
         <div class="container align-self-center">
             <div class="row p-3">
                 <div class="col-12">
@@ -92,7 +90,6 @@
         swal("Algo ha salido mal...", "Ha ocurrido un error, revisa que la información ingresada sea correcta.", "error");
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
 </html>

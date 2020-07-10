@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public interface MateriaRepo extends JpaRepository<Materia, Integer> {
 
-    @Query(value = "SELECT * FROM public.materia WHERE estado = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM public.materia WHERE estado = true ORDER BY nombre ASC", nativeQuery = true)
     public ArrayList<Materia> findAllActive();
 
 }

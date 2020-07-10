@@ -14,7 +14,7 @@ public interface CentroEdRepo extends JpaRepository<CentroEd, Integer> {
     @Query(value = "UPDATE public.centro_ed SET estado=?1 where id_centro_ed = ?2", nativeQuery = true)
     public CentroEd updateEstado(Boolean estado, Integer centroEd);
 
-    @Query(value = "SELECT * FROM public.centro_ed WHERE estado = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM public.centro_ed WHERE estado = true ORDER BY nombre ASC", nativeQuery = true)
     public ArrayList<CentroEd> findAllActive();
 
 

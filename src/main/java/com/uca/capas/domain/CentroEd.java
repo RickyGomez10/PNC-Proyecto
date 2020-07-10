@@ -37,10 +37,11 @@ public class CentroEd {
             return "";
         }
         else{
-            if(this.estado) return "activo";
-            else return "inactivo";
+            if(this.estado) return "Activo";
+            else return "Inactivo";
         }
     }
+    
     @Override
     public String toString() {
         return "CentroEd{" +

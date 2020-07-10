@@ -1,0 +1,13 @@
+Página de inicio: localhost:8080
+
+Puerto postgres: 5432
+
+Nombre de base de datos: dbCapas
+Usuario: postgres
+Contraseña: postgres
+
+-----Credenciales de administrador-----
+
+Usuario: admin
+Contraseña: capas012020
+

@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/custom.css">
+    <script src="https://kit.fontawesome.com/b20aef55a4.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-light">
 
@@ -22,7 +23,7 @@
                 </li>
             </ul>
             <form th:action="@{/cerrarSesion}" class="form-inline">
-                <button class="btn btn-danger my-2 my-sm-0" type="submit">Cerrar Sesión</button>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit"><i class="fas fa-sign-out-alt pull-left"></i> Cerrar Sesión</button>
             </form>
         </div>
     </nav>
@@ -32,7 +33,7 @@
             <div class="row p-3">
                 <div class="col-12">
                     <h1 class="mb-3 display-4"> Listado de Estudiantes</h1>
-                    <table class="table table-hover">
+                    <table class="table table-hover text-center">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col"> Nombre</th>
@@ -46,20 +47,20 @@
                         <tbody>
                         <th:block th:each="estudiante, row: ${estudiantes}">
                             <tr>
-                                <td th:text="${estudiante.nombre}"/>
-                                <td th:text="${estudiante.apellido}"/>
-                                <td th:text="${estudiante.aprobadas}"/>
-                                <td th:text="${estudiante.reprobadas}"/>
-                                <td th:text="${estudiante.promedio}"/>
+                                <td th:text="${estudiante.nombre}" />
+                                <td th:text="${estudiante.apellido}" />
+                                <td th:text="${estudiante.aprobadas}" />
+                                <td th:text="${estudiante.reprobadas}" />
+                                <td th:text="${estudiante.promedio}" />
 
                                 <td>
                                     <form th:action="@{/EditarEstudiante}" th:object="${estudiante}" method="post">
-                                        <button class="btn btn-sm btn-outline-primary" th:name="carne" th:value="*{carne}">Editar</button>
+                                        <button class="btn btn-sm btn-outline-primary" th:name="carne" th:value="*{carne}"><i class="fas fa-search pull-left"></i> Editar</button>
                                     </form>
                                 </td>
                                 <td>
                                     <form th:action="@{/materiasCursadas}" th:object="${estudiante}" method="post">
-                                        <button class="btn btn-sm btn-outline-primary" th:name="carne" th:value="*{carne}">Materias</button>
+                                        <button class="btn btn-sm btn-outline-primary" th:name="carne" th:value="*{carne}"><i class="far fa-edit pull-left"></i> Materias</button>
                                     </form>
                                 </td>
                             </tr>

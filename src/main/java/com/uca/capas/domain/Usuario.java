@@ -103,6 +103,16 @@ public class Usuario {
 
     }
 
+    public String getEstadoDelegate(){
+        if(this.estado == null){
+            return "";
+        }
+        else{
+            if(this.estado) return "Activo";
+            else return "Inactivo";
+        }
+    }
+
     public Integer getIdUsuario() {
         return idUsuario;
     }
